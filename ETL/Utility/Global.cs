@@ -14,20 +14,13 @@ namespace ETL.Utility
         public const string EXPRESSION_TYPE_REGEX = "Regular Expression";
         public const string EXPRESSION_TYPE_MAP = "Map";
 
-        private static List<Database> databasesSource = new List<Database>();
-        private static List<Database> databasesDestination = new List<Database>();
+        private static List<Database> databases = new List<Database>();
         private static Expression expression = Expression.getInstance();
 
-        public static List<Database> DatabasesSource
+        public static List<Database> Databases
         {
-            get { return databasesSource; }
-            set { databasesSource = value; }
-        }
-
-        public static List<Database> DatabasesDestination
-        {
-            get { return databasesDestination; }
-            set { databasesDestination = value; }
+            get { return databases; }
+            set { databases = value; }
         }
 
         public static Expression Expression
@@ -36,9 +29,9 @@ namespace ETL.Utility
             set { expression = value; }
         }
 
-        public static Database GetSourceDatabaseByName(string databaseName)
+        public static Database GetDatabaseByName(string databaseName)
         {
-            foreach (Database database in databasesSource)
+            foreach (Database database in databases)
             {
                 if (database.databaseName == databaseName)
                 {
@@ -48,16 +41,16 @@ namespace ETL.Utility
             return null;
         }
 
-        public static Database GetDestinationDatabaseByName(string databaseName)
+        public static bool DatabaseAlreadyConnected(Database database)
         {
-            foreach (Database database in databasesDestination)
+            foreach (Database existingDatabase in databases)
             {
-                if (database.databaseName == databaseName)
+                if (database == existingDatabase)
                 {
-                    return database;
+                    return true;
                 }
             }
-            return null;
+            return false;
         }
     }
 }
