@@ -124,8 +124,8 @@ namespace ETL.Core
 
             List<string> fieldsNames = table.GetColumnsNames();
             string fields = "(" + string.Join(",", fieldsNames.Select(x => string.Format("\"{0}\"", x))) + ")";
-            Dictionary<string, NpgsqlDbType> columnsWithTypes = HelperPostgreSQL.GetsColumnsWithTypes(dataTable.Columns);
-            string values = HelperPostgreSQL.GetValuesStringForInsertQuery(dataTable.Columns);
+            Dictionary<string, NpgsqlDbType> columnsWithTypes = PostgreSQLHelper.GetsColumnsWithTypes(dataTable.Columns);
+            string values = PostgreSQLHelper.GetValuesStringForInsertQuery(dataTable.Columns);
 
 
             string selectQuery = "SELECT * FROM \"" + tableName + "\"";
@@ -140,7 +140,7 @@ namespace ETL.Core
             {
                 NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(selectQuery, connection);
                 dataAdapter.InsertCommand = new NpgsqlCommand(insertQuery, connection);
-                HelperPostgreSQL.SetParametersForInsertQuery(columnsWithTypes, dataAdapter);
+                PostgreSQLHelper.SetParametersForInsertQuery(columnsWithTypes, dataAdapter);
 
                 dataAdapter.Update(dataTable);
                 dataTable.AcceptChanges();
