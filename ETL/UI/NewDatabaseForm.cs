@@ -58,6 +58,7 @@ namespace ETL.UI
                 }
                 Global.Databases.Add(database);
                 this.AddNodesToTreeView(isSource, database);
+                ETLParent.ShowMainContainer();
                 this.Close();
             }
             else

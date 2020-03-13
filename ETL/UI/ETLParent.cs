@@ -22,6 +22,7 @@ namespace ETL.UI
             InitializeComponent();
             CenterToScreen();
             _instance = this;
+            this.mainSplitContainer.Visible = false;
         }
 
         private void ETLParent_Activated(object sender, System.EventArgs e)
@@ -64,18 +65,6 @@ namespace ETL.UI
             this.Close();
         }
 
-        private void CutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
         private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toolStrip.Visible = toolBarToolStripMenuItem.Checked;
@@ -84,38 +73,6 @@ namespace ETL.UI
         private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             statusStrip.Visible = statusBarToolStripMenuItem.Checked;
-        }
-
-        private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.Cascade);
-        }
-
-        private void TileVerticalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.TileVertical);
-        }
-
-        private void TileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.TileHorizontal);
-        }
-
-        private void ArrangeIconsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.ArrangeIcons);
-        }
-
-        private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (Form childForm in MdiChildren)
-            {
-                childForm.Close();
-            }
-        }
-
-        private void ETLParent_Load(object sender, EventArgs e)
-        {
         }
 
         private void Add_Click(object sender, EventArgs e)
@@ -127,6 +84,11 @@ namespace ETL.UI
         public static TreeView GetTreeView()
         {
             return _instance.databasesTreeView;
+        }
+
+        public static void ShowMainContainer()
+        {
+            _instance.mainSplitContainer.Visible = true;
         }
 
         private void DatabasesTreeView_AfterSelect(object sender, TreeViewEventArgs e)

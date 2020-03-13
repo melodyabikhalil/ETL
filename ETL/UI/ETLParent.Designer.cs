@@ -372,7 +372,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "ETLParent";
-            this.Text = "ETLParent";
+            this.Text = "Extract Transform Load";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
