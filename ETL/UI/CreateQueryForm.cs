@@ -1,4 +1,5 @@
 ﻿using ETL.Core;
+using ETL.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,6 +44,7 @@ namespace ETL.UI
             }
             this.buildQueryTabPage.Enabled = true;
             this.mainTableTextBox.Text = this.mainTableCombobox.SelectedItem.ToString();
+            this.joinQuery.mainTableName = this.mainTableCombobox.SelectedItem.ToString();
             this.SetCreateQueryDataGridView();
             this.createQueryTabControl.SelectedTab = this.buildQueryTabPage;
         }
@@ -74,6 +76,7 @@ namespace ETL.UI
                 column.HeaderText = header;
                 column.DataPropertyName = header;
                 column.FlatStyle = FlatStyle.Flat;
+                column.ValueType = typeof(string);
                 if (values != null)
                 {
                     column.DataSource = values;
@@ -91,38 +94,71 @@ namespace ETL.UI
         {
             this.selectColumnsTabPage.Enabled = true;
             this.createQueryTabControl.SelectedTab = this.selectColumnsTabPage;
+            SetSelectColumnsDataFridView();
         }
 
-        private List<string> GetColumnsForTable(string tableName, Database database)
+        private void SetSelectColumnsDataFridView()
         {
-            List<string> columns = new List<string>();
-            database.Connect();
-            bool gotTableSchema = database.SetDatatableSchema(tableName);
-            database.Close();
-            if (!gotTableSchema)
-            {
-                return columns;
-            }
-            Table table = database.GetTable(tableName);
-            columns = table.GetColumnsNames();
-            return columns;
+            DataTable joinQueryDataTable = UIHelper.CreateDataTableFromDataGridView(buildQueryDataGridView);
+            this.joinQuery.dataTable = joinQueryDataTable;
+            List<string> tables = Helper.SelectOneColumnFromDataTable(joinQueryDataTable, "Table 1");
+            tables.AddRange(Helper.SelectOneColumnFromDataTable(joinQueryDataTable, "Table 2"));
+            List<string> columns = Helper.GetColumnsFromTables(Helper.ConvertListToSet(tables), this.joinQuery.database);
+            DataTable datatableColumns = Helper.ConvertListToDataTable(columns);
+            selectColumnsDataGridView.AllowUserToAddRows = false;
+            this.CreateCheckBoxColumn();
+            datatableColumns.Columns["Column1"].ColumnName = "Column Name";
+            selectColumnsDataGridView.DataSource = datatableColumns;
+            selectColumnsDataGridView.Columns[1].Width = 200;
+
+        }
+
+        private void CreateCheckBoxColumn()
+        {
+            DataGridViewCheckBoxColumn checkColumn = new DataGridViewCheckBoxColumn();
+            checkColumn.Name = "";
+            checkColumn.HeaderText = "";
+            checkColumn.Width = 50;
+            checkColumn.ReadOnly = false;
+            checkColumn.FillWeight = 10;
+            checkColumn.ValueType = typeof(bool);
+            selectColumnsDataGridView.Columns.Add(checkColumn);
         }
 
         private void BuildQueryDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 1 || e.ColumnIndex == 3)
             {
-                int index = e.ColumnIndex;
-                DataGridViewRow row = this.buildQueryDataGridView.Rows[e.RowIndex];
-                string tableName = row.Cells[index].Value.ToString();
-                Database database = joinQuery.database;
-                if (tableName != "" && tableName != null)
+                try
                 {
-                    List<string> columns = this.GetColumnsForTable(tableName, database);
-                    DataGridViewComboBoxCell column1Cell = (DataGridViewComboBoxCell)row.Cells[index + 1];
-                    column1Cell.DataSource = columns;
+                    int index = e.ColumnIndex;
+                    DataGridViewRow row = this.buildQueryDataGridView.Rows[e.RowIndex];
+                    string tableName = row.Cells[index].Value.ToString();
+                    Database database = joinQuery.database;
+                    if (tableName != "" && tableName != null)
+                    {
+                        List<string> columns = database.GetColumnsForTable(tableName);
+                        DataGridViewComboBoxCell column1Cell = (DataGridViewComboBoxCell)row.Cells[index + 1];
+                        column1Cell.DataSource = columns;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
+        }
+
+        private void GoToPreviewTabFromSelectColumnsTabButton_Click(object sender, EventArgs e)
+        {
+            this.queryPreviewTabPage.Enabled = true;
+            this.createQueryTabControl.SelectedTab = this.queryPreviewTabPage;
+            //create query and show it
+        }
+
+        private void GoBackToBuildQueryTabFromSelectColumnsTabButton_Click(object sender, EventArgs e)
+        {
+            this.createQueryTabControl.SelectedTab = this.buildQueryTabPage;
         }
     }
 }

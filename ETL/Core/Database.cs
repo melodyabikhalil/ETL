@@ -86,6 +86,21 @@ namespace ETL.Core
             return null;
         }
 
+        public List<string> GetColumnsForTable(string tableName)
+        {
+            List<string> columns = new List<string>();
+            this.Connect();
+            bool gotTableSchema = this.SetDatatableSchema(tableName);
+            this.Close();
+            if (!gotTableSchema)
+            {
+                return columns;
+            }
+            Table table = this.GetTable(tableName);
+            columns = table.GetColumnsNames();
+            return columns;
+        }
+
         public override string ToString()
         {
             return String.Format("Database name:{0}, Username:{1}, Password:{2}, Server name:{3}", this.databaseName, this.username, this.password, this.serverName);

@@ -161,7 +161,7 @@
             this.buildQueryDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.buildQueryDataGridView.Location = new System.Drawing.Point(29, 88);
             this.buildQueryDataGridView.Name = "buildQueryDataGridView";
-            this.buildQueryDataGridView.Size = new System.Drawing.Size(889, 380);
+            this.buildQueryDataGridView.Size = new System.Drawing.Size(893, 380);
             this.buildQueryDataGridView.TabIndex = 12;
             this.buildQueryDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.BuildQueryDataGridView_CellEndEdit);
             // 
@@ -216,6 +216,7 @@
             this.goBackToBuildQueryTabFromSelectColumnsTabButton.TabIndex = 13;
             this.goBackToBuildQueryTabFromSelectColumnsTabButton.Text = "Back";
             this.goBackToBuildQueryTabFromSelectColumnsTabButton.UseVisualStyleBackColor = true;
+            this.goBackToBuildQueryTabFromSelectColumnsTabButton.Click += new System.EventHandler(this.GoBackToBuildQueryTabFromSelectColumnsTabButton_Click);
             // 
             // goToPreviewTabFromSelectColumnsTabButton
             // 
@@ -225,13 +226,16 @@
             this.goToPreviewTabFromSelectColumnsTabButton.TabIndex = 12;
             this.goToPreviewTabFromSelectColumnsTabButton.Text = "Next";
             this.goToPreviewTabFromSelectColumnsTabButton.UseVisualStyleBackColor = true;
+            this.goToPreviewTabFromSelectColumnsTabButton.Click += new System.EventHandler(this.GoToPreviewTabFromSelectColumnsTabButton_Click);
             // 
             // selectColumnsDataGridView
             // 
+            this.selectColumnsDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.selectColumnsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.selectColumnsDataGridView.Location = new System.Drawing.Point(116, 104);
+            this.selectColumnsDataGridView.GridColor = System.Drawing.SystemColors.ControlLight;
+            this.selectColumnsDataGridView.Location = new System.Drawing.Point(342, 76);
             this.selectColumnsDataGridView.Name = "selectColumnsDataGridView";
-            this.selectColumnsDataGridView.Size = new System.Drawing.Size(731, 310);
+            this.selectColumnsDataGridView.Size = new System.Drawing.Size(292, 382);
             this.selectColumnsDataGridView.TabIndex = 0;
             // 
             // queryPreviewTabPage

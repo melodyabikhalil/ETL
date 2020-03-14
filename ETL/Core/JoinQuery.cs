@@ -11,6 +11,7 @@ namespace ETL.Core
     {
         public string queryName { get; set; }
         public string query { get; set; }
+        public string mainTableName { get; set; }
         public Database database { get; set; }
         public DataTable dataTable { get; set; }
 
