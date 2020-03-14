@@ -12,6 +12,8 @@ namespace ETL.Core
         public string query { get; set; }
         public Database database { get; set; }
         
+        //public JoinQuery() { }
+
         public JoinQuery(string queryName, string query, Database database)
         {
             this.database = database;

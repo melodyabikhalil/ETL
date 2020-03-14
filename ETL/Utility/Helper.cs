@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +20,17 @@ namespace ETL.Utility
             {
                 table.Rows.Add(array);
             }
-
             return table;
+        }
+
+        public static dynamic GetJsonArrayFromFile(string path)
+        {
+            using (StreamReader r = new StreamReader("file.json"))
+            {
+                string json = r.ReadToEnd();
+                dynamic array = JsonConvert.DeserializeObject(json);
+                return array;
+            }
         }
     }
 }

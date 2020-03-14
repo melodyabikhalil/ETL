@@ -15,6 +15,7 @@ namespace ETL.Core
         public List<Table> tables { get; set; }
         public List<string> tablesNames { get; set; }
         public List<JoinQuery> queries { get; set; }
+        public List<string> queriesNames { get; set; }
 
         public Database(string serverName, string username, string password, string databaseName)
         {
@@ -23,6 +24,7 @@ namespace ETL.Core
             this.password = password;
             this.databaseName = databaseName;
             this.tables = new List<Table>();
+            this.queries = new List<JoinQuery>();
         }
 
         public int GetTableIndexByName(string tableName)
@@ -30,6 +32,18 @@ namespace ETL.Core
             for (int i = 0; i < tables.Count; ++i)
             {
                 if (tables[i].tableName == tableName)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public int GetQueryIndexByName(string queryName)
+        {
+            for (int i = 0; i < queries.Count; ++i)
+            {
+                if (queries[i].queryName == queryName)
                 {
                     return i;
                 }
@@ -58,7 +72,18 @@ namespace ETL.Core
                 }
             }
             return null;
+        }
 
+        public JoinQuery GetQuery(string queryName)
+        {
+            foreach (JoinQuery query in queries)
+            {
+                if (query.queryName == queryName)
+                {
+                    return query;
+                }
+            }
+            return null;
         }
 
         public override string ToString()

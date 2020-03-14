@@ -52,6 +52,7 @@ namespace ETL.UI
             {
                 database.tablesNames = database.GetTablesNames();
                 database.CreateTablesList(database.tablesNames);
+                // TODO: add database.queries from json file (if they exist);
                 if (Global.DatabaseAlreadyConnected(database))
                 {
                     this.ShowErrorDialogAndClose();
