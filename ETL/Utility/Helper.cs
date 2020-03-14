@@ -25,7 +25,7 @@ namespace ETL.Utility
 
         public static dynamic GetJsonArrayFromFile(string path)
         {
-            using (StreamReader r = new StreamReader("file.json"))
+            using (StreamReader r = new StreamReader(path))
             {
                 string json = r.ReadToEnd();
                 dynamic array = JsonConvert.DeserializeObject(json);
