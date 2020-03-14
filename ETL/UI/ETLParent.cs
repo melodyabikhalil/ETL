@@ -93,40 +93,7 @@ namespace ETL.UI
 
         private void DatabasesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Level == 0)
-            {
-                return;
-            }
-            string tableName = e.Node.Text;
-            string databaseName = e.Node.Parent.Text;
-            Database database = Global.GetDatabaseByName(databaseName);
-            Table table = database.GetTable(tableName);
-            database.Close();
-            database.Connect();
-            bool gotTableSchema = database.SetDatatableSchema(tableName);
-            database.Close();
-            if (!gotTableSchema)
-            {
-                return;
-            }
-            List<string> columns = table.GetColumnsNames();
-            DataTable dataTable = Helper.ConvertListToDataTable(columns);
-        }
-
-        public static TreeNode AddBranch(string nodeName, TreeView treeView)
-        {
-            treeView.BeginUpdate();
-            TreeNode treeNodeCreated = treeView.Nodes.Add(nodeName);
-            treeView.EndUpdate();
-            return treeNodeCreated;
-        }
-
-        public static void AddChildrenNodes(List<string> childrenNames, int parentIndex, TreeView treeView)
-        {
-            foreach (string childName in childrenNames)
-            {
-                treeView.Nodes[parentIndex].Nodes.Add(childName);
-            }
+            
         }
     }
 }

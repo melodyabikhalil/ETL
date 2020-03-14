@@ -145,9 +145,15 @@ namespace ETL.UI
         private void AddNodesToTreeView(bool isSource, Database database)
         {
             TreeView treeview = ETLParent.GetTreeView();
-            TreeNode node = ETLParent.AddBranch(database.databaseName, treeview);
-            // TODO: add Tables & Queries nodes 
-            ETLParent.AddChildrenNodes(database.tablesNames, node.Index, treeview);
+            TreeNode node = UIHelper.AddBranch(database.databaseName, treeview);
+
+            TreeNode tablesNode = UIHelper.AddChildBranch("Tables", node.Index, treeview);
+            UIHelper.AddChildrenNodes(database.tablesNames, tablesNode);
+
+            TreeNode queriesNode = UIHelper.AddChildBranch("Queries", node.Index, treeview);
+            // TODO: get queries from json file and add them as children nodes to queries node 
+            //we get the queries and we set them in database.queries
+            //UIHelper.AddChildrenNodes(database.queries, queriesNode);
         }
 
         private void SrcDestNex_Click(object sender, EventArgs e)

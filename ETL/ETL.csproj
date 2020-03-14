@@ -129,6 +129,7 @@
     <Compile Include="UI\NewDatabaseForm.Designer.cs">
       <DependentUpon>NewDatabaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\UIHelper.cs" />
     <Compile Include="Utility\Global.cs" />
     <Compile Include="Utility\Helper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
