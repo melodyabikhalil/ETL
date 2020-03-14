@@ -1,6 +1,6 @@
 ﻿namespace ETL.UI
 {
-    partial class CreateQuery
+    partial class CreateQueryForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,24 +30,26 @@
         {
             this.createQueryTabControl = new System.Windows.Forms.TabControl();
             this.mainTableTabPage = new System.Windows.Forms.TabPage();
-            this.buildQueryTabPage = new System.Windows.Forms.TabPage();
-            this.mainTableLabel = new System.Windows.Forms.Label();
-            this.mainTableCombobox = new System.Windows.Forms.ComboBox();
             this.goToBuildQueryTabFromMainTableTabButton = new System.Windows.Forms.Button();
+            this.mainTableCombobox = new System.Windows.Forms.ComboBox();
+            this.mainTableLabel = new System.Windows.Forms.Label();
+            this.buildQueryTabPage = new System.Windows.Forms.TabPage();
+            this.mainTableTextBox = new System.Windows.Forms.TextBox();
+            this.mainTableNameLabel = new System.Windows.Forms.Label();
+            this.buildQueryLabel = new System.Windows.Forms.Label();
+            this.buildQueryDataGridView = new System.Windows.Forms.DataGridView();
             this.goBackToMainTableTabFromBuildQueryTabButton = new System.Windows.Forms.Button();
             this.goToSelectColumnsTabFromBuildQueryTabButton = new System.Windows.Forms.Button();
-            this.buildQueryDataGridView = new System.Windows.Forms.DataGridView();
             this.selectColumnsTabPage = new System.Windows.Forms.TabPage();
-            this.selectColumnsDataGridView = new System.Windows.Forms.DataGridView();
-            this.buildQueryLabel = new System.Windows.Forms.Label();
+            this.selectColumnsLabel = new System.Windows.Forms.Label();
             this.goBackToBuildQueryTabFromSelectColumnsTabButton = new System.Windows.Forms.Button();
             this.goToPreviewTabFromSelectColumnsTabButton = new System.Windows.Forms.Button();
-            this.selectColumnsLabel = new System.Windows.Forms.Label();
+            this.selectColumnsDataGridView = new System.Windows.Forms.DataGridView();
             this.queryPreviewTabPage = new System.Windows.Forms.TabPage();
-            this.previewLabel = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.goBackToSelectColumnsTabFromPreviewTabButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.previewLabel = new System.Windows.Forms.Label();
             this.createQueryTabControl.SuspendLayout();
             this.mainTableTabPage.SuspendLayout();
             this.buildQueryTabPage.SuspendLayout();
@@ -67,7 +69,7 @@
             this.createQueryTabControl.Location = new System.Drawing.Point(0, 0);
             this.createQueryTabControl.Name = "createQueryTabControl";
             this.createQueryTabControl.SelectedIndex = 0;
-            this.createQueryTabControl.Size = new System.Drawing.Size(1024, 592);
+            this.createQueryTabControl.Size = new System.Drawing.Size(984, 592);
             this.createQueryTabControl.TabIndex = 0;
             // 
             // mainTableTabPage
@@ -79,24 +81,27 @@
             this.mainTableTabPage.Location = new System.Drawing.Point(4, 22);
             this.mainTableTabPage.Name = "mainTableTabPage";
             this.mainTableTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mainTableTabPage.Size = new System.Drawing.Size(1016, 566);
+            this.mainTableTabPage.Size = new System.Drawing.Size(976, 566);
             this.mainTableTabPage.TabIndex = 0;
             this.mainTableTabPage.Text = "Main Table";
-            this.mainTableTabPage.Click += new System.EventHandler(this.MainTableTabPage_Click);
             // 
-            // buildQueryTabPage
+            // goToBuildQueryTabFromMainTableTabButton
             // 
-            this.buildQueryTabPage.BackColor = System.Drawing.SystemColors.Control;
-            this.buildQueryTabPage.Controls.Add(this.buildQueryLabel);
-            this.buildQueryTabPage.Controls.Add(this.buildQueryDataGridView);
-            this.buildQueryTabPage.Controls.Add(this.goBackToMainTableTabFromBuildQueryTabButton);
-            this.buildQueryTabPage.Controls.Add(this.goToSelectColumnsTabFromBuildQueryTabButton);
-            this.buildQueryTabPage.Location = new System.Drawing.Point(4, 22);
-            this.buildQueryTabPage.Name = "buildQueryTabPage";
-            this.buildQueryTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.buildQueryTabPage.Size = new System.Drawing.Size(1016, 566);
-            this.buildQueryTabPage.TabIndex = 1;
-            this.buildQueryTabPage.Text = "Build Query";
+            this.goToBuildQueryTabFromMainTableTabButton.Location = new System.Drawing.Point(828, 493);
+            this.goToBuildQueryTabFromMainTableTabButton.Name = "goToBuildQueryTabFromMainTableTabButton";
+            this.goToBuildQueryTabFromMainTableTabButton.Size = new System.Drawing.Size(75, 23);
+            this.goToBuildQueryTabFromMainTableTabButton.TabIndex = 8;
+            this.goToBuildQueryTabFromMainTableTabButton.Text = "Next";
+            this.goToBuildQueryTabFromMainTableTabButton.UseVisualStyleBackColor = true;
+            this.goToBuildQueryTabFromMainTableTabButton.Click += new System.EventHandler(this.GoToBuildQueryTabFromMainTableTabButton_Click);
+            // 
+            // mainTableCombobox
+            // 
+            this.mainTableCombobox.FormattingEnabled = true;
+            this.mainTableCombobox.Location = new System.Drawing.Point(142, 123);
+            this.mainTableCombobox.Name = "mainTableCombobox";
+            this.mainTableCombobox.Size = new System.Drawing.Size(180, 21);
+            this.mainTableCombobox.TabIndex = 1;
             // 
             // mainTableLabel
             // 
@@ -107,22 +112,58 @@
             this.mainTableLabel.TabIndex = 0;
             this.mainTableLabel.Text = "Select the query\'s main table";
             // 
-            // mainTableCombobox
+            // buildQueryTabPage
             // 
-            this.mainTableCombobox.FormattingEnabled = true;
-            this.mainTableCombobox.Location = new System.Drawing.Point(142, 123);
-            this.mainTableCombobox.Name = "mainTableCombobox";
-            this.mainTableCombobox.Size = new System.Drawing.Size(180, 21);
-            this.mainTableCombobox.TabIndex = 1;
+            this.buildQueryTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.buildQueryTabPage.Controls.Add(this.mainTableTextBox);
+            this.buildQueryTabPage.Controls.Add(this.mainTableNameLabel);
+            this.buildQueryTabPage.Controls.Add(this.buildQueryLabel);
+            this.buildQueryTabPage.Controls.Add(this.buildQueryDataGridView);
+            this.buildQueryTabPage.Controls.Add(this.goBackToMainTableTabFromBuildQueryTabButton);
+            this.buildQueryTabPage.Controls.Add(this.goToSelectColumnsTabFromBuildQueryTabButton);
+            this.buildQueryTabPage.Location = new System.Drawing.Point(4, 22);
+            this.buildQueryTabPage.Name = "buildQueryTabPage";
+            this.buildQueryTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.buildQueryTabPage.Size = new System.Drawing.Size(976, 566);
+            this.buildQueryTabPage.TabIndex = 1;
+            this.buildQueryTabPage.Text = "Build Query";
             // 
-            // goToBuildQueryTabFromMainTableTabButton
+            // mainTableTextBox
             // 
-            this.goToBuildQueryTabFromMainTableTabButton.Location = new System.Drawing.Point(828, 493);
-            this.goToBuildQueryTabFromMainTableTabButton.Name = "goToBuildQueryTabFromMainTableTabButton";
-            this.goToBuildQueryTabFromMainTableTabButton.Size = new System.Drawing.Size(75, 23);
-            this.goToBuildQueryTabFromMainTableTabButton.TabIndex = 8;
-            this.goToBuildQueryTabFromMainTableTabButton.Text = "Next";
-            this.goToBuildQueryTabFromMainTableTabButton.UseVisualStyleBackColor = true;
+            this.mainTableTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mainTableTextBox.Location = new System.Drawing.Point(91, 50);
+            this.mainTableTextBox.Name = "mainTableTextBox";
+            this.mainTableTextBox.ReadOnly = true;
+            this.mainTableTextBox.Size = new System.Drawing.Size(141, 20);
+            this.mainTableTextBox.TabIndex = 15;
+            // 
+            // mainTableNameLabel
+            // 
+            this.mainTableNameLabel.AutoSize = true;
+            this.mainTableNameLabel.Location = new System.Drawing.Point(26, 53);
+            this.mainTableNameLabel.Name = "mainTableNameLabel";
+            this.mainTableNameLabel.Size = new System.Drawing.Size(59, 13);
+            this.mainTableNameLabel.TabIndex = 14;
+            this.mainTableNameLabel.Text = "Main table:";
+            // 
+            // buildQueryLabel
+            // 
+            this.buildQueryLabel.AutoSize = true;
+            this.buildQueryLabel.Location = new System.Drawing.Point(25, 22);
+            this.buildQueryLabel.Name = "buildQueryLabel";
+            this.buildQueryLabel.Size = new System.Drawing.Size(294, 13);
+            this.buildQueryLabel.TabIndex = 13;
+            this.buildQueryLabel.Text = "Build join query. Choose the join type, table and join columns.";
+            // 
+            // buildQueryDataGridView
+            // 
+            this.buildQueryDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.buildQueryDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.buildQueryDataGridView.Location = new System.Drawing.Point(29, 88);
+            this.buildQueryDataGridView.Name = "buildQueryDataGridView";
+            this.buildQueryDataGridView.Size = new System.Drawing.Size(889, 380);
+            this.buildQueryDataGridView.TabIndex = 12;
+            this.buildQueryDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.BuildQueryDataGridView_CellEndEdit);
             // 
             // goBackToMainTableTabFromBuildQueryTabButton
             // 
@@ -132,6 +173,7 @@
             this.goBackToMainTableTabFromBuildQueryTabButton.TabIndex = 11;
             this.goBackToMainTableTabFromBuildQueryTabButton.Text = "Back";
             this.goBackToMainTableTabFromBuildQueryTabButton.UseVisualStyleBackColor = true;
+            this.goBackToMainTableTabFromBuildQueryTabButton.Click += new System.EventHandler(this.GoBackToMainTableTabFromBuildQueryTabButton_Click);
             // 
             // goToSelectColumnsTabFromBuildQueryTabButton
             // 
@@ -141,14 +183,7 @@
             this.goToSelectColumnsTabFromBuildQueryTabButton.TabIndex = 10;
             this.goToSelectColumnsTabFromBuildQueryTabButton.Text = "Next";
             this.goToSelectColumnsTabFromBuildQueryTabButton.UseVisualStyleBackColor = true;
-            // 
-            // buildQueryDataGridView
-            // 
-            this.buildQueryDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.buildQueryDataGridView.Location = new System.Drawing.Point(25, 62);
-            this.buildQueryDataGridView.Name = "buildQueryDataGridView";
-            this.buildQueryDataGridView.Size = new System.Drawing.Size(962, 416);
-            this.buildQueryDataGridView.TabIndex = 12;
+            this.goToSelectColumnsTabFromBuildQueryTabButton.Click += new System.EventHandler(this.GoToSelectColumnsTabFromBuildQueryTabButton_Click);
             // 
             // selectColumnsTabPage
             // 
@@ -160,26 +195,18 @@
             this.selectColumnsTabPage.Location = new System.Drawing.Point(4, 22);
             this.selectColumnsTabPage.Name = "selectColumnsTabPage";
             this.selectColumnsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.selectColumnsTabPage.Size = new System.Drawing.Size(1016, 566);
+            this.selectColumnsTabPage.Size = new System.Drawing.Size(976, 566);
             this.selectColumnsTabPage.TabIndex = 2;
             this.selectColumnsTabPage.Text = "Select Columns";
             // 
-            // selectColumnsDataGridView
+            // selectColumnsLabel
             // 
-            this.selectColumnsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.selectColumnsDataGridView.Location = new System.Drawing.Point(116, 104);
-            this.selectColumnsDataGridView.Name = "selectColumnsDataGridView";
-            this.selectColumnsDataGridView.Size = new System.Drawing.Size(731, 310);
-            this.selectColumnsDataGridView.TabIndex = 0;
-            // 
-            // buildQueryLabel
-            // 
-            this.buildQueryLabel.AutoSize = true;
-            this.buildQueryLabel.Location = new System.Drawing.Point(25, 22);
-            this.buildQueryLabel.Name = "buildQueryLabel";
-            this.buildQueryLabel.Size = new System.Drawing.Size(294, 13);
-            this.buildQueryLabel.TabIndex = 13;
-            this.buildQueryLabel.Text = "Build join query. Choose the join type, table and join columns.";
+            this.selectColumnsLabel.AutoSize = true;
+            this.selectColumnsLabel.Location = new System.Drawing.Point(59, 39);
+            this.selectColumnsLabel.Name = "selectColumnsLabel";
+            this.selectColumnsLabel.Size = new System.Drawing.Size(252, 13);
+            this.selectColumnsLabel.TabIndex = 14;
+            this.selectColumnsLabel.Text = "Choose the columns you wish to select in this query.";
             // 
             // goBackToBuildQueryTabFromSelectColumnsTabButton
             // 
@@ -199,14 +226,13 @@
             this.goToPreviewTabFromSelectColumnsTabButton.Text = "Next";
             this.goToPreviewTabFromSelectColumnsTabButton.UseVisualStyleBackColor = true;
             // 
-            // selectColumnsLabel
+            // selectColumnsDataGridView
             // 
-            this.selectColumnsLabel.AutoSize = true;
-            this.selectColumnsLabel.Location = new System.Drawing.Point(59, 39);
-            this.selectColumnsLabel.Name = "selectColumnsLabel";
-            this.selectColumnsLabel.Size = new System.Drawing.Size(252, 13);
-            this.selectColumnsLabel.TabIndex = 14;
-            this.selectColumnsLabel.Text = "Choose the columns you wish to select in this query.";
+            this.selectColumnsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.selectColumnsDataGridView.Location = new System.Drawing.Point(116, 104);
+            this.selectColumnsDataGridView.Name = "selectColumnsDataGridView";
+            this.selectColumnsDataGridView.Size = new System.Drawing.Size(731, 310);
+            this.selectColumnsDataGridView.TabIndex = 0;
             // 
             // queryPreviewTabPage
             // 
@@ -218,27 +244,9 @@
             this.queryPreviewTabPage.Location = new System.Drawing.Point(4, 22);
             this.queryPreviewTabPage.Name = "queryPreviewTabPage";
             this.queryPreviewTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.queryPreviewTabPage.Size = new System.Drawing.Size(1016, 566);
+            this.queryPreviewTabPage.Size = new System.Drawing.Size(976, 566);
             this.queryPreviewTabPage.TabIndex = 3;
             this.queryPreviewTabPage.Text = "Preview";
-            // 
-            // previewLabel
-            // 
-            this.previewLabel.AutoSize = true;
-            this.previewLabel.Location = new System.Drawing.Point(67, 40);
-            this.previewLabel.Name = "previewLabel";
-            this.previewLabel.Size = new System.Drawing.Size(645, 13);
-            this.previewLabel.TabIndex = 0;
-            this.previewLabel.Text = "This is a preview of how your query will look like. If you wish to change anythin" +
-    "g, please go back to previous steps and do the changes.";
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(70, 106);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(642, 238);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
             // 
             // goBackToSelectColumnsTabFromPreviewTabButton
             // 
@@ -258,13 +266,31 @@
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
             // 
-            // CreateQuery
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(70, 106);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(642, 238);
+            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.Text = "";
+            // 
+            // previewLabel
+            // 
+            this.previewLabel.AutoSize = true;
+            this.previewLabel.Location = new System.Drawing.Point(67, 40);
+            this.previewLabel.Name = "previewLabel";
+            this.previewLabel.Size = new System.Drawing.Size(645, 13);
+            this.previewLabel.TabIndex = 0;
+            this.previewLabel.Text = "This is a preview of how your query will look like. If you wish to change anythin" +
+    "g, please go back to previous steps and do the changes.";
+            // 
+            // CreateQueryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1024, 592);
+            this.ClientSize = new System.Drawing.Size(984, 592);
             this.Controls.Add(this.createQueryTabControl);
-            this.Name = "CreateQuery";
+            this.Name = "CreateQueryForm";
             this.Text = "Create new query";
             this.createQueryTabControl.ResumeLayout(false);
             this.mainTableTabPage.ResumeLayout(false);
@@ -303,5 +329,7 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label previewLabel;
+        private System.Windows.Forms.TextBox mainTableTextBox;
+        private System.Windows.Forms.Label mainTableNameLabel;
     }
 }

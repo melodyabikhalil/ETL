@@ -16,6 +16,9 @@ namespace ETL.UI
     {
         private int childFormNumber = 0;
         private static ETLParent _instance;
+        MenuItem newQueryMenuItem = new MenuItem("Add query");
+        ContextMenu newQueryMenu = new ContextMenu();
+        JoinQuery joinQuery;
 
         public ETLParent()
         {
@@ -23,6 +26,8 @@ namespace ETL.UI
             CenterToScreen();
             _instance = this;
             this.mainSplitContainer.Visible = false;
+            newQueryMenu.MenuItems.Add(newQueryMenuItem);
+            newQueryMenuItem.Click += new EventHandler(newQueryMenuItem_Click);
         }
 
         private void ETLParent_Activated(object sender, System.EventArgs e)
@@ -83,9 +88,24 @@ namespace ETL.UI
             _instance.mainSplitContainer.Visible = true;
         }
 
-        private void DatabasesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        private void DatabasesTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            if (e.Node.Level == 1 && e.Node.Text == "Queries" && e.Button == MouseButtons.Right)
+            {
+                string databaseName = e.Node.Parent.Text;
+                Database database = Global.GetDatabaseByName(databaseName);
+                this.joinQuery = new JoinQuery();
+                this.joinQuery.database = database;
+                newQueryMenu.Show(databasesTreeView, e.Location);
+            }
             
+        }
+
+        void newQueryMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateQueryForm createQueryForm = new CreateQueryForm();
+            createQueryForm.SetJoinQuery(this.joinQuery);
+            createQueryForm.ShowDialog(this);
         }
     }
 }

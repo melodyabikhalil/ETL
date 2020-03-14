@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    abstract class Database
+    public abstract class Database
     {
         public string username { get; set; }
         public string password { get; set; }
