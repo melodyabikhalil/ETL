@@ -12,6 +12,7 @@ namespace ETL.Core
         public string queryName { get; set; }
         public string query { get; set; }
         public string mainTableName { get; set; }
+        public List<string> columnsToSelect { get; set; }
         public Database database { get; set; }
         public DataTable dataTable { get; set; }
 
@@ -27,6 +28,48 @@ namespace ETL.Core
             this.queryName = queryName;
 
             this.dataTable = new DataTable();
+        }
+
+        public void CreateAndSetJoinQuery()
+        {
+            string query = "SELECT ";
+            foreach (string column in columnsToSelect)
+            {
+                query += column + ",";
+            }
+            query = query.Remove(query.Length - 1);
+            query += " FROM " + mainTableName;
+            foreach (DataRow datarow in dataTable.Rows)
+            {
+                string joinType = datarow.Field<string>("Join Type");
+                string table1 = datarow.Field<string>("Table 1");
+                string table2 = datarow.Field<string>("Table 2");
+                string column1 = datarow.Field<string>("Column 1");
+                string column2 = datarow.Field<string>("Column 2");
+                if (joinType == null || table1 == null || table2 == null || column1 == null || column2 == null)
+                {
+                    continue;
+                }
+                query += " \n" + joinType + " " + table1 + " ON " + table1 + "." + column1 + "=" + table2 + "." + column2;
+            }
+            query += ";";
+            this.query = query;
+            this.database.queries.Add(this);
+        }
+
+        public static List<string> SetAndGetSelectedColumnsList(DataTable selectedColumnsDatatable)
+        {
+            List<string> selectedColumns = new List<string>();
+            foreach (DataRow datarow in selectedColumnsDatatable.Rows)
+            {
+                bool isSelected = datarow.Field<bool>("Column1");
+                string columnName = datarow.Field<string>("Column Name");
+                if (isSelected)
+                {
+                    selectedColumns.Add(columnName);
+                }
+            }
+            return selectedColumns;
         }
     }
 }

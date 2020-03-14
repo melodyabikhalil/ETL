@@ -52,6 +52,7 @@ namespace ETL.UI
             {
                 database.tablesNames = database.GetTablesNames();
                 database.CreateTablesList(database.tablesNames);
+                database.GetQueriesNames();
                 // TODO: add database.queries from json file (if they exist);
                 if (Global.DatabaseAlreadyConnected(database))
                 {
@@ -147,14 +148,14 @@ namespace ETL.UI
         {
             TreeView treeview = ETLParent.GetTreeView();
             TreeNode node = UIHelper.AddBranch(database.databaseName, treeview);
-
+            node.Tag = database.databaseName;
             TreeNode tablesNode = UIHelper.AddChildBranch("Tables", node.Index, treeview);
             UIHelper.AddChildrenNodes(database.tablesNames, tablesNode);
 
             TreeNode queriesNode = UIHelper.AddChildBranch("Queries", node.Index, treeview);
             // TODO: get queries from json file and add them as children nodes to queries node 
             //we get the queries and we set them in database.queries
-            //UIHelper.AddChildrenNodes(database.queries, queriesNode);
+            UIHelper.AddChildrenNodes(database.queriesNames, queriesNode);
         }
 
         private void SrcDestNex_Click(object sender, EventArgs e)

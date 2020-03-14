@@ -46,6 +46,7 @@ namespace ETL.UI
             this.mainTableTextBox.Text = this.mainTableCombobox.SelectedItem.ToString();
             this.joinQuery.mainTableName = this.mainTableCombobox.SelectedItem.ToString();
             this.SetCreateQueryDataGridView();
+            this.joinQuery.queryName = this.queryNameTextBox.Text;
             this.createQueryTabControl.SelectedTab = this.buildQueryTabPage;
         }
 
@@ -59,11 +60,6 @@ namespace ETL.UI
             CreateComboBoxColumn("Column 1", null);
             CreateComboBoxColumn("Table 2", this.joinQuery.database.tablesNames);
             CreateComboBoxColumn("Column 2", null);
-        }
-
-        private void SetTableOptionsForDatagridViewColumns(DataGridViewComboBoxColumn comboboxColumn, List<string> values)
-        {
-            comboboxColumn.Items.AddRange(values);
         }
 
         private void CreateComboBoxColumn(string header, List<string> values)
@@ -151,14 +147,46 @@ namespace ETL.UI
 
         private void GoToPreviewTabFromSelectColumnsTabButton_Click(object sender, EventArgs e)
         {
+            this.SetJoinQuery();
             this.queryPreviewTabPage.Enabled = true;
             this.createQueryTabControl.SelectedTab = this.queryPreviewTabPage;
-            //create query and show it
+            this.queryRichTextBox.Text = this.joinQuery.query;
+        }
+
+        private void SetJoinQuery()
+        {
+            foreach (DataGridViewRow row in selectColumnsDataGridView.Rows)
+            {
+                if (row.Cells[0].Value == null || (bool)row.Cells[0].Value != true)
+                {
+                    row.Cells[0].Value = false;
+                }
+            }
+            DataTable selectedColumnsDatatable = UIHelper.CreateDataTableFromDataGridView(selectColumnsDataGridView);
+            this.joinQuery.columnsToSelect = JoinQuery.SetAndGetSelectedColumnsList(selectedColumnsDatatable);
+            this.joinQuery.CreateAndSetJoinQuery();
         }
 
         private void GoBackToBuildQueryTabFromSelectColumnsTabButton_Click(object sender, EventArgs e)
         {
             this.createQueryTabControl.SelectedTab = this.buildQueryTabPage;
+        }
+
+        private void GoBackToSelectColumnsTabFromPreviewTabButton_Click(object sender, EventArgs e)
+        {
+            this.createQueryTabControl.SelectedTab = this.selectColumnsTabPage;
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            List<string> queriesNames = this.joinQuery.database.GetQueriesNames();
+            this.joinQuery.database.queriesNames = queriesNames;
+            TreeView treeview = ETLParent.GetTreeView();
+            var result = treeview.Nodes.OfType<TreeNode>()
+                                        .FirstOrDefault(node => node.Tag.Equals(this.joinQuery.database.databaseName));
+            result.Nodes[1].Nodes.Clear();
+            UIHelper.AddChildrenNodes(this.joinQuery.database.queriesNames, result.Nodes[1]);
+            this.Close();
         }
     }
 }

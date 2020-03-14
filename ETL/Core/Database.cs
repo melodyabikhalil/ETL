@@ -25,6 +25,8 @@ namespace ETL.Core
             this.databaseName = databaseName;
             this.tables = new List<Table>();
             this.queries = new List<JoinQuery>();
+            this.tablesNames = new List<string>();
+            this.queriesNames = new List<string>();
         }
 
         public int GetTableIndexByName(string tableName)
@@ -99,6 +101,16 @@ namespace ETL.Core
             Table table = this.GetTable(tableName);
             columns = table.GetColumnsNames();
             return columns;
+        }
+
+        public List<string> GetQueriesNames()
+        {
+            List<string> queriesNames = new List<string>();
+            foreach (JoinQuery joinQuery in this.queries)
+            {
+                queriesNames.Add(joinQuery.queryName);
+            }
+            return queriesNames;
         }
 
         public override string ToString()

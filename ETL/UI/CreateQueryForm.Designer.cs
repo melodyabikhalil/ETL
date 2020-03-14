@@ -48,8 +48,10 @@
             this.queryPreviewTabPage = new System.Windows.Forms.TabPage();
             this.goBackToSelectColumnsTabFromPreviewTabButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.queryRichTextBox = new System.Windows.Forms.RichTextBox();
             this.previewLabel = new System.Windows.Forms.Label();
+            this.queryNameLabel = new System.Windows.Forms.Label();
+            this.queryNameTextBox = new System.Windows.Forms.TextBox();
             this.createQueryTabControl.SuspendLayout();
             this.mainTableTabPage.SuspendLayout();
             this.buildQueryTabPage.SuspendLayout();
@@ -75,6 +77,8 @@
             // mainTableTabPage
             // 
             this.mainTableTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.mainTableTabPage.Controls.Add(this.queryNameTextBox);
+            this.mainTableTabPage.Controls.Add(this.queryNameLabel);
             this.mainTableTabPage.Controls.Add(this.goToBuildQueryTabFromMainTableTabButton);
             this.mainTableTabPage.Controls.Add(this.mainTableCombobox);
             this.mainTableTabPage.Controls.Add(this.mainTableLabel);
@@ -100,7 +104,7 @@
             this.mainTableCombobox.FormattingEnabled = true;
             this.mainTableCombobox.Location = new System.Drawing.Point(142, 123);
             this.mainTableCombobox.Name = "mainTableCombobox";
-            this.mainTableCombobox.Size = new System.Drawing.Size(180, 21);
+            this.mainTableCombobox.Size = new System.Drawing.Size(209, 21);
             this.mainTableCombobox.TabIndex = 1;
             // 
             // mainTableLabel
@@ -108,9 +112,9 @@
             this.mainTableLabel.AutoSize = true;
             this.mainTableLabel.Location = new System.Drawing.Point(96, 82);
             this.mainTableLabel.Name = "mainTableLabel";
-            this.mainTableLabel.Size = new System.Drawing.Size(142, 13);
+            this.mainTableLabel.Size = new System.Drawing.Size(145, 13);
             this.mainTableLabel.TabIndex = 0;
-            this.mainTableLabel.Text = "Select the query\'s main table";
+            this.mainTableLabel.Text = "Select the query\'s main table:";
             // 
             // buildQueryTabPage
             // 
@@ -243,7 +247,7 @@
             this.queryPreviewTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.queryPreviewTabPage.Controls.Add(this.goBackToSelectColumnsTabFromPreviewTabButton);
             this.queryPreviewTabPage.Controls.Add(this.saveButton);
-            this.queryPreviewTabPage.Controls.Add(this.richTextBox1);
+            this.queryPreviewTabPage.Controls.Add(this.queryRichTextBox);
             this.queryPreviewTabPage.Controls.Add(this.previewLabel);
             this.queryPreviewTabPage.Location = new System.Drawing.Point(4, 22);
             this.queryPreviewTabPage.Name = "queryPreviewTabPage";
@@ -260,6 +264,7 @@
             this.goBackToSelectColumnsTabFromPreviewTabButton.TabIndex = 15;
             this.goBackToSelectColumnsTabFromPreviewTabButton.Text = "Back";
             this.goBackToSelectColumnsTabFromPreviewTabButton.UseVisualStyleBackColor = true;
+            this.goBackToSelectColumnsTabFromPreviewTabButton.Click += new System.EventHandler(this.GoBackToSelectColumnsTabFromPreviewTabButton_Click);
             // 
             // saveButton
             // 
@@ -269,14 +274,15 @@
             this.saveButton.TabIndex = 14;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // richTextBox1
+            // queryRichTextBox
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(70, 106);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(642, 238);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
+            this.queryRichTextBox.Location = new System.Drawing.Point(70, 106);
+            this.queryRichTextBox.Name = "queryRichTextBox";
+            this.queryRichTextBox.Size = new System.Drawing.Size(642, 238);
+            this.queryRichTextBox.TabIndex = 1;
+            this.queryRichTextBox.Text = "";
             // 
             // previewLabel
             // 
@@ -287,6 +293,22 @@
             this.previewLabel.TabIndex = 0;
             this.previewLabel.Text = "This is a preview of how your query will look like. If you wish to change anythin" +
     "g, please go back to previous steps and do the changes.";
+            // 
+            // queryNameLabel
+            // 
+            this.queryNameLabel.AutoSize = true;
+            this.queryNameLabel.Location = new System.Drawing.Point(99, 212);
+            this.queryNameLabel.Name = "queryNameLabel";
+            this.queryNameLabel.Size = new System.Drawing.Size(174, 13);
+            this.queryNameLabel.TabIndex = 9;
+            this.queryNameLabel.Text = "Choose a name for your new query:";
+            // 
+            // queryNameTextBox
+            // 
+            this.queryNameTextBox.Location = new System.Drawing.Point(142, 258);
+            this.queryNameTextBox.Name = "queryNameTextBox";
+            this.queryNameTextBox.Size = new System.Drawing.Size(209, 20);
+            this.queryNameTextBox.TabIndex = 10;
             // 
             // CreateQueryForm
             // 
@@ -331,9 +353,11 @@
         private System.Windows.Forms.TabPage queryPreviewTabPage;
         private System.Windows.Forms.Button goBackToSelectColumnsTabFromPreviewTabButton;
         private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox queryRichTextBox;
         private System.Windows.Forms.Label previewLabel;
         private System.Windows.Forms.TextBox mainTableTextBox;
         private System.Windows.Forms.Label mainTableNameLabel;
+        private System.Windows.Forms.TextBox queryNameTextBox;
+        private System.Windows.Forms.Label queryNameLabel;
     }
 }
