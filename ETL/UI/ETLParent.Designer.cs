@@ -235,7 +235,6 @@
             this.newToolStripButton.Name = "newToolStripButton";
             this.newToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.newToolStripButton.Text = "New";
-            this.newToolStripButton.Click += new System.EventHandler(this.ShowNewForm);
             // 
             // openToolStripButton
             // 
@@ -350,7 +349,6 @@
             this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
             this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editMappingToolStripMenuItem.Text = "Edit";
-            this.editMappingToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
             // 
             // mappingMenu
             // 
