@@ -133,18 +133,6 @@ namespace ETL.UI
             func(Controls);
         }
 
-        private bool DatabaseExistsAlready(Database database, List<Database> databases)
-        {
-            foreach (Database existingDatabase in databases)
-            {
-                if (database.Equals(existingDatabase))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         private void ShowErrorDialogAndClose()
         {
             var okPressed = MessageBox.Show("Already connected to this database", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
