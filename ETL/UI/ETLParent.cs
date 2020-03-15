@@ -17,7 +17,10 @@ namespace ETL.UI
         private int childFormNumber = 0;
         private static ETLParent _instance;
         MenuItem newQueryMenuItem = new MenuItem("Add query");
+        MenuItem closeDatabaseMenuItem = new MenuItem("Remove");
         ContextMenu newQueryMenu = new ContextMenu();
+        ContextMenu closeDatabaseMenu = new ContextMenu();
+        string databaseToClose = "";
         JoinQuery joinQuery;
 
         public ETLParent()
@@ -28,6 +31,8 @@ namespace ETL.UI
             this.mainSplitContainer.Visible = false;
             newQueryMenu.MenuItems.Add(newQueryMenuItem);
             newQueryMenuItem.Click += new EventHandler(newQueryMenuItem_Click);
+            closeDatabaseMenu.MenuItems.Add(closeDatabaseMenuItem);
+            closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
         }
 
         private void ETLParent_Activated(object sender, System.EventArgs e)
@@ -98,7 +103,12 @@ namespace ETL.UI
                 this.joinQuery.database = database;
                 newQueryMenu.Show(databasesTreeView, e.Location);
             }
-            
+            if (e.Node.Level == 0 && e.Button == MouseButtons.Right)
+            {
+                closeDatabaseMenu.Show(databasesTreeView, e.Location);
+                string databaseName = e.Node.Text;
+                this.databaseToClose = databaseName;
+            }
         }
 
         void newQueryMenuItem_Click(object sender, EventArgs e)
@@ -110,6 +120,18 @@ namespace ETL.UI
             createQueryForm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
             createQueryForm.Dock = DockStyle.Fill;
             createQueryForm.Show();
+        }
+
+        void closeDatabaseMenuItem_Click(object sender, EventArgs e)
+        {
+            Database database = Global.GetDatabaseByName(this.databaseToClose);
+            if (database != null)
+            {
+                Global.Databases.Remove(database);
+                var result = databasesTreeView.Nodes.OfType<TreeNode>()
+                                        .FirstOrDefault(node => node.Tag.Equals(database.databaseName));
+                this.databasesTreeView.Nodes.Remove(result);
+            }
         }
     }
 }
