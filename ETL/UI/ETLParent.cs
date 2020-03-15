@@ -107,7 +107,7 @@ namespace ETL.UI
             createQueryForm.SetJoinQuery(this.joinQuery);
             createQueryForm.TopLevel = false;
             this.mainSplitContainer.Panel2.Controls.Add(createQueryForm);
-            createQueryForm.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            createQueryForm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
             createQueryForm.Dock = DockStyle.Fill;
             createQueryForm.Show();
         }
