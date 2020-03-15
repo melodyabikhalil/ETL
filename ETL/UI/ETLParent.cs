@@ -75,7 +75,7 @@ namespace ETL.UI
         private void Add_Click(object sender, EventArgs e)
         {
             NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
-            newDatabaseForm.Show();
+            newDatabaseForm.ShowDialog();
         }
 
         public static TreeView GetTreeView()
@@ -105,7 +105,11 @@ namespace ETL.UI
         {
             CreateQueryForm createQueryForm = new CreateQueryForm();
             createQueryForm.SetJoinQuery(this.joinQuery);
-            createQueryForm.ShowDialog(this);
+            createQueryForm.TopLevel = false;
+            this.mainSplitContainer.Panel2.Controls.Add(createQueryForm);
+            createQueryForm.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            createQueryForm.Dock = DockStyle.Fill;
+            createQueryForm.Show();
         }
     }
 }
