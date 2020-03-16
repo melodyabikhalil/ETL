@@ -32,6 +32,20 @@ namespace ETL.UI
             newQueryMenuItem.Click += new EventHandler(newQueryMenuItem_Click);
             closeDatabaseMenu.MenuItems.Add(closeDatabaseMenuItem);
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
+            this.LoadDatabasesFromJsonFile();
+        }
+
+        private void LoadDatabasesFromJsonFile()
+        {
+            List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
+            foreach (Database database in databases)
+            {
+                NewDatabaseForm.AddNodesToTreeView(database);
+            }
+            if (databases.Count > 0)
+            {
+                ShowMainContainer();
+            }
         }
 
         private void ETLParent_Activated(object sender, System.EventArgs e)

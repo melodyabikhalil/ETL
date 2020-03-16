@@ -58,7 +58,7 @@ namespace ETL.UI
                     this.ShowErrorDialogAndClose();
                 }
                 Global.Databases.Add(database);
-                this.AddNodesToTreeView(database);
+                AddNodesToTreeView(database);
                 ETLParent.ShowMainContainer();
                 this.Close();
             }
@@ -128,7 +128,7 @@ namespace ETL.UI
             }
         }
 
-        private void AddNodesToTreeView(Database database)
+        public static void AddNodesToTreeView(Database database)
         {
             TreeView treeview = ETLParent.GetTreeView();
             TreeNode node = UIHelper.AddBranch(database.databaseName, treeview);
@@ -137,8 +137,6 @@ namespace ETL.UI
             UIHelper.AddChildrenNodes(database.tablesNames, tablesNode);
 
             TreeNode queriesNode = UIHelper.AddChildBranch("Queries", node.Index, treeview);
-            // TODO: get queries from json file and add them as children nodes to queries node 
-            //we get the queries and we set them in database.queries
             UIHelper.AddChildrenNodes(database.queriesNames, queriesNode);
         }
 

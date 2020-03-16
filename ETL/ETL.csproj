@@ -152,6 +152,7 @@
     <Compile Include="UI\UIHelper.cs" />
     <Compile Include="Utility\Global.cs" />
     <Compile Include="Utility\Helper.cs" />
+    <Compile Include="Utility\JsonHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

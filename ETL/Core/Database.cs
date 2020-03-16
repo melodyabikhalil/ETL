@@ -113,6 +113,15 @@ namespace ETL.Core
             return queriesNames;
         }
 
+        public void SetQueriesNamesListFromQueriesList()
+        {
+            this.queriesNames = new List<string>();
+            foreach (JoinQuery joinQuery in queries)
+            {
+                queriesNames.Add(joinQuery.queryName);
+            }
+        }
+
         public override string ToString()
         {
             return String.Format("Database name:{0}, Username:{1}, Password:{2}, Server name:{3}", this.databaseName, this.username, this.password, this.serverName);
