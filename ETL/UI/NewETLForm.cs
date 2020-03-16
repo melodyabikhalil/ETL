@@ -24,6 +24,7 @@ namespace ETL.UI
             InitializeComponent();
             this.SrcDestDbTab.Enabled = false;
             this.SrcDestTablesTab.Enabled = false;
+            this.ExpressionTab.Enabled = false;
             
             for(int i = 0; i< Global.Databases.Count; ++i)
             {

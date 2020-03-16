@@ -50,9 +50,9 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ExpressionTab = new System.Windows.Forms.TabPage();
-            this.ExpressionDataGridView = new System.Windows.Forms.DataGridView();
             this.backToSrcDestTablesTabButton = new System.Windows.Forms.Button();
             this.DoneButton = new System.Windows.Forms.Button();
+            this.ExpressionDataGridView = new System.Windows.Forms.DataGridView();
             this.ETLTabControl.SuspendLayout();
             this.ETLNameTab.SuspendLayout();
             this.SrcDestDbTab.SuspendLayout();
@@ -89,7 +89,7 @@
             // 
             // fromETLNameToSrcDrstDbButton
             // 
-            this.fromETLNameToSrcDrstDbButton.Location = new System.Drawing.Point(905, 510);
+            this.fromETLNameToSrcDrstDbButton.Location = new System.Drawing.Point(878, 524);
             this.fromETLNameToSrcDrstDbButton.Name = "fromETLNameToSrcDrstDbButton";
             this.fromETLNameToSrcDrstDbButton.Size = new System.Drawing.Size(75, 23);
             this.fromETLNameToSrcDrstDbButton.TabIndex = 8;
@@ -132,7 +132,7 @@
             // 
             // backFromSrcDestDbToETLNameButton
             // 
-            this.backFromSrcDestDbToETLNameButton.Location = new System.Drawing.Point(804, 521);
+            this.backFromSrcDestDbToETLNameButton.Location = new System.Drawing.Point(767, 521);
             this.backFromSrcDestDbToETLNameButton.Name = "backFromSrcDestDbToETLNameButton";
             this.backFromSrcDestDbToETLNameButton.Size = new System.Drawing.Size(75, 23);
             this.backFromSrcDestDbToETLNameButton.TabIndex = 10;
@@ -142,7 +142,7 @@
             // 
             // fromSrcDestDbToSrcDestTablesButton
             // 
-            this.fromSrcDestDbToSrcDestTablesButton.Location = new System.Drawing.Point(909, 521);
+            this.fromSrcDestDbToSrcDestTablesButton.Location = new System.Drawing.Point(872, 521);
             this.fromSrcDestDbToSrcDestTablesButton.Name = "fromSrcDestDbToSrcDestTablesButton";
             this.fromSrcDestDbToSrcDestTablesButton.Size = new System.Drawing.Size(75, 23);
             this.fromSrcDestDbToSrcDestTablesButton.TabIndex = 9;
@@ -212,7 +212,7 @@
             // 
             // backToSrcDestDbFromSrcDestTablesButton
             // 
-            this.backToSrcDestDbFromSrcDestTablesButton.Location = new System.Drawing.Point(808, 520);
+            this.backToSrcDestDbFromSrcDestTablesButton.Location = new System.Drawing.Point(774, 521);
             this.backToSrcDestDbFromSrcDestTablesButton.Name = "backToSrcDestDbFromSrcDestTablesButton";
             this.backToSrcDestDbFromSrcDestTablesButton.Size = new System.Drawing.Size(75, 23);
             this.backToSrcDestDbFromSrcDestTablesButton.TabIndex = 12;
@@ -222,7 +222,7 @@
             // 
             // fromSrcDestTablesToExpressionButton
             // 
-            this.fromSrcDestTablesToExpressionButton.Location = new System.Drawing.Point(913, 520);
+            this.fromSrcDestTablesToExpressionButton.Location = new System.Drawing.Point(879, 521);
             this.fromSrcDestTablesToExpressionButton.Name = "fromSrcDestTablesToExpressionButton";
             this.fromSrcDestTablesToExpressionButton.Size = new System.Drawing.Size(75, 23);
             this.fromSrcDestTablesToExpressionButton.TabIndex = 11;
@@ -286,14 +286,6 @@
             this.ExpressionTab.TabIndex = 3;
             this.ExpressionTab.Text = "Mapping Expressions";
             // 
-            // ExpressionDataGridView
-            // 
-            this.ExpressionDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ExpressionDataGridView.Location = new System.Drawing.Point(20, 61);
-            this.ExpressionDataGridView.Name = "ExpressionDataGridView";
-            this.ExpressionDataGridView.Size = new System.Drawing.Size(720, 234);
-            this.ExpressionDataGridView.TabIndex = 0;
-            // 
             // backToSrcDestTablesTabButton
             // 
             this.backToSrcDestTablesTabButton.Location = new System.Drawing.Point(788, 524);
@@ -313,6 +305,14 @@
             this.DoneButton.Text = "Done";
             this.DoneButton.UseVisualStyleBackColor = true;
             this.DoneButton.Click += new System.EventHandler(this.DoneButton_Click);
+            // 
+            // ExpressionDataGridView
+            // 
+            this.ExpressionDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ExpressionDataGridView.Location = new System.Drawing.Point(26, 61);
+            this.ExpressionDataGridView.Name = "ExpressionDataGridView";
+            this.ExpressionDataGridView.Size = new System.Drawing.Size(931, 234);
+            this.ExpressionDataGridView.TabIndex = 0;
             // 
             // NewETLForm
             // 
