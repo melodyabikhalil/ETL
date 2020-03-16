@@ -39,16 +39,22 @@ namespace ETL.UI
 
         private void GoToBuildQueryTabFromMainTableTabButton_Click(object sender, EventArgs e)
         {
-            if (this.mainTableCombobox.SelectedIndex < 0)
+            string queryName = this.queryNameTextBox.Text;
+            List<string> tablesNamesOfDatabase = this.joinQuery.database.tablesNames;
+            bool queryNameExistsAsTable = tablesNamesOfDatabase.Contains(queryName.Trim());
+            if (this.mainTableCombobox.SelectedIndex < 0 || queryName == "" || queryName == null || queryNameExistsAsTable)
             {
-                return;
+                MessageBox.Show("Please choose a name for this new ETL to proceed. You can't choose the same name as a table", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            this.buildQueryTabPage.Enabled = true;
-            this.mainTableTextBox.Text = this.mainTableCombobox.SelectedItem.ToString();
-            this.joinQuery.mainTableName = this.mainTableCombobox.SelectedItem.ToString();
-            this.SetCreateQueryDataGridView();
-            this.joinQuery.queryName = this.queryNameTextBox.Text;
-            this.createQueryTabControl.SelectedTab = this.buildQueryTabPage;
+            else
+            {
+                this.buildQueryTabPage.Enabled = true;
+                this.mainTableTextBox.Text = this.mainTableCombobox.SelectedItem.ToString();
+                this.joinQuery.mainTableName = this.mainTableCombobox.SelectedItem.ToString();
+                this.SetCreateQueryDataGridView();
+                this.joinQuery.queryName = queryName;
+                this.createQueryTabControl.SelectedTab = this.buildQueryTabPage;
+            }
         }
 
         private void SetCreateQueryDataGridView()

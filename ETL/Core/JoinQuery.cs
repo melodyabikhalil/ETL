@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace ETL.Core
 {
     public class JoinQuery: SourceTableOrQuery
-    class JoinQuery: SourceTableOrQuery
     {
         public string queryName { get; set; }
         public string query { get; set; }
@@ -93,12 +92,7 @@ namespace ETL.Core
 
         public override List<string> GetColumnsNames()
         {
-            List<string> columnsNames = new List<string>();
-            for (int i = 0; i < columns.Count; ++i)
-            {
-                columnsNames.Add(columns[i].ColumnName);
-            }
-            return columnsNames;
+            return this.columns;
         }
     }
 }
