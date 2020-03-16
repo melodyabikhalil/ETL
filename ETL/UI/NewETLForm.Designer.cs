@@ -51,10 +51,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ExpressionTab = new System.Windows.Forms.TabPage();
-            this.backToSrcDestTablesTabButton = new System.Windows.Forms.Button();
-            this.DoneButton = new System.Windows.Forms.Button();
-            this.ExpressionDataGridView = new System.Windows.Forms.DataGridView();
             this.label8 = new System.Windows.Forms.Label();
+            this.backToSrcDestTablesTabButton = new System.Windows.Forms.Button();
+            this.SaveButton = new System.Windows.Forms.Button();
+            this.ExpressionDataGridView = new System.Windows.Forms.DataGridView();
             this.ETLTabControl.SuspendLayout();
             this.ETLNameTab.SuspendLayout();
             this.SrcDestDbTab.SuspendLayout();
@@ -97,13 +97,13 @@
             this.fromETLNameToSrcDrstDbButton.TabIndex = 8;
             this.fromETLNameToSrcDrstDbButton.Text = "Next";
             this.fromETLNameToSrcDrstDbButton.UseVisualStyleBackColor = true;
-            this.fromETLNameToSrcDrstDbButton.Click += new System.EventHandler(this.fromETLNameToSrcDrstDbButton_Click);
+            this.fromETLNameToSrcDrstDbButton.Click += new System.EventHandler(this.FromETLNameToSrcDrstDbButton_Click);
             // 
             // ETLNameTextBox
             // 
             this.ETLNameTextBox.Location = new System.Drawing.Point(70, 101);
             this.ETLNameTextBox.Name = "ETLNameTextBox";
-            this.ETLNameTextBox.Size = new System.Drawing.Size(134, 20);
+            this.ETLNameTextBox.Size = new System.Drawing.Size(198, 20);
             this.ETLNameTextBox.TabIndex = 1;
             // 
             // label1
@@ -130,7 +130,7 @@
             this.SrcDestDbTab.Padding = new System.Windows.Forms.Padding(3);
             this.SrcDestDbTab.Size = new System.Drawing.Size(976, 565);
             this.SrcDestDbTab.TabIndex = 1;
-            this.SrcDestDbTab.Text = "Source & Destination Databases";
+            this.SrcDestDbTab.Text = "Databases";
             // 
             // backFromSrcDestDbToETLNameButton
             // 
@@ -140,7 +140,7 @@
             this.backFromSrcDestDbToETLNameButton.TabIndex = 10;
             this.backFromSrcDestDbToETLNameButton.Text = "Back";
             this.backFromSrcDestDbToETLNameButton.UseVisualStyleBackColor = true;
-            this.backFromSrcDestDbToETLNameButton.Click += new System.EventHandler(this.backFromSrcDestDbToETLNameButton_Click);
+            this.backFromSrcDestDbToETLNameButton.Click += new System.EventHandler(this.BackFromSrcDestDbToETLNameButton_Click);
             // 
             // fromSrcDestDbToSrcDestTablesButton
             // 
@@ -150,48 +150,48 @@
             this.fromSrcDestDbToSrcDestTablesButton.TabIndex = 9;
             this.fromSrcDestDbToSrcDestTablesButton.Text = "Next";
             this.fromSrcDestDbToSrcDestTablesButton.UseVisualStyleBackColor = true;
-            this.fromSrcDestDbToSrcDestTablesButton.Click += new System.EventHandler(this.fromSrcDestDbToSrcDestTablesButton_Click);
+            this.fromSrcDestDbToSrcDestTablesButton.Click += new System.EventHandler(this.FromSrcDestDbToSrcDestTablesButton_Click);
             // 
             // destinationDbComboBox
             // 
             this.destinationDbComboBox.FormattingEnabled = true;
-            this.destinationDbComboBox.Location = new System.Drawing.Point(136, 153);
+            this.destinationDbComboBox.Location = new System.Drawing.Point(203, 155);
             this.destinationDbComboBox.Name = "destinationDbComboBox";
-            this.destinationDbComboBox.Size = new System.Drawing.Size(121, 21);
+            this.destinationDbComboBox.Size = new System.Drawing.Size(173, 21);
             this.destinationDbComboBox.TabIndex = 4;
             // 
             // sourceDbComboBox
             // 
             this.sourceDbComboBox.FormattingEnabled = true;
-            this.sourceDbComboBox.Location = new System.Drawing.Point(137, 101);
+            this.sourceDbComboBox.Location = new System.Drawing.Point(203, 103);
             this.sourceDbComboBox.Name = "sourceDbComboBox";
-            this.sourceDbComboBox.Size = new System.Drawing.Size(121, 21);
+            this.sourceDbComboBox.Size = new System.Drawing.Size(173, 21);
             this.sourceDbComboBox.TabIndex = 3;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(69, 156);
+            this.label4.Location = new System.Drawing.Point(85, 158);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.Size = new System.Drawing.Size(107, 13);
             this.label4.TabIndex = 2;
-            this.label4.Text = "Destination";
+            this.label4.Text = "Destination database";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(69, 104);
+            this.label3.Location = new System.Drawing.Point(85, 106);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 13);
+            this.label3.Size = new System.Drawing.Size(88, 13);
             this.label3.TabIndex = 1;
-            this.label3.Text = "Source";
+            this.label3.Text = "Source database";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(69, 68);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(208, 13);
+            this.label2.Size = new System.Drawing.Size(205, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "Choose source and destination databases";
             // 
@@ -210,7 +210,7 @@
             this.SrcDestTablesTab.Padding = new System.Windows.Forms.Padding(3);
             this.SrcDestTablesTab.Size = new System.Drawing.Size(976, 565);
             this.SrcDestTablesTab.TabIndex = 2;
-            this.SrcDestTablesTab.Text = "Source & Destination Tables";
+            this.SrcDestTablesTab.Text = "Tables or Queries";
             // 
             // backToSrcDestDbFromSrcDestTablesButton
             // 
@@ -220,7 +220,7 @@
             this.backToSrcDestDbFromSrcDestTablesButton.TabIndex = 12;
             this.backToSrcDestDbFromSrcDestTablesButton.Text = "Back";
             this.backToSrcDestDbFromSrcDestTablesButton.UseVisualStyleBackColor = true;
-            this.backToSrcDestDbFromSrcDestTablesButton.Click += new System.EventHandler(this.backToSrcDestDbFromSrcDestTables_Click);
+            this.backToSrcDestDbFromSrcDestTablesButton.Click += new System.EventHandler(this.BackToSrcDestDbFromSrcDestTables_Click);
             // 
             // fromSrcDestTablesToExpressionButton
             // 
@@ -230,22 +230,22 @@
             this.fromSrcDestTablesToExpressionButton.TabIndex = 11;
             this.fromSrcDestTablesToExpressionButton.Text = "Next";
             this.fromSrcDestTablesToExpressionButton.UseVisualStyleBackColor = true;
-            this.fromSrcDestTablesToExpressionButton.Click += new System.EventHandler(this.fromSrcDestTablesToExpression_Click);
+            this.fromSrcDestTablesToExpressionButton.Click += new System.EventHandler(this.FromSrcDestTablesToExpression_Click);
             // 
             // destTableComboBox
             // 
             this.destTableComboBox.FormattingEnabled = true;
-            this.destTableComboBox.Location = new System.Drawing.Point(152, 148);
+            this.destTableComboBox.Location = new System.Drawing.Point(198, 148);
             this.destTableComboBox.Name = "destTableComboBox";
-            this.destTableComboBox.Size = new System.Drawing.Size(121, 21);
+            this.destTableComboBox.Size = new System.Drawing.Size(159, 21);
             this.destTableComboBox.TabIndex = 8;
             // 
             // srcTableOrQueriesComboBox
             // 
             this.srcTableOrQueriesComboBox.FormattingEnabled = true;
-            this.srcTableOrQueriesComboBox.Location = new System.Drawing.Point(153, 96);
+            this.srcTableOrQueriesComboBox.Location = new System.Drawing.Point(199, 96);
             this.srcTableOrQueriesComboBox.Name = "srcTableOrQueriesComboBox";
-            this.srcTableOrQueriesComboBox.Size = new System.Drawing.Size(121, 21);
+            this.srcTableOrQueriesComboBox.Size = new System.Drawing.Size(159, 21);
             this.srcTableOrQueriesComboBox.TabIndex = 7;
             // 
             // label6
@@ -253,25 +253,25 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(85, 151);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 13);
+            this.label6.Size = new System.Drawing.Size(86, 13);
             this.label6.TabIndex = 6;
-            this.label6.Text = "Destination";
+            this.label6.Text = "Destination table";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(85, 99);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(40, 13);
+            this.label7.Size = new System.Drawing.Size(108, 13);
             this.label7.TabIndex = 5;
-            this.label7.Text = "Source";
+            this.label7.Text = "Source table or query";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(54, 53);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(241, 13);
+            this.label5.Size = new System.Drawing.Size(236, 13);
             this.label5.TabIndex = 0;
             this.label5.Text = "Choose source  and destination tables or queries";
             // 
@@ -280,7 +280,7 @@
             this.ExpressionTab.BackColor = System.Drawing.SystemColors.Control;
             this.ExpressionTab.Controls.Add(this.label8);
             this.ExpressionTab.Controls.Add(this.backToSrcDestTablesTabButton);
-            this.ExpressionTab.Controls.Add(this.DoneButton);
+            this.ExpressionTab.Controls.Add(this.SaveButton);
             this.ExpressionTab.Controls.Add(this.ExpressionDataGridView);
             this.ExpressionTab.Location = new System.Drawing.Point(4, 22);
             this.ExpressionTab.Name = "ExpressionTab";
@@ -288,6 +288,15 @@
             this.ExpressionTab.Size = new System.Drawing.Size(976, 565);
             this.ExpressionTab.TabIndex = 3;
             this.ExpressionTab.Text = "Mapping Expressions";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(28, 24);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(493, 104);
+            this.label8.TabIndex = 15;
+            this.label8.Text = resources.GetString("label8.Text");
             // 
             // backToSrcDestTablesTabButton
             // 
@@ -297,35 +306,26 @@
             this.backToSrcDestTablesTabButton.TabIndex = 14;
             this.backToSrcDestTablesTabButton.Text = "Back";
             this.backToSrcDestTablesTabButton.UseVisualStyleBackColor = true;
-            this.backToSrcDestTablesTabButton.Click += new System.EventHandler(this.backToSrcDestTablesTabButton_Click);
+            this.backToSrcDestTablesTabButton.Click += new System.EventHandler(this.BackToSrcDestTablesTabButton_Click);
             // 
-            // DoneButton
+            // SaveButton
             // 
-            this.DoneButton.Location = new System.Drawing.Point(893, 524);
-            this.DoneButton.Name = "DoneButton";
-            this.DoneButton.Size = new System.Drawing.Size(75, 23);
-            this.DoneButton.TabIndex = 13;
-            this.DoneButton.Text = "Done";
-            this.DoneButton.UseVisualStyleBackColor = true;
-            this.DoneButton.Click += new System.EventHandler(this.DoneButton_Click);
+            this.SaveButton.Location = new System.Drawing.Point(893, 524);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(75, 23);
+            this.SaveButton.TabIndex = 13;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // ExpressionDataGridView
             // 
             this.ExpressionDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ExpressionDataGridView.Location = new System.Drawing.Point(21, 154);
+            this.ExpressionDataGridView.Location = new System.Drawing.Point(31, 154);
             this.ExpressionDataGridView.Name = "ExpressionDataGridView";
-            this.ExpressionDataGridView.Size = new System.Drawing.Size(931, 234);
+            this.ExpressionDataGridView.Size = new System.Drawing.Size(914, 289);
             this.ExpressionDataGridView.TabIndex = 0;
             this.ExpressionDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ExpressionDataGridView_RowsAdded);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 20);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(507, 104);
-            this.label8.TabIndex = 15;
-            this.label8.Text = resources.GetString("label8.Text");
             // 
             // NewETLForm
             // 
@@ -334,7 +334,7 @@
             this.ClientSize = new System.Drawing.Size(984, 591);
             this.Controls.Add(this.ETLTabControl);
             this.Name = "NewETLForm";
-            this.Text = "NewETLForm";
+            this.Text = "Create ETL";
             this.ETLTabControl.ResumeLayout(false);
             this.ETLNameTab.ResumeLayout(false);
             this.ETLNameTab.PerformLayout();
@@ -375,7 +375,7 @@
         private System.Windows.Forms.Button fromSrcDestTablesToExpressionButton;
         private System.Windows.Forms.DataGridView ExpressionDataGridView;
         private System.Windows.Forms.Button backToSrcDestTablesTabButton;
-        private System.Windows.Forms.Button DoneButton;
+        private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Label label8;
     }
 }

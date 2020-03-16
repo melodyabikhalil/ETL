@@ -16,7 +16,7 @@ namespace ETL.Utility
 
         private static List<Database> databases = new List<Database>();
         private static Expression expression = Expression.getInstance();
-        public static List<ETLClass> etls = new List<ETLClass>();
+        public static List<Core.ETL> etls = new List<Core.ETL>();
         public static DataTable mapDt = new DataTable();
         static Global()
         {

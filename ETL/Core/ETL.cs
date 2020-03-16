@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class ETLClass
+    class ETL
     {
         public string ETLName { set; get; }
         public Database destDb { set; get; }
@@ -16,8 +16,9 @@ namespace ETL.Core
         public Table destTable { set; get; }
         public DataTable expressionDt { set; get; }
 
-        public ETLClass(Database srcDb, Database destDb, SourceTableOrQuery sourceTable, Table destTable, DataTable expressionDt)
+        public ETL(string name, Database srcDb, Database destDb, SourceTableOrQuery sourceTable, Table destTable, DataTable expressionDt)
         {
+            this.ETLName = name;
             this.srcDb = srcDb;
             this.destDb = destDb;
             this.sourceTable = sourceTable;
