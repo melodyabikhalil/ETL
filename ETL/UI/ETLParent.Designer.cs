@@ -163,7 +163,6 @@
             this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
             this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.editMappingToolStripMenuItem.Text = "Edit";
-            this.editMappingToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
             // 
             // viewMenu
             // 
