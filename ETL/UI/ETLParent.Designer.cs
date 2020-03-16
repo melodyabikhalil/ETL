@@ -265,7 +265,6 @@
             this.newToolStripButton.Name = "newToolStripButton";
             this.newToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.newToolStripButton.Text = "New";
-            this.newToolStripButton.Click += new System.EventHandler(this.ShowNewForm);
             // 
             // openToolStripButton
             // 
@@ -360,6 +359,34 @@
             this.databasesTreeView.Size = new System.Drawing.Size(278, 678);
             this.databasesTreeView.TabIndex = 0;
             this.databasesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.DatabasesTreeView_AfterSelect);
+            // 
+            // RunToolStripMenuItem
+            // 
+            this.RunToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.eTLJob1ToolStripMenuItem});
+            this.RunToolStripMenuItem.Name = "RunToolStripMenuItem";
+            this.RunToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RunToolStripMenuItem.Text = "Run";
+            // 
+            // eTLJob1ToolStripMenuItem
+            // 
+            this.eTLJob1ToolStripMenuItem.Name = "eTLJob1ToolStripMenuItem";
+            this.eTLJob1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.eTLJob1ToolStripMenuItem.Text = "ETLJob1..";
+            // 
+            // editMappingToolStripMenuItem
+            // 
+            this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
+            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editMappingToolStripMenuItem.Text = "Edit";
+            // 
+            // mappingMenu
+            // 
+            this.mappingMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editMappingToolStripMenuItem});
+            this.mappingMenu.Name = "mappingMenu";
+            this.mappingMenu.Size = new System.Drawing.Size(67, 20);
+            this.mappingMenu.Text = "&Mapping";
             // 
             // ETLParent
             // 
