@@ -20,6 +20,7 @@ namespace ETL.UI
         public CreateQueryForm()
         {
             InitializeComponent();
+            this.joinQuery = new JoinQuery();
             this.buildQueryTabPage.Enabled = false;
             this.selectColumnsTabPage.Enabled = false;
             this.queryPreviewTabPage.Enabled = false;
@@ -101,11 +102,14 @@ namespace ETL.UI
             tables.AddRange(Helper.SelectOneColumnFromDataTable(joinQueryDataTable, "Table 2"));
             List<string> columns = Helper.GetColumnsFromTables(Helper.ConvertListToSet(tables), this.joinQuery.database);
             DataTable datatableColumns = Helper.ConvertListToDataTable(columns);
+            datatableColumns.Columns["Column1"].ColumnName = "Column Name";
+            datatableColumns.Columns["Column Name"].ReadOnly = true;
+            datatableColumns = Helper.DuplicateDatatableColumnWithValues(datatableColumns, "Column Name", "AS");
             selectColumnsDataGridView.AllowUserToAddRows = false;
             this.CreateCheckBoxColumn();
-            datatableColumns.Columns["Column1"].ColumnName = "Column Name";
             selectColumnsDataGridView.DataSource = datatableColumns;
             selectColumnsDataGridView.Columns[1].Width = 200;
+            selectColumnsDataGridView.Columns[2].Width = 200;
 
         }
 
@@ -163,7 +167,7 @@ namespace ETL.UI
                 }
             }
             DataTable selectedColumnsDatatable = UIHelper.CreateDataTableFromDataGridView(selectColumnsDataGridView);
-            this.joinQuery.columnsToSelect = JoinQuery.SetAndGetSelectedColumnsList(selectedColumnsDatatable);
+            JoinQuery.SetSelectedColumnsList(selectedColumnsDatatable, this.joinQuery);
             this.joinQuery.CreateAndSetJoinQuery();
         }
 
@@ -179,14 +183,24 @@ namespace ETL.UI
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            List<string> queriesNames = this.joinQuery.database.GetQueriesNames();
-            this.joinQuery.database.queriesNames = queriesNames;
-            TreeView treeview = ETLParent.GetTreeView();
-            var result = treeview.Nodes.OfType<TreeNode>()
-                                        .FirstOrDefault(node => node.Tag.Equals(this.joinQuery.database.databaseName));
-            result.Nodes[1].Nodes.Clear();
-            UIHelper.AddChildrenNodes(this.joinQuery.database.queriesNames, result.Nodes[1]);
-            this.Close();
+            bool queryIsValid = this.joinQuery.database.TrySelect(this.joinQuery.query.Insert(this.joinQuery.query.Length - 1, " WHERE 1=0"));
+            if (queryIsValid)
+            {
+                string query = this.joinQuery.query;
+                this.joinQuery.database.queries.Add(this.joinQuery);
+                List<string> queriesNames = this.joinQuery.database.GetQueriesNames();
+                this.joinQuery.database.queriesNames = queriesNames;
+                TreeView treeview = ETLParent.GetTreeView();
+                var result = treeview.Nodes.OfType<TreeNode>()
+                                            .FirstOrDefault(node => node.Tag.Equals(this.joinQuery.database.databaseName));
+                result.Nodes[1].Nodes.Clear();
+                UIHelper.AddChildrenNodes(this.joinQuery.database.queriesNames, result.Nodes[1]);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Query is not valid. Please go back to previous steps and fix it", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

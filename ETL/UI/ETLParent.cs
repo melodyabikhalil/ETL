@@ -14,7 +14,6 @@ namespace ETL.UI
 {
     public partial class ETLParent : Form
     {
-        private int childFormNumber = 0;
         private static ETLParent _instance;
         MenuItem newQueryMenuItem = new MenuItem("Add query");
         MenuItem closeDatabaseMenuItem = new MenuItem("Remove");

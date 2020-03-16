@@ -30,6 +30,8 @@
         {
             this.createQueryTabControl = new System.Windows.Forms.TabControl();
             this.mainTableTabPage = new System.Windows.Forms.TabPage();
+            this.queryNameTextBox = new System.Windows.Forms.TextBox();
+            this.queryNameLabel = new System.Windows.Forms.Label();
             this.goToBuildQueryTabFromMainTableTabButton = new System.Windows.Forms.Button();
             this.mainTableCombobox = new System.Windows.Forms.ComboBox();
             this.mainTableLabel = new System.Windows.Forms.Label();
@@ -50,8 +52,6 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.queryRichTextBox = new System.Windows.Forms.RichTextBox();
             this.previewLabel = new System.Windows.Forms.Label();
-            this.queryNameLabel = new System.Windows.Forms.Label();
-            this.queryNameTextBox = new System.Windows.Forms.TextBox();
             this.createQueryTabControl.SuspendLayout();
             this.mainTableTabPage.SuspendLayout();
             this.buildQueryTabPage.SuspendLayout();
@@ -88,6 +88,22 @@
             this.mainTableTabPage.Size = new System.Drawing.Size(976, 566);
             this.mainTableTabPage.TabIndex = 0;
             this.mainTableTabPage.Text = "Main Table";
+            // 
+            // queryNameTextBox
+            // 
+            this.queryNameTextBox.Location = new System.Drawing.Point(142, 258);
+            this.queryNameTextBox.Name = "queryNameTextBox";
+            this.queryNameTextBox.Size = new System.Drawing.Size(209, 20);
+            this.queryNameTextBox.TabIndex = 10;
+            // 
+            // queryNameLabel
+            // 
+            this.queryNameLabel.AutoSize = true;
+            this.queryNameLabel.Location = new System.Drawing.Point(99, 212);
+            this.queryNameLabel.Name = "queryNameLabel";
+            this.queryNameLabel.Size = new System.Drawing.Size(174, 13);
+            this.queryNameLabel.TabIndex = 9;
+            this.queryNameLabel.Text = "Choose a name for your new query:";
             // 
             // goToBuildQueryTabFromMainTableTabButton
             // 
@@ -237,9 +253,9 @@
             this.selectColumnsDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.selectColumnsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.selectColumnsDataGridView.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.selectColumnsDataGridView.Location = new System.Drawing.Point(342, 76);
+            this.selectColumnsDataGridView.Location = new System.Drawing.Point(249, 76);
             this.selectColumnsDataGridView.Name = "selectColumnsDataGridView";
-            this.selectColumnsDataGridView.Size = new System.Drawing.Size(292, 382);
+            this.selectColumnsDataGridView.Size = new System.Drawing.Size(490, 382);
             this.selectColumnsDataGridView.TabIndex = 0;
             // 
             // queryPreviewTabPage
@@ -293,22 +309,6 @@
             this.previewLabel.TabIndex = 0;
             this.previewLabel.Text = "This is a preview of how your query will look like. If you wish to change anythin" +
     "g, please go back to previous steps and do the changes.";
-            // 
-            // queryNameLabel
-            // 
-            this.queryNameLabel.AutoSize = true;
-            this.queryNameLabel.Location = new System.Drawing.Point(99, 212);
-            this.queryNameLabel.Name = "queryNameLabel";
-            this.queryNameLabel.Size = new System.Drawing.Size(174, 13);
-            this.queryNameLabel.TabIndex = 9;
-            this.queryNameLabel.Text = "Choose a name for your new query:";
-            // 
-            // queryNameTextBox
-            // 
-            this.queryNameTextBox.Location = new System.Drawing.Point(142, 258);
-            this.queryNameTextBox.Name = "queryNameTextBox";
-            this.queryNameTextBox.Size = new System.Drawing.Size(209, 20);
-            this.queryNameTextBox.TabIndex = 10;
             // 
             // CreateQueryForm
             // 

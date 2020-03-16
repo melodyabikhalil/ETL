@@ -64,6 +64,17 @@ namespace ETL.Utility
             return columns;
         }
 
+        public static DataTable DuplicateDatatableColumnWithValues(DataTable datatable, string columnName, string newColumnName)
+        {
+            DataColumn dataColumn = new DataColumn(newColumnName, typeof(string));
+            datatable.Columns.Add(dataColumn);
+            foreach (DataRow row in datatable.Rows)
+            {
+                row[newColumnName] = row[columnName];
+            }
+            return datatable;
+        }
+
         // JSON Helper
 
         public const string JSON_DATABASE_IS_SOURCE = "isSource";

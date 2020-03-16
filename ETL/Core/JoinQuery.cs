@@ -13,12 +13,15 @@ namespace ETL.Core
         public string query { get; set; }
         public string mainTableName { get; set; }
         public List<string> columnsToSelect { get; set; }
+        public List<string> columns { get; set; }
         public Database database { get; set; }
         public DataTable dataTable { get; set; }
 
         public JoinQuery()
         {
             this.dataTable = new DataTable();
+            this.columns = new List<string>();
+            this.columnsToSelect = new List<string>();
         }
 
         public JoinQuery(string queryName, string query, Database database)
@@ -28,6 +31,8 @@ namespace ETL.Core
             this.queryName = queryName;
 
             this.dataTable = new DataTable();
+            this.columns = new List<string>();
+            this.columnsToSelect = new List<string>();
         }
 
         public void CreateAndSetJoinQuery()
@@ -38,7 +43,7 @@ namespace ETL.Core
                 query += column + ",";
             }
             query = query.Remove(query.Length - 1);
-            query += " FROM " + mainTableName;
+            query += " \nFROM " + mainTableName;
             foreach (DataRow datarow in dataTable.Rows)
             {
                 string joinType = datarow.Field<string>("Join Type");
@@ -54,22 +59,35 @@ namespace ETL.Core
             }
             query += ";";
             this.query = query;
-            this.database.queries.Add(this);
         }
 
-        public static List<string> SetAndGetSelectedColumnsList(DataTable selectedColumnsDatatable)
+        public void SetColumnsList(List<string> columns)
         {
-            List<string> selectedColumns = new List<string>();
+            this.columns = columns;
+        }
+
+        public static void SetSelectedColumnsList(DataTable selectedColumnsDatatable, JoinQuery joinQuery)
+        {
+            joinQuery.columnsToSelect = new List<string>();
+            joinQuery.columns = new List<string>();
             foreach (DataRow datarow in selectedColumnsDatatable.Rows)
             {
                 bool isSelected = datarow.Field<bool>("Column1");
                 string columnName = datarow.Field<string>("Column Name");
+                string columnAlias = datarow.Field<string>("AS");
                 if (isSelected)
                 {
-                    selectedColumns.Add(columnName);
+                    joinQuery.columns.Add(columnAlias);
+                    if (columnName == columnAlias)
+                    {
+                        joinQuery.columnsToSelect.Add(columnName);
+                    }
+                    else
+                    {
+                        joinQuery.columnsToSelect.Add(columnName + " AS " + columnAlias);
+                    }
                 }
             }
-            return selectedColumns;
         }
     }
 }
