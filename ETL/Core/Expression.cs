@@ -18,6 +18,16 @@ namespace ETL.Core
         public DataTable mapDt;
         private static Expression instance;
 
+        public void SetExpressionDt(DataTable expressionDt)
+        {
+            this.expressionDt = expressionDt;
+        }
+
+        public void SetMapDt(DataTable mapDt)
+        {
+            this.mapDt = mapDt;
+        }
+
         public static string Replace(string expression, DataRow row)
         {
             string result = expression;
