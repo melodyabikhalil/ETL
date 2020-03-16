@@ -100,7 +100,25 @@ namespace ETL.Core
                 Console.WriteLine(e.Message);
                 return false;
             }
+        }
 
+        public override bool TrySelect(string query)
+        {
+            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
+            OleDbCommand selectCommand = new OleDbCommand(query, this.connection);
+            dataAdapter.SelectCommand = selectCommand;
+            DataTable testDatatable = new DataTable();
+            dataAdapter.SelectCommand = selectCommand;
+            try
+            {
+                dataAdapter.Fill(testDatatable);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
 
         public override bool Insert(string tableName)

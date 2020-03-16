@@ -98,6 +98,23 @@ namespace ETL.Core
             }
         }
 
+        public override bool TrySelect(string query)
+        {
+            OdbcCommand command = new OdbcCommand(query, this.connection);
+            OdbcDataAdapter dataAdapter = new OdbcDataAdapter(command);
+            DataSet dataSet = new DataSet();
+            try
+            {
+                dataAdapter.Fill(dataSet);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
         public override bool Insert(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];
