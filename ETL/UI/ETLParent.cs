@@ -132,5 +132,15 @@ namespace ETL.UI
                 this.databasesTreeView.Nodes.Remove(result);
             }
         }
+
+        private void createStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewETLForm newEtlForm = new NewETLForm();
+            newEtlForm.TopLevel = false;
+            this.mainSplitContainer.Panel2.Controls.Add(newEtlForm);
+            newEtlForm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            newEtlForm.Dock = DockStyle.Fill;
+            newEtlForm.Show();
+        }
     }
 }
