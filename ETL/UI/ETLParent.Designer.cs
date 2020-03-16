@@ -117,7 +117,7 @@
             // 
             this.createStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.createStripMenuItem.Name = "createStripMenuItem";
-            this.createStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.createStripMenuItem.Text = "&Create";
             this.createStripMenuItem.Click += new System.EventHandler(this.createStripMenuItem_Click);
             // 
@@ -148,6 +148,49 @@
             // 
             this.eTLJob1ToolStripMenuItem.Name = "eTLJob1ToolStripMenuItem";
             this.eTLJob1ToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.eTLJob1ToolStripMenuItem.Text = "ETLJob1..";
+            // 
+            // mappingMenu
+            // 
+            this.mappingMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editMappingToolStripMenuItem});
+            this.mappingMenu.Name = "mappingMenu";
+            this.mappingMenu.Size = new System.Drawing.Size(67, 20);
+            this.mappingMenu.Text = "&Mapping";
+            // 
+            // editMappingToolStripMenuItem
+            // 
+            this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
+            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
+            this.editMappingToolStripMenuItem.Text = "Edit";
+            // 
+            // toolsMenu
+            // 
+            this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createJobToolStripMenuItem,
+            this.RunToolStripMenuItem});
+            this.toolsMenu.Name = "toolsMenu";
+            this.toolsMenu.Size = new System.Drawing.Size(59, 20);
+            this.toolsMenu.Text = "&ETL Job";
+            // 
+            // createJobToolStripMenuItem
+            // 
+            this.createJobToolStripMenuItem.Name = "createJobToolStripMenuItem";
+            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.createJobToolStripMenuItem.Text = "&Create";
+            // 
+            // RunToolStripMenuItem
+            // 
+            this.RunToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.eTLJob1ToolStripMenuItem});
+            this.RunToolStripMenuItem.Name = "RunToolStripMenuItem";
+            this.RunToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.RunToolStripMenuItem.Text = "Run";
+            // 
+            // eTLJob1ToolStripMenuItem
+            // 
+            this.eTLJob1ToolStripMenuItem.Name = "eTLJob1ToolStripMenuItem";
+            this.eTLJob1ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.eTLJob1ToolStripMenuItem.Text = "ETLJob1..";
             // 
             // mappingMenu
@@ -357,35 +400,7 @@
             this.databasesTreeView.Name = "databasesTreeView";
             this.databasesTreeView.Size = new System.Drawing.Size(278, 678);
             this.databasesTreeView.TabIndex = 0;
-            this.databasesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.DatabasesTreeView_AfterSelect);
-            // 
-            // RunToolStripMenuItem
-            // 
-            this.RunToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.eTLJob1ToolStripMenuItem});
-            this.RunToolStripMenuItem.Name = "RunToolStripMenuItem";
-            this.RunToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.RunToolStripMenuItem.Text = "Run";
-            // 
-            // eTLJob1ToolStripMenuItem
-            // 
-            this.eTLJob1ToolStripMenuItem.Name = "eTLJob1ToolStripMenuItem";
-            this.eTLJob1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.eTLJob1ToolStripMenuItem.Text = "ETLJob1..";
-            // 
-            // editMappingToolStripMenuItem
-            // 
-            this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
-            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editMappingToolStripMenuItem.Text = "Edit";
-            // 
-            // mappingMenu
-            // 
-            this.mappingMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editMappingToolStripMenuItem});
-            this.mappingMenu.Name = "mappingMenu";
-            this.mappingMenu.Size = new System.Drawing.Size(67, 20);
-            this.mappingMenu.Text = "&Mapping";
+            this.databasesTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabasesTreeView_NodeMouseClick);
             // 
             // ETLParent
             // 

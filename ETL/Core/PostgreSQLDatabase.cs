@@ -109,6 +109,24 @@ namespace ETL.Core
                 return false;
             }
         }
+
+        public override bool TrySelect(string query)
+        {
+            NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(command);
+            DataSet dataSet = new DataSet();
+            try
+            {
+                dataAdapter.Fill(dataSet);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
         public override bool Insert(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];

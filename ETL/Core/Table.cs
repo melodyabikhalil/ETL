@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class Table : SourceTableOrQuery
+    public class Table: SourceTableOrQuery
     {
         public string tableName { get; set; }
         public int numberOfFields { get; set; }

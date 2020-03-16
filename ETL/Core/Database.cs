@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    abstract class Database
+    public abstract class Database
     {
         public string username { get; set; }
         public string password { get; set; }
@@ -25,7 +25,8 @@ namespace ETL.Core
             this.databaseName = databaseName;
             this.tables = new List<Table>();
             this.queries = new List<JoinQuery>();
-            this.queriesNames = new List<String>();
+            this.tablesNames = new List<string>();
+            this.queriesNames = new List<string>();
         }
 
         public int GetTableIndexByName(string tableName)
@@ -87,6 +88,31 @@ namespace ETL.Core
             return null;
         }
 
+        public List<string> GetColumnsForTable(string tableName)
+        {
+            List<string> columns = new List<string>();
+            this.Connect();
+            bool gotTableSchema = this.SetDatatableSchema(tableName);
+            this.Close();
+            if (!gotTableSchema)
+            {
+                return columns;
+            }
+            Table table = this.GetTable(tableName);
+            columns = table.GetColumnsNames();
+            return columns;
+        }
+
+        public List<string> GetQueriesNames()
+        {
+            List<string> queriesNames = new List<string>();
+            foreach (JoinQuery joinQuery in this.queries)
+            {
+                queriesNames.Add(joinQuery.queryName);
+            }
+            return queriesNames;
+        }
+
         public override string ToString()
         {
             return String.Format("Database name:{0}, Username:{1}, Password:{2}, Server name:{3}", this.databaseName, this.username, this.password, this.serverName);
@@ -98,6 +124,7 @@ namespace ETL.Core
         abstract public bool Insert(string tableName);
         abstract public bool Select(string tableName, string query);
         abstract public bool SetDatatableSchema(string tableName);
+        abstract public bool TrySelect(string query);
 
         //for later
         //abstract public void Update(DataTable dataTable);

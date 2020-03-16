@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,29 @@ namespace ETL.UI
             TreeNode treeNodeCreated = treeView.Nodes[parentIndex].Nodes.Add(childNodeName);
             treeView.EndUpdate();
             return treeNodeCreated;
+        }
+
+        public static DataTable CreateDataTableFromDataGridView(DataGridView dataGridView)
+        {
+            DataTable dt = new DataTable();
+
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                dt.Columns.Add(column.HeaderText, column.ValueType);
+            }
+
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                dt.Rows.Add();
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.Value != null && cell.Value != "")
+                    {
+                        dt.Rows[dt.Rows.Count - 1][cell.ColumnIndex] = cell.Value.ToString();
+                    } 
+                }
+            }
+            return dt;
         }
     }
 }

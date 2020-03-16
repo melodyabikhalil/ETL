@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ETL.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,6 +24,56 @@ namespace ETL.Utility
             return table;
         }
 
+        public static List<string> SelectOneColumnFromDataTable(DataTable datatable, string columnName)
+        {
+            List<string> values = new List<string>();
+            foreach (DataRow dataRow in datatable.Rows)
+            {
+                if (columnName != null)
+                {
+                    values.Add(dataRow.Field<string>(columnName));
+                }
+            }
+            return values;
+        }
+
+        public static HashSet<string> ConvertListToSet(List<string> list)
+        {
+            HashSet<string> hashSet = new HashSet<string>(list);
+            return hashSet;
+        }
+
+        public static List<string> GetColumnsFromTables(HashSet<string> tablesNames, Database database)
+        {
+            List<string> columns = new List<string>();
+            List<string> columnsForTable = new List<string>();
+            List<string> columnsNameWithTableName = new List<string>();
+            foreach (string tableName in tablesNames)
+            {
+                if (tableName != null && tableName != "")
+                {
+                    columnsForTable = database.GetColumnsForTable(tableName);
+                    columnsNameWithTableName = new List<string>();
+                    foreach (string columnName in columnsForTable)
+                    {
+                        columnsNameWithTableName.Add(tableName + "." + columnName);
+                    }
+                    columns.AddRange(columnsNameWithTableName);
+                }
+            }
+            return columns;
+        }
+
+        public static DataTable DuplicateDatatableColumnWithValues(DataTable datatable, string columnName, string newColumnName)
+        {
+            DataColumn dataColumn = new DataColumn(newColumnName, typeof(string));
+            datatable.Columns.Add(dataColumn);
+            foreach (DataRow row in datatable.Rows)
+            {
+                row[newColumnName] = row[columnName];
+            }
+            return datatable;
+        }
 
         // JSON Helper
 

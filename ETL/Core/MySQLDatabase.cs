@@ -99,6 +99,24 @@ namespace ETL.Core
             }
         }
 
+        public override bool TrySelect(string query)
+        {
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand command = new MySqlCommand(query, this.connection);
+            DataTable testDatatable = new DataTable();
+            adapter.SelectCommand = command;
+            try
+            {
+                adapter.Fill(testDatatable);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
         public override bool Insert(string tableName)
         {
             Table table = this.tables[this.GetTableIndexByName(tableName)];

@@ -18,12 +18,11 @@ namespace ETL.UI
         {
             InitializeComponent();
             this.CenterToParent();
-            this.typeTabPage.Enabled = false;
             this.credentialsTabPage.Enabled = false;
-            this.AcceptButton = Connect;
+            this.AcceptButton = connectButton;
         }
 
-        private void connectToDb(int dbType, bool isSource)
+        private void ConnectToDb(int dbType)
         {
             Database database;
             switch (dbType)
@@ -52,13 +51,14 @@ namespace ETL.UI
             {
                 database.tablesNames = database.GetTablesNames();
                 database.CreateTablesList(database.tablesNames);
+                database.GetQueriesNames();
                 // TODO: add database.queries from json file (if they exist);
                 if (Global.DatabaseAlreadyConnected(database))
                 {
                     this.ShowErrorDialogAndClose();
                 }
                 Global.Databases.Add(database);
-                this.AddNodesToTreeView(isSource, database);
+                this.AddNodesToTreeView(database);
                 ETLParent.ShowMainContainer();
                 this.Close();
             }
@@ -70,7 +70,6 @@ namespace ETL.UI
                     this.Close();
                 }
             }
-
         }
 
         private MySQLDatabase CreateMysqlDatabase()
@@ -120,20 +119,6 @@ namespace ETL.UI
             return odbcDatabase;
         }
 
-        private void ClearTextBoxes()
-        {
-            Action<Control.ControlCollection> func = null;
-            func = (controls) =>
-            {
-                foreach (Control control in controls)
-                    if (control is TextBox)
-                        (control as TextBox).Clear();
-                    else
-                        func(control.Controls);
-            };
-            func(Controls);
-        }
-
         private void ShowErrorDialogAndClose()
         {
             var okPressed = MessageBox.Show("Already connected to this database", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -143,32 +128,21 @@ namespace ETL.UI
             }
         }
 
-        private void AddNodesToTreeView(bool isSource, Database database)
+        private void AddNodesToTreeView(Database database)
         {
             TreeView treeview = ETLParent.GetTreeView();
             TreeNode node = UIHelper.AddBranch(database.databaseName, treeview);
-
+            node.Tag = database.databaseName;
             TreeNode tablesNode = UIHelper.AddChildBranch("Tables", node.Index, treeview);
             UIHelper.AddChildrenNodes(database.tablesNames, tablesNode);
 
             TreeNode queriesNode = UIHelper.AddChildBranch("Queries", node.Index, treeview);
             // TODO: get queries from json file and add them as children nodes to queries node 
             //we get the queries and we set them in database.queries
-            //UIHelper.AddChildrenNodes(database.queries, queriesNode);
+            UIHelper.AddChildrenNodes(database.queriesNames, queriesNode);
         }
 
-        private void SrcDestNex_Click(object sender, EventArgs e)
-        {
-            this.typeTabPage.Enabled = true;
-            this.newDatabaseTabControl.SelectedTab = this.typeTabPage;
-        }
-
-        private void backToSrcDest_Click(object sender, EventArgs e)
-        {
-            this.newDatabaseTabControl.SelectedTab = this.sourceDestinationTabPage;
-        }
-
-        private void dbTypeButton_Click(object sender, EventArgs e)
+        private void GoToCredentialsTabFromTypeTabButton_Click(object sender, EventArgs e)
         {
             this.credentialsTabPage.Enabled = true;
             this.newDatabaseTabControl.SelectedTab = this.credentialsTabPage;
@@ -248,17 +222,14 @@ namespace ETL.UI
             }
         }
 
-        private void backToDbTypes_Click(object sender, EventArgs e)
+        private void GoBackToTypeTabFromCredentialsTabButton_Click(object sender, EventArgs e)
         {
             this.newDatabaseTabControl.SelectedTab = this.typeTabPage;
         }
 
-        private void Connect_Click(object sender, EventArgs e)
+        private void ConnectButton_Click(object sender, EventArgs e)
         {
-            var checkedButton = this.sourceDestinationTabPage.Controls.OfType<RadioButton>()
-                                      .FirstOrDefault(r => r.Checked);
-            bool isSource = checkedButton.Name == "srcRadioButton";
-            this.connectToDb(dbTypesComboBox.SelectedIndex, isSource);
+            this.ConnectToDb(dbTypesComboBox.SelectedIndex);
         }
     }
 }

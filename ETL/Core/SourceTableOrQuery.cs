@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    abstract class SourceTableOrQuery
+    public abstract class SourceTableOrQuery
     {
         abstract public List<string> GetColumnsNames();
     }
