@@ -313,6 +313,7 @@
             this.ExpressionDataGridView.Name = "ExpressionDataGridView";
             this.ExpressionDataGridView.Size = new System.Drawing.Size(931, 234);
             this.ExpressionDataGridView.TabIndex = 0;
+            this.ExpressionDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(ExpressionDataGridView_RowsAdded);
             // 
             // NewETLForm
             // 

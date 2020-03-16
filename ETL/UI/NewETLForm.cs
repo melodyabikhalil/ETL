@@ -175,5 +175,15 @@ namespace ETL.UI
             Global.Expression.SetExpressionDt(this.CreateExpressionDatatable());
             this.Close();
         }
+
+        private void ExpressionDataGridView_RowsAdded(object sender, System.Windows.Forms.DataGridViewRowsAddedEventArgs e)
+        {
+            for (int index = e.RowIndex; index <= e.RowIndex + e.RowCount - 1; index++)
+            {
+                DataGridViewRow row = ExpressionDataGridView.Rows[index];
+                row.Cells[0].Value = this.destTableComboBox.Text;
+            }
+        }
+        
     }
 }
