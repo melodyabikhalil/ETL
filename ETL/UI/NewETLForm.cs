@@ -80,18 +80,18 @@ namespace ETL.UI
             src.SetDatatableSchema(srcTableName);
             Table srcTable = Global.GetTableByNameAndDbName(this.dbDictionary[this.sourceDbComboBox.SelectedIndex], srcTableName);
             Table destTable = Global.GetTableByNameAndDbName(this.dbDictionary[this.destinationDbComboBox.SelectedIndex], destTableName);
-            CreateTexBoxColumn("TableNameDest", true, "TableNameDest");
+            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
             foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
             {
                 Row.Cells[0].Value = destTableName;
             }
-            CreateComboBoxColumn("ColumnDest", destTable.GetColumnsNames(), "ColumnDest");
+            CreateComboBoxColumn("Column Destination", destTable.GetColumnsNames(), "ColumnDest");
             List<string> expressionTypes = new List<string>(new string[] { "Replace", "Reg", "Map" });
-            CreateComboBoxColumn("ExpressionType", expressionTypes, "ExpressionType");
-            CreateComboBoxColumn("RegexpColumnName", srcTable.GetColumnsNames(), "RegexpColumnName");
+            CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
+            CreateComboBoxColumn("Regexp Column Name", srcTable.GetColumnsNames(), "RegexpColumnName");
             CreateTexBoxColumn("Expression", false, "Expression");
             List<string> sectionNames = new List<string>(new string[] { "Gender" });
-            CreateComboBoxColumn("SectionName", sectionNames, "SectionName");
+            CreateComboBoxColumn("Section Name", sectionNames, "SectionName");
         }
 
         private void fromSrcDestTablesToExpression_Click(object sender, EventArgs e)
