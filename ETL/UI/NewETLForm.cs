@@ -75,8 +75,8 @@ namespace ETL.UI
             string srcTableName = this.srcTableOrQueriesComboBox.Text;
             src.Close();
             src.SetDatatableSchema(srcTableName);
-            Table srcTable = Global.GetTableByNameAndDbName(this.sourceDbComboBox.Text, srcTableName);
-            Table destTable = Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
+            SourceTableOrQuery srcTable = Global.GetTableByNameAndDbName(this.sourceDbComboBox.Text, srcTableName);
+            Table destTable = (Table) Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
             CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
             foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
             {

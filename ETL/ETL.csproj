@@ -118,6 +118,7 @@
     <Compile Include="Core\ODBCHelper.cs" />
     <Compile Include="Core\PostgreSQLDatabase.cs" />
     <Compile Include="Core\PostgreSQLHelper.cs" />
+    <Compile Include="Core\SourceTableOrQuery.cs" />
     <Compile Include="Core\SQLServerDatabase.cs" />
     <Compile Include="Core\SQLServerHelper.cs" />
     <Compile Include="Core\Table.cs" />

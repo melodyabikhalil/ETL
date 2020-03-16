@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class Table
+    class Table : SourceTableOrQuery
     {
         public string tableName { get; set; }
         public int numberOfFields { get; set; }
@@ -21,7 +21,7 @@ namespace ETL.Core
             this.dataTable = new DataTable();
         }
 
-        public List<string> GetColumnsNames()
+        public override List<string> GetColumnsNames()
         {
             List<string> columnsNames = new List<string>();
             for (int i = 0; i < columns.Count; ++i)

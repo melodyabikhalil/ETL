@@ -41,7 +41,7 @@ namespace ETL.Utility
             return null;
         }
 
-        public static Table GetTableByNameAndDbName(string dbName, string tableName)
+        public static SourceTableOrQuery GetTableByNameAndDbName(string dbName, string tableName)
         {
             Database db = GetDatabaseByName(dbName);
             foreach(Table table in db.tables)
@@ -49,6 +49,13 @@ namespace ETL.Utility
                 if(table.tableName == tableName)
                 {
                     return table;
+                }
+            }
+            foreach(JoinQuery query in db.queries)
+            {
+                if(query.queryName == tableName)
+                {
+                    return query;
                 }
             }
             return null;
