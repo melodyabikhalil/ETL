@@ -95,5 +95,11 @@ namespace ETL.UI
         {
             
         }
+
+        private void createStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewETLForm newEtlForm = new NewETLForm();
+            newEtlForm.Show();
+        }
     }
 }

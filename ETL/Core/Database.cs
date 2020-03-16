@@ -25,6 +25,7 @@ namespace ETL.Core
             this.databaseName = databaseName;
             this.tables = new List<Table>();
             this.queries = new List<JoinQuery>();
+            this.queriesNames = new List<String>();
         }
 
         public int GetTableIndexByName(string tableName)

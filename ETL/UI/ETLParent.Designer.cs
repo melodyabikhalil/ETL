@@ -35,11 +35,15 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ETLMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.createStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.createJobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eTLJob1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mappingMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.editMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.createJobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,10 +64,6 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.databasesTreeView = new System.Windows.Forms.TreeView();
-            this.RunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.eTLJob1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mappingMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -101,7 +101,7 @@
             // 
             this.addToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.Add_Click);
             // 
@@ -110,7 +110,7 @@
             this.ETLMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createStripMenuItem});
             this.ETLMenu.Name = "ETLMenu";
-            this.ETLMenu.Size = new System.Drawing.Size(38, 20);
+            this.ETLMenu.Size = new System.Drawing.Size(37, 20);
             this.ETLMenu.Text = "&ETL";
             // 
             // createStripMenuItem
@@ -119,6 +119,51 @@
             this.createStripMenuItem.Name = "createStripMenuItem";
             this.createStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createStripMenuItem.Text = "&Create";
+            this.createStripMenuItem.Click += new System.EventHandler(this.createStripMenuItem_Click);
+            // 
+            // toolsMenu
+            // 
+            this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createJobToolStripMenuItem,
+            this.RunToolStripMenuItem});
+            this.toolsMenu.Name = "toolsMenu";
+            this.toolsMenu.Size = new System.Drawing.Size(58, 20);
+            this.toolsMenu.Text = "&ETL Job";
+            // 
+            // createJobToolStripMenuItem
+            // 
+            this.createJobToolStripMenuItem.Name = "createJobToolStripMenuItem";
+            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.createJobToolStripMenuItem.Text = "&Create";
+            // 
+            // RunToolStripMenuItem
+            // 
+            this.RunToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.eTLJob1ToolStripMenuItem});
+            this.RunToolStripMenuItem.Name = "RunToolStripMenuItem";
+            this.RunToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.RunToolStripMenuItem.Text = "Run";
+            // 
+            // eTLJob1ToolStripMenuItem
+            // 
+            this.eTLJob1ToolStripMenuItem.Name = "eTLJob1ToolStripMenuItem";
+            this.eTLJob1ToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.eTLJob1ToolStripMenuItem.Text = "ETLJob1..";
+            // 
+            // mappingMenu
+            // 
+            this.mappingMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editMappingToolStripMenuItem});
+            this.mappingMenu.Name = "mappingMenu";
+            this.mappingMenu.Size = new System.Drawing.Size(67, 20);
+            this.mappingMenu.Text = "&Mapping";
+            // 
+            // editMappingToolStripMenuItem
+            // 
+            this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
+            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
+            this.editMappingToolStripMenuItem.Text = "Edit";
+            this.editMappingToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
             // 
             // viewMenu
             // 
@@ -135,7 +180,7 @@
             this.toolBarToolStripMenuItem.CheckOnClick = true;
             this.toolBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolBarToolStripMenuItem.Name = "toolBarToolStripMenuItem";
-            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.toolBarToolStripMenuItem.Text = "&Toolbar";
             this.toolBarToolStripMenuItem.Click += new System.EventHandler(this.ToolBarToolStripMenuItem_Click);
             // 
@@ -145,24 +190,9 @@
             this.statusBarToolStripMenuItem.CheckOnClick = true;
             this.statusBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
-            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.statusBarToolStripMenuItem.Text = "&Status Bar";
             this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
-            // 
-            // toolsMenu
-            // 
-            this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createJobToolStripMenuItem,
-            this.RunToolStripMenuItem});
-            this.toolsMenu.Name = "toolsMenu";
-            this.toolsMenu.Size = new System.Drawing.Size(59, 20);
-            this.toolsMenu.Text = "&ETL Job";
-            // 
-            // createJobToolStripMenuItem
-            // 
-            this.createJobToolStripMenuItem.Name = "createJobToolStripMenuItem";
-            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.createJobToolStripMenuItem.Text = "&Create";
             // 
             // helpMenu
             // 
@@ -180,7 +210,7 @@
             // 
             this.contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
             this.contentsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.contentsToolStripMenuItem.Text = "&Contents";
             // 
             // indexToolStripMenuItem
@@ -188,7 +218,7 @@
             this.indexToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("indexToolStripMenuItem.Image")));
             this.indexToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.indexToolStripMenuItem.Name = "indexToolStripMenuItem";
-            this.indexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.indexToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.indexToolStripMenuItem.Text = "&Index";
             // 
             // searchToolStripMenuItem
@@ -196,18 +226,18 @@
             this.searchToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("searchToolStripMenuItem.Image")));
             this.searchToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.searchToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.searchToolStripMenuItem.Text = "&Search";
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(165, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.aboutToolStripMenuItem.Text = "&About ... ...";
             // 
             // toolStrip
@@ -297,7 +327,7 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 756);
+            this.statusStrip.Location = new System.Drawing.Point(0, 727);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1313, 22);
             this.statusStrip.TabIndex = 2;
@@ -318,7 +348,7 @@
             // mainSplitContainer.Panel1
             // 
             this.mainSplitContainer.Panel1.Controls.Add(this.databasesTreeView);
-            this.mainSplitContainer.Size = new System.Drawing.Size(1313, 707);
+            this.mainSplitContainer.Size = new System.Drawing.Size(1313, 678);
             this.mainSplitContainer.SplitterDistance = 278;
             this.mainSplitContainer.TabIndex = 4;
             // 
@@ -327,44 +357,15 @@
             this.databasesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.databasesTreeView.Location = new System.Drawing.Point(0, 0);
             this.databasesTreeView.Name = "databasesTreeView";
-            this.databasesTreeView.Size = new System.Drawing.Size(278, 707);
+            this.databasesTreeView.Size = new System.Drawing.Size(278, 678);
             this.databasesTreeView.TabIndex = 0;
             this.databasesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.DatabasesTreeView_AfterSelect);
-            // 
-            // RunToolStripMenuItem
-            // 
-            this.RunToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.eTLJob1ToolStripMenuItem});
-            this.RunToolStripMenuItem.Name = "RunToolStripMenuItem";
-            this.RunToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.RunToolStripMenuItem.Text = "Run";
-            // 
-            // eTLJob1ToolStripMenuItem
-            // 
-            this.eTLJob1ToolStripMenuItem.Name = "eTLJob1ToolStripMenuItem";
-            this.eTLJob1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.eTLJob1ToolStripMenuItem.Text = "ETLJob1..";
-            // 
-            // editMappingToolStripMenuItem
-            // 
-            this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
-            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editMappingToolStripMenuItem.Text = "Edit";
-            this.editMappingToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
-            // 
-            // mappingMenu
-            // 
-            this.mappingMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editMappingToolStripMenuItem});
-            this.mappingMenu.Name = "mappingMenu";
-            this.mappingMenu.Size = new System.Drawing.Size(67, 20);
-            this.mappingMenu.Text = "&Mapping";
             // 
             // ETLParent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1313, 778);
+            this.ClientSize = new System.Drawing.Size(1313, 749);
             this.Controls.Add(this.mainSplitContainer);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);

@@ -41,6 +41,19 @@ namespace ETL.Utility
             return null;
         }
 
+        public static Table GetTableByNameAndDbName(string dbName, string tableName)
+        {
+            Database db = GetDatabaseByName(dbName);
+            foreach(Table table in db.tables)
+            {
+                if(table.tableName == tableName)
+                {
+                    return table;
+                }
+            }
+            return null;
+        }
+
         public static bool DatabaseAlreadyConnected(Database database)
         {
             foreach (Database existingDatabase in databases)
