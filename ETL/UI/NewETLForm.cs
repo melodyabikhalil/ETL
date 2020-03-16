@@ -29,7 +29,6 @@ namespace ETL.UI
             {
                 sourceDbComboBox.Items.Insert(i, Global.Databases[i].databaseName);
                 destinationDbComboBox.Items.Insert(i, Global.Databases[i].databaseName);
-                dbDictionary.Add(i, Global.Databases[i].databaseName);
             }
             
         }
@@ -47,24 +46,21 @@ namespace ETL.UI
 
         private void fromSrcDestDbToSrcDestTablesButton_Click(object sender, EventArgs e)
         {
-            string srcDatabase = this.dbDictionary[this.sourceDbComboBox.SelectedIndex];
-            string destDatabase = this.dbDictionary[this.destinationDbComboBox.SelectedIndex];
+            string srcDatabase = this.sourceDbComboBox.Text;
+            string destDatabase = this.destinationDbComboBox.Text;
             src = Global.GetDatabaseByName(srcDatabase);
             dest = Global.GetDatabaseByName(destDatabase);
             for(int i = 0; i< src.tablesNames.Count; ++i)
             {
                 this.srcTableOrQueriesComboBox.Items.Insert(i, src.tablesNames[i]);
-                this.srcTablesDictionary.Add(i, src.tablesNames[i]);
             }
             for (int i = src.tablesNames.Count; i < src.queriesNames.Count + src.tablesNames.Count; ++i)
             {
                 this.srcTableOrQueriesComboBox.Items.Insert(i, src.queriesNames[i]);
-                this.srcTablesDictionary.Add(i, src.tablesNames[i]);
             }
             for (int i = 0; i < dest.tablesNames.Count; ++i)
             {
                 this.destTableComboBox.Items.Insert(i, dest.tablesNames[i]);
-                this.destTablesDictionary.Add(i, dest.tablesNames[i]);
             }
             this.SrcDestTablesTab.Enabled = true;
             this.ETLTabControl.SelectedTab = this.SrcDestTablesTab;
@@ -72,14 +68,14 @@ namespace ETL.UI
 
         private void setExpressionDataGridView()
         {
-            string destTableName = this.destTablesDictionary[this.destTableComboBox.SelectedIndex];
+            string destTableName = this.destTableComboBox.Text;
             dest.Close();
             dest.SetDatatableSchema(destTableName);
-            string srcTableName = this.srcTablesDictionary[this.srcTableOrQueriesComboBox.SelectedIndex];
+            string srcTableName = this.srcTableOrQueriesComboBox.Text;
             src.Close();
             src.SetDatatableSchema(srcTableName);
-            Table srcTable = Global.GetTableByNameAndDbName(this.dbDictionary[this.sourceDbComboBox.SelectedIndex], srcTableName);
-            Table destTable = Global.GetTableByNameAndDbName(this.dbDictionary[this.destinationDbComboBox.SelectedIndex], destTableName);
+            Table srcTable = Global.GetTableByNameAndDbName(this.sourceDbComboBox.Text, srcTableName);
+            Table destTable = Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
             CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
             foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
             {
@@ -176,15 +172,6 @@ namespace ETL.UI
         private void DoneButton_Click(object sender, EventArgs e)
         {
             Global.Expression.SetExpressionDt(this.CreateExpressionDatatable());
-            foreach (DataRow dataRow in Global.Expression.expressionDt.Rows)
-            {
-                foreach (var item in dataRow.ItemArray)
-                {
-                    Console.Write(item);
-                    Console.Write(" ");
-                }
-                Console.WriteLine(" ");
-            }
             this.Close();
         }
     }
