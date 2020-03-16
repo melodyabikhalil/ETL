@@ -19,6 +19,8 @@ namespace ETL.UI
         private Dictionary<int, String> destTablesDictionary = new Dictionary<int, string>();
         private Database src;
         private Database dest;
+        private SourceTableOrQuery srcTable;
+        private Table destTable;
         public NewETLForm()
         {
             InitializeComponent();
@@ -75,8 +77,8 @@ namespace ETL.UI
             string srcTableName = this.srcTableOrQueriesComboBox.Text;
             src.Close();
             src.SetDatatableSchema(srcTableName);
-            SourceTableOrQuery srcTable = Global.GetTableByNameAndDbName(this.sourceDbComboBox.Text, srcTableName);
-            Table destTable = (Table) Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
+            this.srcTable = Global.GetTableByNameAndDbName(this.sourceDbComboBox.Text, srcTableName);
+            this.destTable = (Table) Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
             CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
             foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
             {
@@ -177,7 +179,8 @@ namespace ETL.UI
 
         private void DoneButton_Click(object sender, EventArgs e)
         {
-            Global.Expression.SetExpressionDt(this.CreateExpressionDatatable());
+            ETLClass etl = new ETLClass(src, dest, srcTable, destTable, this.CreateExpressionDatatable());
+            Global.etls.Add(etl);
             this.Close();
         }
 
