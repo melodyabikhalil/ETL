@@ -117,4 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label8.Text" xml:space="preserve">
+    <value>There is three types of expressions: Replace, Reg (Regular Expression) and Map.
+Usage examples:
+
+table1, FullName, Replace, null, [FirstName].[LastName], null
+
+table1, Gender, Reg, Gender, ^[A-Za-z]{2}, null (takes the first two letters of the gender value)
+
+table1, Gender, Map, null, null, Gender (maps the gender value to another one using the mapping table)</value>
+  </data>
 </root>

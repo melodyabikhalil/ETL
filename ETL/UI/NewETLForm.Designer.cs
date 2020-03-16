@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewETLForm));
             this.ETLTabControl = new System.Windows.Forms.TabControl();
             this.ETLNameTab = new System.Windows.Forms.TabPage();
             this.fromETLNameToSrcDrstDbButton = new System.Windows.Forms.Button();
@@ -53,6 +54,7 @@
             this.backToSrcDestTablesTabButton = new System.Windows.Forms.Button();
             this.DoneButton = new System.Windows.Forms.Button();
             this.ExpressionDataGridView = new System.Windows.Forms.DataGridView();
+            this.label8 = new System.Windows.Forms.Label();
             this.ETLTabControl.SuspendLayout();
             this.ETLNameTab.SuspendLayout();
             this.SrcDestDbTab.SuspendLayout();
@@ -276,6 +278,7 @@
             // ExpressionTab
             // 
             this.ExpressionTab.BackColor = System.Drawing.SystemColors.Control;
+            this.ExpressionTab.Controls.Add(this.label8);
             this.ExpressionTab.Controls.Add(this.backToSrcDestTablesTabButton);
             this.ExpressionTab.Controls.Add(this.DoneButton);
             this.ExpressionTab.Controls.Add(this.ExpressionDataGridView);
@@ -309,11 +312,20 @@
             // ExpressionDataGridView
             // 
             this.ExpressionDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ExpressionDataGridView.Location = new System.Drawing.Point(26, 61);
+            this.ExpressionDataGridView.Location = new System.Drawing.Point(21, 154);
             this.ExpressionDataGridView.Name = "ExpressionDataGridView";
             this.ExpressionDataGridView.Size = new System.Drawing.Size(931, 234);
             this.ExpressionDataGridView.TabIndex = 0;
-            this.ExpressionDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(ExpressionDataGridView_RowsAdded);
+            this.ExpressionDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ExpressionDataGridView_RowsAdded);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(18, 20);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(507, 104);
+            this.label8.TabIndex = 15;
+            this.label8.Text = resources.GetString("label8.Text");
             // 
             // NewETLForm
             // 
@@ -331,6 +343,7 @@
             this.SrcDestTablesTab.ResumeLayout(false);
             this.SrcDestTablesTab.PerformLayout();
             this.ExpressionTab.ResumeLayout(false);
+            this.ExpressionTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ExpressionDataGridView)).EndInit();
             this.ResumeLayout(false);
 
@@ -363,5 +376,6 @@
         private System.Windows.Forms.DataGridView ExpressionDataGridView;
         private System.Windows.Forms.Button backToSrcDestTablesTabButton;
         private System.Windows.Forms.Button DoneButton;
+        private System.Windows.Forms.Label label8;
     }
 }
