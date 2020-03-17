@@ -58,26 +58,27 @@ namespace ETL.Utility
             return text;
         }
 
-        public static void SaveDatabase(Database database, string type)
+        public static void SaveDatabase(Database database, bool addIfNotExists)
         {
             List<Database> savedDatabases = GetDatabasesFromJsonFile();
-            if (!Helper.DatabaseExistsInListOfDatabases(savedDatabases, database))
+            bool databaseAlreadySaved = Helper.DatabaseExistsInListOfDatabases(savedDatabases, database);
+
+            if (databaseAlreadySaved)
             {
-                JObject databaseObject = JObject.FromObject(database);
-                databaseObject.Add("type", type);
-
-                JArray databasesJsonArray = new JArray();
-
-                string databasesJson = ReadAllFile(PATH_DATABASES);
-                if (databasesJson != "" && databasesJson != null)
-                {
-                    databasesJsonArray = JArray.Parse(databasesJson);
-                }
-
-                databasesJsonArray.Add(databaseObject);
+                savedDatabases.Remove(database);
+            }
+                
+            if (databaseAlreadySaved  || (!databaseAlreadySaved && addIfNotExists))
+            {
+                savedDatabases.Add(database);
+                string json = JsonConvert.SerializeObject(savedDatabases, Formatting.Indented,
+                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
 
                 File.WriteAllText(PATH_DATABASES, string.Empty);
-                File.WriteAllText(PATH_DATABASES, databasesJsonArray.ToString());
+                File.WriteAllText(PATH_DATABASES, json);
             }
         }
 

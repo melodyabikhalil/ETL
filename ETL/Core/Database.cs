@@ -16,6 +16,7 @@ namespace ETL.Core
         public List<string> tablesNames { get; set; }
         public List<JoinQuery> queries { get; set; }
         public List<string> queriesNames { get; set; }
+        public string type { get; set; }
 
         public const string DATABASE_TYPE_MYSQL = "MySQL";
         public const string DATABASE_TYPE_POSTGRES = "PostgreSQL";

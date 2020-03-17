@@ -79,7 +79,7 @@ namespace ETL.Utility
         {
             foreach (Database existingDatabase in databases)
             {
-                if (database == existingDatabase)
+                if (database.Equals(existingDatabase))
                 {
                     return true;
                 }

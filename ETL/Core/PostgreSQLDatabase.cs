@@ -20,6 +20,7 @@ namespace ETL.Core
         {
             this.port = port;
             this.schema = schema;
+            this.type = Database.DATABASE_TYPE_POSTGRES;
         }
 
         public override bool Connect()

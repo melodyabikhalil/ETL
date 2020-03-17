@@ -16,6 +16,7 @@ namespace ETL.Core
             base(serverName, username, password, databaseName)
         {
             this.schema = schema;
+            this.type = Database.DATABASE_TYPE_SQLSERVER;
         }
 
         public override bool Connect()

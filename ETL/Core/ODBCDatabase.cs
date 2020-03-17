@@ -18,6 +18,7 @@ namespace ETL.Core
             base(serverName, username, password, databaseName)
         {
             this.connectionString = connectionString;
+            this.type = Database.DATABASE_TYPE_ODBC;
         }
 
         public override bool Connect()

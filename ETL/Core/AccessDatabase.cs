@@ -23,6 +23,7 @@ namespace ETL.Core
                 int indexOfExtension = this.path.LastIndexOf(".");
                 this.databaseName = this.path.Substring(indexOfLastBackslash + 1, indexOfExtension - indexOfLastBackslash - 1);
             }
+            this.type = Database.DATABASE_TYPE_ACCESS;
         }
 
         public override bool Connect()

@@ -69,7 +69,7 @@ namespace ETL.UI
                 bool rememberDatabase = rememberDatabaseCheckbox.Checked;
                 if (rememberDatabase)
                 {
-                    JsonHelper.SaveDatabase(database, dbType);
+                    JsonHelper.SaveDatabase(database, true);
                 }
 
                 ETLParent.ShowMainContainer();

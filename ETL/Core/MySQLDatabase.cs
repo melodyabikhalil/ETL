@@ -14,7 +14,9 @@ namespace ETL.Core
 
         public MySQLDatabase(string serverName, string username, string password, string databaseName) :
             base(serverName, username, password, databaseName)
-        { }
+        {
+            this.type = Database.DATABASE_TYPE_MYSQL;
+        }
 
         public override bool Connect()
         {
