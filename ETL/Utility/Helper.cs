@@ -75,6 +75,18 @@ namespace ETL.Utility
             return datatable;
         }
 
+        public static bool DatabaseExistsInListOfDatabases(List<Database> databases, Database database)
+        {
+            foreach (Database existingDatabase in databases)
+            {
+                if (database == existingDatabase)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         // JSON Helper
 
         public const string JSON_DATABASE_IS_SOURCE = "isSource";

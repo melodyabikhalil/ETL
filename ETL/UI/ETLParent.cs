@@ -32,6 +32,7 @@ namespace ETL.UI
             newQueryMenuItem.Click += new EventHandler(newQueryMenuItem_Click);
             closeDatabaseMenu.MenuItems.Add(closeDatabaseMenuItem);
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
+            JsonHelper.CreateJsonFolder();
             this.LoadDatabasesFromJsonFile();
         }
 
@@ -40,7 +41,11 @@ namespace ETL.UI
             List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
             foreach (Database database in databases)
             {
-                NewDatabaseForm.AddNodesToTreeView(database);
+                if (!Global.DatabaseAlreadyConnected(database))
+                {
+                    NewDatabaseForm.AddNodesToTreeView(database);
+                    Global.Databases.Add(database);
+                }
             }
             if (databases.Count > 0)
             {

@@ -83,14 +83,7 @@ namespace ETL.Utility
 
         public static bool DatabaseAlreadyConnected(Database database)
         {
-            foreach (Database existingDatabase in databases)
-            {
-                if (database == existingDatabase)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return Helper.DatabaseExistsInListOfDatabases(databases, database);
         }
     }
 }
