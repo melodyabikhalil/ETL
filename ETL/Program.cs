@@ -17,9 +17,11 @@ namespace ETL
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ETLParent());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new ETLParent());
+
+            List<Core.ETL> etls = JsonHelper.GetETLsFromJsonFile();
         }
     }
 }

@@ -33,7 +33,14 @@ namespace ETL.UI
             closeDatabaseMenu.MenuItems.Add(closeDatabaseMenuItem);
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
             JsonHelper.CreateJsonFolder();
+            this.LoadSavedDataFromJsonFiles();
             this.LoadDatabasesFromJsonFile();
+        }
+
+        private void LoadSavedDataFromJsonFiles()
+        {
+            this.LoadDatabasesFromJsonFile();
+            this.LoadEtlsFromJsonFile();
         }
 
         private void LoadDatabasesFromJsonFile()
@@ -41,16 +48,27 @@ namespace ETL.UI
             List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
             foreach (Database database in databases)
             {
-                if (!Global.DatabaseAlreadyConnected(database))
+                bool canConnect = database.Connect();
+                database.Close();
+                if (canConnect)
                 {
-                    NewDatabaseForm.AddNodesToTreeView(database);
-                    Global.Databases.Add(database);
+                    if (!Global.DatabaseAlreadyConnected(database))
+                    {
+                        NewDatabaseForm.AddNodesToTreeView(database);
+                        Global.Databases.Add(database);
+                    }
+                    if (databases.Count > 0)
+                    {
+                        ShowMainContainer();
+                    }
                 }
             }
-            if (databases.Count > 0)
-            {
-                ShowMainContainer();
-            }
+        }
+
+        private void LoadEtlsFromJsonFile()
+        {
+            List<Core.ETL> etls = JsonHelper.GetETLsFromJsonFile();
+            Global.etls = etls;
         }
 
         private void ETLParent_Activated(object sender, System.EventArgs e)

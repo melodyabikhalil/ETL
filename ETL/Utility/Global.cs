@@ -85,5 +85,10 @@ namespace ETL.Utility
         {
             return Helper.DatabaseExistsInListOfDatabases(databases, database);
         }
+
+        public static bool EtlAlreadyConnected(Core.ETL etl)
+        {
+            return Helper.EtlExistsInListOfEtls(etls, etl);
+        }
     }
 }

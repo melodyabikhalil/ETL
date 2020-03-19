@@ -87,30 +87,16 @@ namespace ETL.Utility
             return false;
         }
 
-        // JSON Helper
-
-        public const string JSON_DATABASE_IS_SOURCE = "isSource";
-        public const string JSON_DATABASE_SERVER_NAME = "serverName";
-        public const string JSON_DATABASE_TYPE = "type";
-        public const string JSON_DATABASE_USERNAME = "username";
-        public const string JSON_DATABASE_PASSWORD = "password";
-        public const string JSON_DATABASE_SCHEMA = "schema";
-        public const string JSON_DATABASE_DATABASE_NAME = "databaseName";
-        public const string JSON_DATABASE_PATH = "path";
-        public const string JSON_DATABASE_PORT = "port";
-        public const string JSON_DATABASE_TABLES = "tables";
-        public const string JSON_DATABASE_QUERIES = "queries";
-        public const string JSON_DATABASE_QUERIES_NAME = "name";
-        public const string JSON_DATABASE_QUERIES_QUERY = "query";
-
-        public static dynamic GetJsonArrayFromFile(string path)
+        public static bool EtlExistsInListOfEtls(List<Core.ETL> etls, Core.ETL etl)
         {
-            using (StreamReader r = new StreamReader(path))
+            foreach (Core.ETL existingEtls in etls)
             {
-                string json = r.ReadToEnd();
-                dynamic array = JsonConvert.DeserializeObject(json);
-                return array;
+                if (etl.Equals(existingEtls))
+                {
+                    return true;
+                }
             }
+            return false;
         }
     }
 }

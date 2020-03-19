@@ -208,6 +208,7 @@ namespace ETL.UI
         {
             Core.ETL etl = new Core.ETL(ETLName, src, dest, srcTable, destTable, this.CreateExpressionDatatable());
             Global.etls.Add(etl);
+            JsonHelper.SaveETL(etl, true);
             this.Close();
         }
 

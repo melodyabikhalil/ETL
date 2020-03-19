@@ -22,6 +22,7 @@ namespace ETL.Core
             this.dataTable = new DataTable();
             this.columns = new List<string>();
             this.columnsToSelect = new List<string>();
+            this.Type = SourceTableOrQuery.TYPE_JOIN_QUERY;
         }
 
         public JoinQuery(string queryName, string query, Database database)
@@ -33,6 +34,7 @@ namespace ETL.Core
             this.dataTable = new DataTable();
             this.columns = new List<string>();
             this.columnsToSelect = new List<string>();
+            this.Type = SourceTableOrQuery.TYPE_JOIN_QUERY;
         }
 
         public void CreateAndSetJoinQuery()
@@ -93,6 +95,14 @@ namespace ETL.Core
         public override List<string> GetColumnsNames()
         {
             return this.columns;
+        }
+
+        public override bool Equals(Object obj)
+        {
+            return (obj is JoinQuery)
+                && ((JoinQuery)obj).queryName == this.queryName
+                 && ((JoinQuery)obj).columns == this.columns
+                 && ((JoinQuery)obj).query == this.query;
         }
     }
 }
