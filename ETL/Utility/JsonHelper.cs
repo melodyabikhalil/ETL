@@ -260,7 +260,7 @@ namespace ETL.Utility
 
         public static SourceTableOrQuery JsonToSourceTableOrQuery(dynamic data)
         {
-            string type = data.Type;
+            string type = data.type;
             SourceTableOrQuery sourceTableOrQuery;
             switch (type)
             {
