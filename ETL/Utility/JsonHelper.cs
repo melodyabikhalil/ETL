@@ -171,7 +171,7 @@ namespace ETL.Utility
 
         public static void SaveETL(Core.ETL etl, bool addIfNotExists)
         {
-            List<Core.ETL> savedEtls = new List<Core.ETL>();// GetETLsFromJsonFile();
+            List<Core.ETL> savedEtls = GetETLsFromJsonFile();
             bool etlAlreadySaved = Helper.EtlExistsInListOfEtls(savedEtls, etl);
 
             if (etlAlreadySaved)
