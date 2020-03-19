@@ -1,10 +1,5 @@
-﻿using ETL.Core;
-using ETL.UI;
-using ETL.Utility;
+﻿using ETL.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ETL
@@ -17,11 +12,9 @@ namespace ETL
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new ETLParent());
-
-            List<Core.ETL> etls = JsonHelper.GetETLsFromJsonFile();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new ETLParent());
         }
     }
 }

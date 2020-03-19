@@ -34,7 +34,7 @@ namespace ETL.Core
             this.dataTable = new DataTable();
             this.columns = new List<string>();
             this.columnsToSelect = new List<string>();
-            this.Type = SourceTableOrQuery.TYPE_JOIN_QUERY;
+            this.type = SourceTableOrQuery.TYPE_JOIN_QUERY;
         }
 
         public void CreateAndSetJoinQuery()
