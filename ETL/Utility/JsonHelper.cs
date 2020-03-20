@@ -123,19 +123,19 @@ namespace ETL.Utility
             }
         }
 
-        public static List<Core.ETL> GetETLsFromJsonFile()
+        public static List<Core.SingleETL> GetETLsFromJsonFile()
         {
-            List<Core.ETL> etls = new List<Core.ETL>();
+            List<Core.SingleETL> etls = new List<Core.SingleETL>();
             try
             {
                 string json = ReadAllFile(PATH_ETLS);
                 JArray jsonArray = JArray.Parse(json);
                 int etlsNumber = jsonArray.Count;
-                Core.ETL etl;
+                Core.SingleETL etl;
                 for (int i = 0; i < etlsNumber; ++i)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
-                    string ETLName = data.ETLName;
+                    string ETLName = data.name;
 
                     dynamic sourceDatabaseData = JObject.Parse(data.srcDb.ToString());
                     Database sourceDatabase = JsonToDatabase(sourceDatabaseData);
@@ -154,7 +154,7 @@ namespace ETL.Utility
                         continue;
                     }
 
-                    etl = new Core.ETL(ETLName, sourceDatabase, destinationDatabase, sourceTableOrQuery, destinationTable, expressionDt);
+                    etl = new Core.SingleETL(ETLName, sourceDatabase, destinationDatabase, sourceTableOrQuery, destinationTable, expressionDt);
                     if (!etls.Contains(etl))
                     {
                         etls.Add(etl);
@@ -165,13 +165,13 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return new List<Core.ETL>();
+                return new List<Core.SingleETL>();
             }
         }
 
-        public static void SaveETL(Core.ETL etl, bool addIfNotExists)
+        public static void SaveETL(Core.SingleETL etl, bool addIfNotExists)
         {
-            List<Core.ETL> savedEtls = GetETLsFromJsonFile();
+            List<Core.SingleETL> savedEtls = GetETLsFromJsonFile();
             bool etlAlreadySaved = Helper.EtlExistsInListOfEtls(savedEtls, etl);
 
             if (etlAlreadySaved)

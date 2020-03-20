@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    public class ETL
+    public class SingleETL
     {
-        public string ETLName { set; get; }
+        public string name { set; get; }
         public Database destDb { set; get; }
         public Database srcDb { set; get; }
         public SourceTableOrQuery sourceTable { set; get; }
         public Table destTable { set; get; }
         public DataTable expressionDt { set; get; }
 
-        public ETL(string name, Database srcDb, Database destDb, SourceTableOrQuery sourceTable, Table destTable, DataTable expressionDt)
+        public SingleETL(string name, Database srcDb, Database destDb, SourceTableOrQuery sourceTable, Table destTable, DataTable expressionDt)
         {
-            this.ETLName = name;
+            this.name = name;
             this.srcDb = srcDb;
             this.destDb = destDb;
             this.sourceTable = sourceTable;
@@ -28,13 +28,13 @@ namespace ETL.Core
 
         public override bool Equals(Object obj)
         {
-            return (obj is ETL)
-                && ((ETL)obj).ETLName == this.ETLName
-                 && ((ETL)obj).destDb == this.destDb
-                  && ((ETL)obj).srcDb == this.srcDb
-                   && ((ETL)obj).sourceTable == this.sourceTable
-                  && ((ETL)obj).destTable == this.destTable
-                  && ((ETL)obj).expressionDt == this.expressionDt;
+            return (obj is SingleETL)
+                && ((SingleETL)obj).name == this.name
+                 && ((SingleETL)obj).destDb == this.destDb
+                  && ((SingleETL)obj).srcDb == this.srcDb
+                   && ((SingleETL)obj).sourceTable == this.sourceTable
+                  && ((SingleETL)obj).destTable == this.destTable
+                  && ((SingleETL)obj).expressionDt == this.expressionDt;
         }
     }
 }
