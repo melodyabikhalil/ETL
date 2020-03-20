@@ -110,8 +110,9 @@
     <Compile Include="Core\Database.cs" />
     <Compile Include="Core\DSpaceHelper.cs" />
     <Compile Include="Core\DSpaceMetadataField.cs" />
-    <Compile Include="Core\ETL.cs" />
+    <Compile Include="Core\SingleETL.cs" />
     <Compile Include="Core\Expression.cs" />
+    <Compile Include="Core\JobETL.cs" />
     <Compile Include="Core\JoinQuery.cs" />
     <Compile Include="Core\MySQLDatabase.cs" />
     <Compile Include="Core\MySQLHelper.cs" />

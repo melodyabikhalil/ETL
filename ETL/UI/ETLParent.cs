@@ -67,7 +67,7 @@ namespace ETL.UI
 
         private void LoadEtlsFromJsonFile()
         {
-            List<Core.ETL> etls = JsonHelper.GetETLsFromJsonFile();
+            List<SingleETL> etls = JsonHelper.GetETLsFromJsonFile();
             Global.etls = etls;
         }
 

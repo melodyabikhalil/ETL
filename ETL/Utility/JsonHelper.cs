@@ -123,15 +123,15 @@ namespace ETL.Utility
             }
         }
 
-        public static List<Core.SingleETL> GetETLsFromJsonFile()
+        public static List<SingleETL> GetETLsFromJsonFile()
         {
-            List<Core.SingleETL> etls = new List<Core.SingleETL>();
+            List<SingleETL> etls = new List<SingleETL>();
             try
             {
                 string json = ReadAllFile(PATH_ETLS);
                 JArray jsonArray = JArray.Parse(json);
                 int etlsNumber = jsonArray.Count;
-                Core.SingleETL etl;
+                SingleETL etl;
                 for (int i = 0; i < etlsNumber; ++i)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
@@ -154,7 +154,7 @@ namespace ETL.Utility
                         continue;
                     }
 
-                    etl = new Core.SingleETL(ETLName, sourceDatabase, destinationDatabase, sourceTableOrQuery, destinationTable, expressionDt);
+                    etl = new SingleETL(ETLName, sourceDatabase, destinationDatabase, sourceTableOrQuery, destinationTable, expressionDt);
                     if (!etls.Contains(etl))
                     {
                         etls.Add(etl);
@@ -165,13 +165,13 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return new List<Core.SingleETL>();
+                return new List<SingleETL>();
             }
         }
 
-        public static void SaveETL(Core.SingleETL etl, bool addIfNotExists)
+        public static void SaveETL(SingleETL etl, bool addIfNotExists)
         {
-            List<Core.SingleETL> savedEtls = GetETLsFromJsonFile();
+            List<SingleETL> savedEtls = GetETLsFromJsonFile();
             bool etlAlreadySaved = Helper.EtlExistsInListOfEtls(savedEtls, etl);
 
             if (etlAlreadySaved)

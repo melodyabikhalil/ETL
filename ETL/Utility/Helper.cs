@@ -87,9 +87,9 @@ namespace ETL.Utility
             return false;
         }
 
-        public static bool EtlExistsInListOfEtls(List<Core.ETL> etls, Core.ETL etl)
+        public static bool EtlExistsInListOfEtls(List<SingleETL> etls, SingleETL etl)
         {
-            foreach (Core.ETL existingEtls in etls)
+            foreach (SingleETL existingEtls in etls)
             {
                 if (etl.Equals(existingEtls))
                 {

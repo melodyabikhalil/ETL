@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    public class Job
+    public class JobETL
     {
         public string name { get; set; }
         public List<SingleETL> etls { get; set; }
