@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.credentialsTabPage = new System.Windows.Forms.TabPage();
+            this.rememberDatabaseCheckbox = new System.Windows.Forms.CheckBox();
             this.portTextBox = new System.Windows.Forms.TextBox();
             this.schemaTextBox = new System.Windows.Forms.TextBox();
             this.dbNameTextBox = new System.Windows.Forms.TextBox();
@@ -56,6 +57,7 @@
             // credentialsTabPage
             // 
             this.credentialsTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.credentialsTabPage.Controls.Add(this.rememberDatabaseCheckbox);
             this.credentialsTabPage.Controls.Add(this.portTextBox);
             this.credentialsTabPage.Controls.Add(this.schemaTextBox);
             this.credentialsTabPage.Controls.Add(this.dbNameTextBox);
@@ -77,30 +79,40 @@
             this.credentialsTabPage.TabIndex = 2;
             this.credentialsTabPage.Text = "Credentials";
             // 
+            // rememberDatabaseCheckbox
+            // 
+            this.rememberDatabaseCheckbox.AutoSize = true;
+            this.rememberDatabaseCheckbox.Location = new System.Drawing.Point(134, 188);
+            this.rememberDatabaseCheckbox.Name = "rememberDatabaseCheckbox";
+            this.rememberDatabaseCheckbox.Size = new System.Drawing.Size(124, 17);
+            this.rememberDatabaseCheckbox.TabIndex = 30;
+            this.rememberDatabaseCheckbox.Text = "Remember database";
+            this.rememberDatabaseCheckbox.UseVisualStyleBackColor = true;
+            // 
             // portTextBox
             // 
-            this.portTextBox.Location = new System.Drawing.Point(134, 163);
+            this.portTextBox.Location = new System.Drawing.Point(134, 162);
             this.portTextBox.Name = "portTextBox";
             this.portTextBox.Size = new System.Drawing.Size(224, 20);
             this.portTextBox.TabIndex = 29;
             // 
             // schemaTextBox
             // 
-            this.schemaTextBox.Location = new System.Drawing.Point(134, 137);
+            this.schemaTextBox.Location = new System.Drawing.Point(134, 136);
             this.schemaTextBox.Name = "schemaTextBox";
             this.schemaTextBox.Size = new System.Drawing.Size(224, 20);
             this.schemaTextBox.TabIndex = 27;
             // 
             // dbNameTextBox
             // 
-            this.dbNameTextBox.Location = new System.Drawing.Point(134, 113);
+            this.dbNameTextBox.Location = new System.Drawing.Point(134, 112);
             this.dbNameTextBox.Name = "dbNameTextBox";
             this.dbNameTextBox.Size = new System.Drawing.Size(224, 20);
             this.dbNameTextBox.TabIndex = 25;
             // 
             // passTextBox
             // 
-            this.passTextBox.Location = new System.Drawing.Point(134, 88);
+            this.passTextBox.Location = new System.Drawing.Point(134, 87);
             this.passTextBox.Name = "passTextBox";
             this.passTextBox.PasswordChar = '*';
             this.passTextBox.Size = new System.Drawing.Size(224, 20);
@@ -108,14 +120,14 @@
             // 
             // usernameTextBox
             // 
-            this.usernameTextBox.Location = new System.Drawing.Point(134, 64);
+            this.usernameTextBox.Location = new System.Drawing.Point(134, 63);
             this.usernameTextBox.Name = "usernameTextBox";
             this.usernameTextBox.Size = new System.Drawing.Size(224, 20);
             this.usernameTextBox.TabIndex = 21;
             // 
             // hostTextBox
             // 
-            this.hostTextBox.Location = new System.Drawing.Point(134, 40);
+            this.hostTextBox.Location = new System.Drawing.Point(134, 39);
             this.hostTextBox.Name = "hostTextBox";
             this.hostTextBox.Size = new System.Drawing.Size(224, 20);
             this.hostTextBox.TabIndex = 19;
@@ -123,7 +135,7 @@
             // portLabel
             // 
             this.portLabel.AutoSize = true;
-            this.portLabel.Location = new System.Drawing.Point(48, 165);
+            this.portLabel.Location = new System.Drawing.Point(48, 164);
             this.portLabel.Name = "portLabel";
             this.portLabel.Size = new System.Drawing.Size(26, 13);
             this.portLabel.TabIndex = 28;
@@ -132,7 +144,7 @@
             // schemaLabel
             // 
             this.schemaLabel.AutoSize = true;
-            this.schemaLabel.Location = new System.Drawing.Point(46, 140);
+            this.schemaLabel.Location = new System.Drawing.Point(46, 139);
             this.schemaLabel.Name = "schemaLabel";
             this.schemaLabel.Size = new System.Drawing.Size(46, 13);
             this.schemaLabel.TabIndex = 26;
@@ -141,7 +153,7 @@
             // dbNameLabel
             // 
             this.dbNameLabel.AutoSize = true;
-            this.dbNameLabel.Location = new System.Drawing.Point(46, 115);
+            this.dbNameLabel.Location = new System.Drawing.Point(46, 114);
             this.dbNameLabel.Name = "dbNameLabel";
             this.dbNameLabel.Size = new System.Drawing.Size(84, 13);
             this.dbNameLabel.TabIndex = 24;
@@ -150,7 +162,7 @@
             // passwordLabel
             // 
             this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(46, 91);
+            this.passwordLabel.Location = new System.Drawing.Point(46, 90);
             this.passwordLabel.Name = "passwordLabel";
             this.passwordLabel.Size = new System.Drawing.Size(53, 13);
             this.passwordLabel.TabIndex = 22;
@@ -159,7 +171,7 @@
             // usernameLabel
             // 
             this.usernameLabel.AutoSize = true;
-            this.usernameLabel.Location = new System.Drawing.Point(46, 66);
+            this.usernameLabel.Location = new System.Drawing.Point(46, 65);
             this.usernameLabel.Name = "usernameLabel";
             this.usernameLabel.Size = new System.Drawing.Size(55, 13);
             this.usernameLabel.TabIndex = 20;
@@ -168,7 +180,7 @@
             // hostLabel
             // 
             this.hostLabel.AutoSize = true;
-            this.hostLabel.Location = new System.Drawing.Point(46, 42);
+            this.hostLabel.Location = new System.Drawing.Point(46, 41);
             this.hostLabel.Name = "hostLabel";
             this.hostLabel.Size = new System.Drawing.Size(29, 13);
             this.hostLabel.TabIndex = 18;
@@ -210,12 +222,6 @@
             // dbTypesComboBox
             // 
             this.dbTypesComboBox.FormattingEnabled = true;
-            this.dbTypesComboBox.Items.AddRange(new object[] {
-            "MySQL",
-            "SQL Server",
-            "PostgreSQL",
-            "MS Access",
-            "ODBC"});
             this.dbTypesComboBox.Location = new System.Drawing.Point(52, 78);
             this.dbTypesComboBox.Name = "dbTypesComboBox";
             this.dbTypesComboBox.Size = new System.Drawing.Size(168, 21);
@@ -290,5 +296,6 @@
         private System.Windows.Forms.Button goToCredentialsTabFromTypeTabButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TabControl newDatabaseTabControl;
+        private System.Windows.Forms.CheckBox rememberDatabaseCheckbox;
     }
 }

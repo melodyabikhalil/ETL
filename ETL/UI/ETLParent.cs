@@ -32,6 +32,43 @@ namespace ETL.UI
             newQueryMenuItem.Click += new EventHandler(newQueryMenuItem_Click);
             closeDatabaseMenu.MenuItems.Add(closeDatabaseMenuItem);
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
+            JsonHelper.CreateJsonFolder();
+            this.LoadSavedDataFromJsonFiles();
+            this.LoadDatabasesFromJsonFile();
+        }
+
+        private void LoadSavedDataFromJsonFiles()
+        {
+            this.LoadDatabasesFromJsonFile();
+            this.LoadEtlsFromJsonFile();
+        }
+
+        private void LoadDatabasesFromJsonFile()
+        {
+            List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
+            foreach (Database database in databases)
+            {
+                bool canConnect = database.Connect();
+                database.Close();
+                if (canConnect)
+                {
+                    if (!Global.DatabaseAlreadyConnected(database))
+                    {
+                        NewDatabaseForm.AddNodesToTreeView(database);
+                        Global.Databases.Add(database);
+                    }
+                    if (databases.Count > 0)
+                    {
+                        ShowMainContainer();
+                    }
+                }
+            }
+        }
+
+        private void LoadEtlsFromJsonFile()
+        {
+            List<SingleETL> etls = JsonHelper.GetETLsFromJsonFile();
+            Global.etls = etls;
         }
 
         private void ETLParent_Activated(object sender, System.EventArgs e)

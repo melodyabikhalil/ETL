@@ -19,6 +19,7 @@ namespace ETL.Core
         {
             this.columns = new List<DataColumn>();
             this.dataTable = new DataTable();
+            this.type = SourceTableOrQuery.TYPE_TABLE;
         }
 
         public override List<string> GetColumnsNames()

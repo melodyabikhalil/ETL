@@ -16,7 +16,7 @@ namespace ETL.Utility
 
         private static List<Database> databases = new List<Database>();
         private static Expression expression = Expression.getInstance();
-        public static List<Core.ETL> etls = new List<Core.ETL>();
+        public static List<SingleETL> etls = new List<SingleETL>();
         public static DataTable mapDt = new DataTable();
         static Global()
         {
@@ -83,14 +83,12 @@ namespace ETL.Utility
 
         public static bool DatabaseAlreadyConnected(Database database)
         {
-            foreach (Database existingDatabase in databases)
-            {
-                if (database == existingDatabase)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return Helper.DatabaseExistsInListOfDatabases(databases, database);
+        }
+
+        public static bool EtlAlreadyConnected(SingleETL etl)
+        {
+            return Helper.EtlExistsInListOfEtls(etls, etl);
         }
     }
 }

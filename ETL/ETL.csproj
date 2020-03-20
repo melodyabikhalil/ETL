@@ -110,8 +110,9 @@
     <Compile Include="Core\Database.cs" />
     <Compile Include="Core\DSpaceHelper.cs" />
     <Compile Include="Core\DSpaceMetadataField.cs" />
-    <Compile Include="Core\ETL.cs" />
+    <Compile Include="Core\SingleETL.cs" />
     <Compile Include="Core\Expression.cs" />
+    <Compile Include="Core\JobETL.cs" />
     <Compile Include="Core\JoinQuery.cs" />
     <Compile Include="Core\MySQLDatabase.cs" />
     <Compile Include="Core\MySQLHelper.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="UI\UIHelper.cs" />
     <Compile Include="Utility\Global.cs" />
     <Compile Include="Utility\Helper.cs" />
+    <Compile Include="Utility\JsonHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

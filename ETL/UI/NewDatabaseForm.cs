@@ -20,45 +20,58 @@ namespace ETL.UI
             this.CenterToParent();
             this.credentialsTabPage.Enabled = false;
             this.AcceptButton = connectButton;
+            this.dbTypesComboBox.Items.Add(Database.DATABASE_TYPE_MYSQL);
+            this.dbTypesComboBox.Items.Add(Database.DATABASE_TYPE_SQLSERVER);
+            this.dbTypesComboBox.Items.Add(Database.DATABASE_TYPE_POSTGRES);
+            this.dbTypesComboBox.Items.Add(Database.DATABASE_TYPE_ACCESS);
+            this.dbTypesComboBox.Items.Add(Database.DATABASE_TYPE_ODBC);
         }
 
-        private void ConnectToDb(int dbType)
+        private void ConnectToDb(string dbType)
         {
             Database database;
             switch (dbType)
             {
-                case 0:
+                case Database.DATABASE_TYPE_MYSQL:
                     database = this.CreateMysqlDatabase();
                     break;
-                case 1:
+                case Database.DATABASE_TYPE_SQLSERVER:
                     database = this.CreateSQLServerDatabase();
                     break;
-                case 2:
+                case Database.DATABASE_TYPE_POSTGRES:
                     database = this.CreatePostgresDatabase();
                     break;
-                case 3:
+                case Database.DATABASE_TYPE_ACCESS:
                     database = this.CreateAccessDatabase();
                     break;
-                case 4:
+                case Database.DATABASE_TYPE_ODBC:
                     database = this.CreateODBCDatabase();
                     break;
                 default:
                     database = this.CreateMysqlDatabase();
                     break;
             }
+
             bool connected = database.Connect();
             if (connected)
             {
                 database.tablesNames = database.GetTablesNames();
                 database.CreateTablesList(database.tablesNames);
                 database.GetQueriesNames();
-                // TODO: add database.queries from json file (if they exist);
+
                 if (Global.DatabaseAlreadyConnected(database))
                 {
                     this.ShowErrorDialogAndClose();
                 }
                 Global.Databases.Add(database);
-                this.AddNodesToTreeView(database);
+                AddNodesToTreeView(database);
+
+                bool rememberDatabase = rememberDatabaseCheckbox.Checked;
+                if (rememberDatabase)
+                {
+                    JsonHelper.SaveDatabase(database, true);
+                }
+
                 ETLParent.ShowMainContainer();
                 this.Close();
             }
@@ -128,17 +141,16 @@ namespace ETL.UI
             }
         }
 
-        private void AddNodesToTreeView(Database database)
+        public static void AddNodesToTreeView(Database database)
         {
             TreeView treeview = ETLParent.GetTreeView();
             TreeNode node = UIHelper.AddBranch(database.databaseName, treeview);
             node.Tag = database.databaseName;
+
             TreeNode tablesNode = UIHelper.AddChildBranch("Tables", node.Index, treeview);
             UIHelper.AddChildrenNodes(database.tablesNames, tablesNode);
 
             TreeNode queriesNode = UIHelper.AddChildBranch("Queries", node.Index, treeview);
-            // TODO: get queries from json file and add them as children nodes to queries node 
-            //we get the queries and we set them in database.queries
             UIHelper.AddChildrenNodes(database.queriesNames, queriesNode);
         }
 
@@ -229,7 +241,7 @@ namespace ETL.UI
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-            this.ConnectToDb(dbTypesComboBox.SelectedIndex);
+            this.ConnectToDb(dbTypesComboBox.SelectedItem.ToString());
         }
     }
 }

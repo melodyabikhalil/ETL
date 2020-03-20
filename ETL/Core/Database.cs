@@ -16,6 +16,13 @@ namespace ETL.Core
         public List<string> tablesNames { get; set; }
         public List<JoinQuery> queries { get; set; }
         public List<string> queriesNames { get; set; }
+        public string type { get; set; }
+
+        public const string DATABASE_TYPE_MYSQL = "MySQL";
+        public const string DATABASE_TYPE_POSTGRES = "PostgreSQL";
+        public const string DATABASE_TYPE_SQLSERVER = "SQL Server";
+        public const string DATABASE_TYPE_ACCESS = "MS Access";
+        public const string DATABASE_TYPE_ODBC = "ODBC";
 
         public Database(string serverName, string username, string password, string databaseName)
         {
@@ -111,6 +118,15 @@ namespace ETL.Core
                 queriesNames.Add(joinQuery.queryName);
             }
             return queriesNames;
+        }
+
+        public void SetQueriesNamesListFromQueriesList()
+        {
+            this.queriesNames = new List<string>();
+            foreach (JoinQuery joinQuery in queries)
+            {
+                queriesNames.Add(joinQuery.queryName);
+            }
         }
 
         public override string ToString()

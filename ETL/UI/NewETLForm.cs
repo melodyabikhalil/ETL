@@ -206,8 +206,9 @@ namespace ETL.UI
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            Core.ETL etl = new Core.ETL(ETLName, src, dest, srcTable, destTable, this.CreateExpressionDatatable());
+            SingleETL etl = new SingleETL(ETLName, src, dest, srcTable, destTable, this.CreateExpressionDatatable());
             Global.etls.Add(etl);
+            JsonHelper.SaveETL(etl, true);
             this.Close();
         }
 
