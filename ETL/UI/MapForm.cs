@@ -18,6 +18,7 @@ namespace ETL.UI
         public MapForm()
         {
             InitializeComponent();
+            this.CenterToParent();
             this.bindingSource1.DataSource = Global.mapDt;
             this.mapDataGridView.DataSource = this.bindingSource1;
             this.changed = false;

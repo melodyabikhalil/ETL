@@ -189,10 +189,6 @@ namespace ETL.UI
         private void editMappingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MapForm mapForm = new MapForm();
-            mapForm.TopLevel = false;
-            this.mainSplitContainer.Panel2.Controls.Add(mapForm);
-            mapForm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
-            mapForm.Dock = DockStyle.Fill;
             mapForm.Show();
         }
     }
