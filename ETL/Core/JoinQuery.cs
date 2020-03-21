@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    public class JoinQuery: SourceTableOrQuery
+    public class JoinQuery: TableOrQuery
     {
         public string queryName { get; set; }
         public string query { get; set; }
@@ -22,7 +22,7 @@ namespace ETL.Core
             this.dataTable = new DataTable();
             this.columns = new List<string>();
             this.columnsToSelect = new List<string>();
-            this.type = SourceTableOrQuery.TYPE_JOIN_QUERY;
+            this.type = TableOrQuery.TYPE_JOIN_QUERY;
         }
 
         public JoinQuery(string queryName, string query, Database database)
@@ -34,7 +34,7 @@ namespace ETL.Core
             this.dataTable = new DataTable();
             this.columns = new List<string>();
             this.columnsToSelect = new List<string>();
-            this.type = SourceTableOrQuery.TYPE_JOIN_QUERY;
+            this.type = TableOrQuery.TYPE_JOIN_QUERY;
         }
 
         public void CreateAndSetJoinQuery()
@@ -103,6 +103,16 @@ namespace ETL.Core
                 && ((JoinQuery)obj).queryName == this.queryName
                  && ((JoinQuery)obj).columns == this.columns
                  && ((JoinQuery)obj).query == this.query;
+        }
+
+        public override void SetName(string name)
+        {
+            this.name = name;
+        }
+
+        public override string GetName()
+        {
+            return this.name;
         }
     }
 }

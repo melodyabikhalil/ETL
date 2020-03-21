@@ -40,7 +40,7 @@ namespace ETL.Core
         {
             for (int i = 0; i < tables.Count; ++i)
             {
-                if (tables[i].tableName == tableName)
+                if (tables[i].GetName() == tableName)
                 {
                     return i;
                 }
@@ -66,7 +66,7 @@ namespace ETL.Core
             for (int i = 0; i < tablesNames.Count; ++i)
             {
                 table = new Table();
-                table.tableName = tablesNames[i];
+                table.SetName(tablesNames[i]);
                 this.tables.Add(table);
             }
         }
@@ -75,7 +75,7 @@ namespace ETL.Core
         {
             foreach (Table table in tables)
             {
-                if (table.tableName == tableName)
+                if (table.GetName() == tableName)
                 {
                     return table;
                 }

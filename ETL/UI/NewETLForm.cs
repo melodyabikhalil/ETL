@@ -19,7 +19,7 @@ namespace ETL.UI
         private Dictionary<int, String> destTablesDictionary = new Dictionary<int, string>();
         private Database src;
         private Database dest;
-        private SourceTableOrQuery srcTable;
+        private TableOrQuery srcTable;
         private Table destTable;
         string ETLName = "";
 

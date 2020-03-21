@@ -7,19 +7,17 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    public class Table: SourceTableOrQuery
+    public class Table: TableOrQuery
     {
-        public string tableName { get; set; }
         public int numberOfFields { get; set; }
         public string primaryKeyName { get; set; }
         public List<DataColumn> columns { get; set; }
-        public DataTable dataTable { get; set; }
 
         public Table()
         {
             this.columns = new List<DataColumn>();
             this.dataTable = new DataTable();
-            this.type = SourceTableOrQuery.TYPE_TABLE;
+            this.type = TableOrQuery.TYPE_TABLE;
         }
 
         public override List<string> GetColumnsNames()
@@ -54,14 +52,25 @@ namespace ETL.Core
 
         public override string ToString()
         {
-            return String.Format("Name:{0}, Number of fields:{1}, Primary key:{2}", this.tableName, this.numberOfFields, this.primaryKeyName);
+            return String.Format("Name:{0}, Number of fields:{1}, Primary key:{2}", this.name, this.numberOfFields, this.primaryKeyName);
         }
 
         public override bool Equals(Object obj)
         {
             return (obj is Table)
-                && ((Table)obj).tableName == this.tableName
+                && ((Table)obj).name == this.name
                  && ((Table)obj).columns == this.columns;
+        }
+
+        public override void SetName(string name)
+        {
+            this.name = name;
+            this.query = "SELECT * FROM " + name + ";";
+        }
+
+        public override string GetName()
+        {
+            return this.name;
         }
     }
 }

@@ -44,12 +44,12 @@ namespace ETL.Utility
             return null;
         }
 
-        public static SourceTableOrQuery GetTableByNameAndDbName(string dbName, string tableName)
+        public static TableOrQuery GetTableByNameAndDbName(string dbName, string tableName)
         {
             Database db = GetDatabaseByName(dbName);
             foreach(Table table in db.tables)
             {
-                if(table.tableName == tableName)
+                if(table.GetName() == tableName)
                 {
                     return table;
                 }
