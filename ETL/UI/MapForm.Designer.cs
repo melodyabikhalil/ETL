@@ -35,16 +35,17 @@
             // 
             // mapDataGridView
             // 
+            this.mapDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mapDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mapDataGridView.Location = new System.Drawing.Point(21, 44);
             this.mapDataGridView.Name = "mapDataGridView";
-            this.mapDataGridView.Size = new System.Drawing.Size(477, 157);
+            this.mapDataGridView.Size = new System.Drawing.Size(477, 122);
             this.mapDataGridView.TabIndex = 0;
-            this.mapDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(mapDataGridView_CellValueChanged);
+            this.mapDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapDataGridView_CellValueChanged);
             // 
             // finishButton
             // 
-            this.finishButton.Location = new System.Drawing.Point(695, 403);
+            this.finishButton.Location = new System.Drawing.Point(882, 547);
             this.finishButton.Name = "finishButton";
             this.finishButton.Size = new System.Drawing.Size(75, 23);
             this.finishButton.TabIndex = 1;
@@ -56,7 +57,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(984, 591);
             this.Controls.Add(this.finishButton);
             this.Controls.Add(this.mapDataGridView);
             this.Name = "MapForm";
