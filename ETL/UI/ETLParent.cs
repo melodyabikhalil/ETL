@@ -35,6 +35,7 @@ namespace ETL.UI
             JsonHelper.CreateJsonFolder();
             this.LoadSavedDataFromJsonFiles();
             this.LoadDatabasesFromJsonFile();
+            this.LoadSavedMapDtFromJsonFile();
         }
 
         private void LoadSavedDataFromJsonFiles()
@@ -43,6 +44,11 @@ namespace ETL.UI
             this.LoadEtlsFromJsonFile();
         }
 
+        private void LoadSavedMapDtFromJsonFile()
+        {
+            DataTable mapDt = JsonHelper.GetMapDtFromJsonFile();
+            Global.mapDt = mapDt;
+        }
         private void LoadDatabasesFromJsonFile()
         {
             List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
@@ -178,6 +184,12 @@ namespace ETL.UI
             newEtlForm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
             newEtlForm.Dock = DockStyle.Fill;
             newEtlForm.Show();
+        }
+
+        private void editMappingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapForm mapForm = new MapForm();
+            mapForm.Show();
         }
     }
 }

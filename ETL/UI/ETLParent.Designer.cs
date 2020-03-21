@@ -101,7 +101,7 @@
             // 
             this.addToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.Add_Click);
             // 
@@ -110,7 +110,7 @@
             this.ETLMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createStripMenuItem});
             this.ETLMenu.Name = "ETLMenu";
-            this.ETLMenu.Size = new System.Drawing.Size(38, 20);
+            this.ETLMenu.Size = new System.Drawing.Size(37, 20);
             this.ETLMenu.Text = "&ETL";
             // 
             // createStripMenuItem
@@ -127,7 +127,7 @@
             this.createJobToolStripMenuItem,
             this.RunToolStripMenuItem});
             this.toolsMenu.Name = "toolsMenu";
-            this.toolsMenu.Size = new System.Drawing.Size(59, 20);
+            this.toolsMenu.Size = new System.Drawing.Size(58, 20);
             this.toolsMenu.Text = "&ETL Job";
             // 
             // createJobToolStripMenuItem
@@ -147,7 +147,7 @@
             // eTLJob1ToolStripMenuItem
             // 
             this.eTLJob1ToolStripMenuItem.Name = "eTLJob1ToolStripMenuItem";
-            this.eTLJob1ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.eTLJob1ToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.eTLJob1ToolStripMenuItem.Text = "ETLJob1..";
             // 
             // mappingMenu
@@ -161,8 +161,9 @@
             // editMappingToolStripMenuItem
             // 
             this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
-            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
+            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editMappingToolStripMenuItem.Text = "Edit";
+            this.editMappingToolStripMenuItem.Click += new System.EventHandler(this.editMappingToolStripMenuItem_Click);
             // 
             // viewMenu
             // 
