@@ -34,14 +34,14 @@ namespace ETL.UI
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
             JsonHelper.CreateJsonFolder();
             this.LoadSavedDataFromJsonFiles();
-            this.LoadDatabasesFromJsonFile();
-            this.LoadSavedMapDtFromJsonFile();
         }
 
         private void LoadSavedDataFromJsonFiles()
         {
             this.LoadDatabasesFromJsonFile();
             this.LoadEtlsFromJsonFile();
+            this.LoadEtlJobsFromJsonFile();
+            this.LoadSavedMapDtFromJsonFile();
         }
 
         private void LoadSavedMapDtFromJsonFile()
@@ -49,6 +49,7 @@ namespace ETL.UI
             DataTable mapDt = JsonHelper.GetMapDtFromJsonFile();
             Global.mapDt = mapDt;
         }
+        
         private void LoadDatabasesFromJsonFile()
         {
             List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
@@ -77,7 +78,14 @@ namespace ETL.UI
             Global.etls = etls;
         }
 
-        private void ETLParent_Activated(object sender, System.EventArgs e)
+        private void LoadEtlJobsFromJsonFile()
+        {
+            List<JobETL> jobs = JsonHelper.GetETLJobsFromJsonFile();
+            Global.jobETLs = jobs;
+            ETLParent.ReloadEtlJobsListInMenu();
+        }
+
+        private void ETLParent_Activated(object sender, EventArgs e)
         {
             MessageBox.Show("activated:");
         }
@@ -186,6 +194,41 @@ namespace ETL.UI
             newEtlForm.Show();
         }
 
+        public static void ReloadEtlJobsListInMenu()
+        {
+            foreach (JobETL job in Global.jobETLs)
+            {
+                ToolStripItem jobSubITem = new ToolStripMenuItem(job.name);
+                jobSubITem.Click += new EventHandler(_instance.JobMenuItem_Click);
+                _instance.RunToolStripMenuItem.DropDownItems.Add(jobSubITem);
+            }
+        }
+
+        private void CreateJobToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateETLJob createETLJob = new CreateETLJob();
+            createETLJob.TopLevel = false;
+            this.mainSplitContainer.Panel2.Controls.Add(createETLJob);
+            createETLJob.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            createETLJob.Dock = DockStyle.Fill;
+            createETLJob.Show();
+        }
+
+        void JobMenuItem_Click(object sender, EventArgs e)
+        {
+            string jobName = sender.ToString();
+            JobETL job = Global.GetJobByName(jobName);
+            if (job != null)
+            {
+                var pressed = MessageBox.Show("Are you sure you want to run this job?", "Run job", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (pressed == DialogResult.Yes)
+                {
+                    job.Run();
+                    // TODO : log result + show progress in window
+                }
+            }
+        }
+        
         private void editMappingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MapForm mapForm = new MapForm();

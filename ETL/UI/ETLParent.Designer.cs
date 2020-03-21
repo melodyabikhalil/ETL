@@ -38,7 +38,6 @@
             this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.createJobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.eTLJob1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mappingMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.editMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -133,22 +132,15 @@
             // createJobToolStripMenuItem
             // 
             this.createJobToolStripMenuItem.Name = "createJobToolStripMenuItem";
-            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createJobToolStripMenuItem.Text = "&Create";
+            this.createJobToolStripMenuItem.Click += new System.EventHandler(this.CreateJobToolStripMenuItem_Click);
             // 
             // RunToolStripMenuItem
             // 
-            this.RunToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.eTLJob1ToolStripMenuItem});
             this.RunToolStripMenuItem.Name = "RunToolStripMenuItem";
-            this.RunToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.RunToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.RunToolStripMenuItem.Text = "Run";
-            // 
-            // eTLJob1ToolStripMenuItem
-            // 
-            this.eTLJob1ToolStripMenuItem.Name = "eTLJob1ToolStripMenuItem";
-            this.eTLJob1ToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-            this.eTLJob1ToolStripMenuItem.Text = "ETLJob1..";
             // 
             // mappingMenu
             // 
@@ -420,7 +412,6 @@
         private System.Windows.Forms.SplitContainer mainSplitContainer;
         private System.Windows.Forms.TreeView databasesTreeView;
         private System.Windows.Forms.ToolStripMenuItem RunToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem eTLJob1ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mappingMenu;
         private System.Windows.Forms.ToolStripMenuItem editMappingToolStripMenuItem;
     }

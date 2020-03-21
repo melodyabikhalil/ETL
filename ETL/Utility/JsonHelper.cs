@@ -1,4 +1,4 @@
-﻿using ETL.Core;
+﻿ using ETL.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -16,6 +16,7 @@ namespace ETL.Utility
         public const string PATH_FOLDER_CONFIG = ".\\config";
         public const string PATH_DATABASES = PATH_FOLDER_CONFIG + "\\databases.json";
         public const string PATH_ETLS = PATH_FOLDER_CONFIG + "\\etls.json";
+        public const string PATH_ETL_JOBS = PATH_FOLDER_CONFIG + "\\jobs.json";
         public const string PATH_MAP_DT = PATH_FOLDER_CONFIG + "\\mappingDt.json";
 
         public static bool CreateJsonFolder()
@@ -96,7 +97,7 @@ namespace ETL.Utility
                 for (int i = 0; i < databasesNumber; ++i)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
-                    Database database= JsonToDatabase(data);
+                    Database database = JsonToDatabase(data);
                     if (database == null)
                     {
                         continue;
@@ -136,26 +137,12 @@ namespace ETL.Utility
                 for (int i = 0; i < etlsNumber; ++i)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
-                    string ETLName = data.name;
 
-                    dynamic sourceDatabaseData = JObject.Parse(data.srcDb.ToString());
-                    Database sourceDatabase = JsonToDatabase(sourceDatabaseData);
-
-                    dynamic destinationDatabaseData = JObject.Parse(data.destDb.ToString());
-                    Database destinationDatabase = JsonToDatabase(destinationDatabaseData);
-                    
-                    SourceTableOrQuery sourceTableOrQuery = JsonToSourceTableOrQuery(data.sourceTable);
-                    Table destinationTable = JsonToTable(data.destTable);
-
-                    var expressionDatatableJson = JsonConvert.SerializeObject(data.expressionDt);
-                    DataTable expressionDt = (DataTable)JsonConvert.DeserializeObject(expressionDatatableJson.ToString(), typeof(DataTable));
-
-                    if (destinationDatabase == null || sourceDatabase == null || sourceTableOrQuery == null || destinationTable == null || expressionDt == null)
+                    etl = JsonToEtl(data);
+                    if (etl == null)
                     {
-                        continue;
+                        return null;
                     }
-
-                    etl = new SingleETL(ETLName, sourceDatabase, destinationDatabase, sourceTableOrQuery, destinationTable, expressionDt);
                     if (!etls.Contains(etl))
                     {
                         etls.Add(etl);
@@ -216,6 +203,30 @@ namespace ETL.Utility
             }
         }
 
+        public static void SaveEtlJob(JobETL job, bool addIfNotExists)
+        {
+            List<JobETL> savedJobs = GetETLJobsFromJsonFile();
+            bool jobAlreadySaved = Helper.EtlJobExistsInListOfEtlJobs(savedJobs, job);
+
+            if (jobAlreadySaved)
+            {
+                savedJobs.Remove(job);
+            }
+
+            if (jobAlreadySaved || (!jobAlreadySaved && addIfNotExists))
+            {
+                savedJobs.Add(job);
+                string json = JsonConvert.SerializeObject(savedJobs, Formatting.Indented,
+                    new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+              
+                File.WriteAllText(PATH_ETL_JOBS, string.Empty);
+                File.WriteAllText(PATH_ETL_JOBS, json);
+            }
+        }
+
         public static void SaveMapDt(DataTable mapDt)
         {
             string json = JsonConvert.SerializeObject(mapDt, Formatting.Indented,
@@ -226,6 +237,48 @@ namespace ETL.Utility
 
             File.WriteAllText(PATH_MAP_DT, string.Empty);
             File.WriteAllText(PATH_MAP_DT, json);
+        }
+
+        public static List<JobETL> GetETLJobsFromJsonFile()
+        {
+            List<JobETL> jobs = new List<JobETL>();
+            try
+            {
+                string json = ReadAllFile(PATH_ETL_JOBS);
+                JArray jsonArray = JArray.Parse(json);
+                int jobsNumber = jsonArray.Count;
+                JobETL job = new JobETL();
+                for (int i = 0; i < jobsNumber; ++i)
+                {
+                    dynamic data = JObject.Parse(jsonArray[i].ToString());
+                    string jobName = data.name;
+                    job.name = jobName;
+
+                    if (data.etls != null)
+                    {
+                        for (int j = 0; j < data.etls.Count; ++j)
+                        {
+                            dynamic etlData = JObject.Parse(data.etls[i].ToString());
+                            SingleETL etl = JsonToEtl(etlData);
+                            if (etl != null && !job.etls.Contains(etl))
+                            {
+                                job.etls.Add(etl);
+                            }
+                        }
+                    }
+
+                    if (!jobs.Contains(job))
+                    {
+                        jobs.Add(job);
+                    }
+                }
+                return jobs;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new List<JobETL>();
+            }
         }
 
         public static Database JsonToDatabase(dynamic data)
@@ -349,6 +402,40 @@ namespace ETL.Utility
                 List<DataColumn> columns = (List<DataColumn>)JsonConvert.DeserializeObject(columnsJson.ToString(), typeof(List<DataColumn>));
                 table.tableName = tableName;
                 return table;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public static SingleETL JsonToEtl(dynamic data)
+        {
+            SingleETL etl;
+            try
+            {
+                string ETLName = data.name;
+
+                dynamic sourceDatabaseData = JObject.Parse(data.srcDb.ToString());
+                Database sourceDatabase = JsonToDatabase(sourceDatabaseData);
+
+                dynamic destinationDatabaseData = JObject.Parse(data.destDb.ToString());
+                Database destinationDatabase = JsonToDatabase(destinationDatabaseData);
+
+                SourceTableOrQuery sourceTableOrQuery = JsonToSourceTableOrQuery(data.sourceTable);
+                Table destinationTable = JsonToTable(data.destTable);
+
+                var expressionDatatableJson = JsonConvert.SerializeObject(data.expressionDt);
+                DataTable expressionDt = (DataTable)JsonConvert.DeserializeObject(expressionDatatableJson.ToString(), typeof(DataTable));
+
+                if (destinationDatabase == null || sourceDatabase == null || sourceTableOrQuery == null || destinationTable == null || expressionDt == null)
+                {
+                    return null;
+                }
+
+                etl = new SingleETL(ETLName, sourceDatabase, destinationDatabase, sourceTableOrQuery, destinationTable, expressionDt);
+                return etl;
             }
             catch (Exception e)
             {

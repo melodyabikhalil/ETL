@@ -202,6 +202,7 @@ namespace ETL.UI
                 result.Nodes[1].Nodes.Clear();
                 UIHelper.AddChildrenNodes(this.joinQuery.database.queriesNames, result.Nodes[1]);
                 JsonHelper.SaveDatabase(this.joinQuery.database, false);
+                MessageBox.Show("Query successfully created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             else
