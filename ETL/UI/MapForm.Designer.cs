@@ -40,6 +40,7 @@
             this.mapDataGridView.Name = "mapDataGridView";
             this.mapDataGridView.Size = new System.Drawing.Size(477, 157);
             this.mapDataGridView.TabIndex = 0;
+            this.mapDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(mapDataGridView_CellValueChanged);
             // 
             // finishButton
             // 
