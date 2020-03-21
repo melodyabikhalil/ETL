@@ -216,6 +216,7 @@ namespace ETL.UI
             SingleETL etl = new SingleETL(ETLName, src, dest, srcTable, destTable, this.CreateExpressionDatatable());
             Global.etls.Add(etl);
             JsonHelper.SaveETL(etl, true);
+            MessageBox.Show("ETL successfully created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
 
