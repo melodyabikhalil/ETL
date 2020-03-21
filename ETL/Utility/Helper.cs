@@ -98,5 +98,33 @@ namespace ETL.Utility
             }
             return false;
         }
+
+        public static bool EtlJobExistsInListOfEtlJobs(List<JobETL> jobs, JobETL job)
+        {
+            foreach (JobETL existingJob in jobs)
+            {
+                if (job.Equals(existingJob))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static List<string> ConvertDataColumnToList(DataTable datatable, string columnName)
+        {
+            List<string> list = new List<string>();
+            try
+            {
+                list = datatable.Rows.OfType<DataRow>()
+                    .Select(dr => dr.Field<string>(columnName)).ToList();
+                return list;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new List<string>();
+            }
+        }
     }
 }

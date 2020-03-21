@@ -18,6 +18,8 @@ namespace ETL.Utility
         private static Expression expression = Expression.getInstance();
         public static List<SingleETL> etls = new List<SingleETL>();
         public static DataTable mapDt = new DataTable();
+        public static List<JobETL> jobETLs = new List<JobETL>();
+
         static Global()
         {
             mapDt.Columns.Add("SectionName");
@@ -86,9 +88,52 @@ namespace ETL.Utility
             return Helper.DatabaseExistsInListOfDatabases(databases, database);
         }
 
-        public static bool EtlAlreadyConnected(SingleETL etl)
+        public static bool EtlAlreadyExists(SingleETL etl)
         {
             return Helper.EtlExistsInListOfEtls(etls, etl);
+        }
+
+        public static bool EtlJobAlreadyExists(JobETL job)
+        {
+            return Helper.EtlJobExistsInListOfEtlJobs(jobETLs, job);
+        }
+
+        public static bool EtlJobNameAlreadyExists(string jobName)
+        {
+            foreach (JobETL job in jobETLs)
+            {
+                if (job.name == jobName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static List<string> GetEtlsNames()
+        {
+            List<string> etlsNames = new List<string>();
+            foreach (SingleETL etl in etls)
+            {
+                etlsNames.Add(etl.name);
+            }
+            return etlsNames;
+        }
+
+        public static List<SingleETL> GetEtlsFromNames(List<string> etlNames)
+        {
+            List<SingleETL> etlsToGet = new List<SingleETL>();
+            foreach (string etlName in etlNames)
+            {
+                foreach (SingleETL existingEtl in etls)
+                {
+                    if (existingEtl.name == etlName)
+                    {
+                        etlsToGet.Add(existingEtl);
+                    }
+                }
+            }
+            return etlsToGet;
         }
     }
 }

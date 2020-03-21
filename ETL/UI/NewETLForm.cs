@@ -212,7 +212,7 @@ namespace ETL.UI
             this.Close();
         }
 
-        private void ExpressionDataGridView_RowsAdded(object sender, System.Windows.Forms.DataGridViewRowsAddedEventArgs e)
+        private void ExpressionDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             for (int index = e.RowIndex; index <= e.RowIndex + e.RowCount - 1; index++)
             {

@@ -179,5 +179,24 @@ namespace ETL.UI
             newEtlForm.Dock = DockStyle.Fill;
             newEtlForm.Show();
         }
+
+        public static void ReloadEtlJobsListInMenu()
+        {
+            foreach (JobETL job in Global.jobETLs)
+            {
+                ToolStripItem etlSubITem = new ToolStripMenuItem(job.name);
+                _instance.RunToolStripMenuItem.DropDownItems.Add(etlSubITem);
+            }
+        }
+
+        private void CreateJobToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateETLJob createETLJob = new CreateETLJob();
+            createETLJob.TopLevel = false;
+            this.mainSplitContainer.Panel2.Controls.Add(createETLJob);
+            createETLJob.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            createETLJob.Dock = DockStyle.Fill;
+            createETLJob.Show();
+        }
     }
 }
