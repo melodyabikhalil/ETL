@@ -17,6 +17,7 @@ namespace ETL.Utility
         public const string PATH_DATABASES = PATH_FOLDER_CONFIG + "\\databases.json";
         public const string PATH_ETLS = PATH_FOLDER_CONFIG + "\\etls.json";
         public const string PATH_ETL_JOBS = PATH_FOLDER_CONFIG + "\\jobs.json";
+        public const string PATH_MAP_DT = PATH_FOLDER_CONFIG + "\\mappingDt.json";
 
         public static bool CreateJsonFolder()
         {
@@ -156,6 +157,28 @@ namespace ETL.Utility
             }
         }
 
+        public static DataTable GetMapDtFromJsonFile()
+        {
+            try
+            {
+                string json = ReadAllFile(PATH_MAP_DT);
+                DataTable mapDt = (DataTable)JsonConvert.DeserializeObject(json, typeof(DataTable));
+                if(mapDt == null ||mapDt.Rows.Count == 0)
+                {
+                    mapDt = new DataTable();
+                    mapDt.Columns.Add("Section Name");
+                    mapDt.Columns.Add("From Value");
+                    mapDt.Columns.Add("To Value");
+                }
+                return mapDt;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new DataTable();
+            }
+        }
+
         public static void SaveETL(SingleETL etl, bool addIfNotExists)
         {
             List<SingleETL> savedEtls = GetETLsFromJsonFile();
@@ -194,13 +217,26 @@ namespace ETL.Utility
             {
                 savedJobs.Add(job);
                 string json = JsonConvert.SerializeObject(savedJobs, Formatting.Indented,
+                    new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+              
+                File.WriteAllText(PATH_ETL_JOBS, string.Empty);
+                File.WriteAllText(PATH_ETL_JOBS, json);
+            }
+        }
+
+        public static void SaveMapDt(DataTable mapDt)
+        {
+            string json = JsonConvert.SerializeObject(mapDt, Formatting.Indented,
                 new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
 
-                File.WriteAllText(PATH_ETL_JOBS, string.Empty);
-                File.WriteAllText(PATH_ETL_JOBS, json);
+            File.WriteAllText(PATH_MAP_DT, string.Empty);
+            File.WriteAllText(PATH_MAP_DT, json);
             }
         }
 

@@ -41,8 +41,15 @@ namespace ETL.UI
             this.LoadDatabasesFromJsonFile();
             this.LoadEtlsFromJsonFile();
             this.LoadEtlJobsFromJsonFile();
+            this.LoadSavedMapDtFromJsonFile();
         }
 
+        private void LoadSavedMapDtFromJsonFile()
+        {
+            DataTable mapDt = JsonHelper.GetMapDtFromJsonFile();
+            Global.mapDt = mapDt;
+        }
+        
         private void LoadDatabasesFromJsonFile()
         {
             List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
@@ -222,5 +229,10 @@ namespace ETL.UI
             }
         }
         
+        private void editMappingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapForm mapForm = new MapForm();
+            mapForm.Show();
+        }
     }
 }

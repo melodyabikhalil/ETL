@@ -144,6 +144,12 @@
     <Compile Include="UI\ETLParent.Designer.cs">
       <DependentUpon>ETLParent.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\MapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MapForm.Designer.cs">
+      <DependentUpon>MapForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\NewDatabaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +184,9 @@
     <EmbeddedResource Include="UI\ETLParent.resx">
       <DependentUpon>ETLParent.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\MapForm.resx">
+      <DependentUpon>MapForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\NewDatabaseForm.resx">
       <DependentUpon>NewDatabaseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -185,6 +194,7 @@
       <DependentUpon>NewETLForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\ETL.Utility.Global.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
