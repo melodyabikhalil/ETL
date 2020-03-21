@@ -97,7 +97,7 @@ namespace ETL.Utility
                 for (int i = 0; i < databasesNumber; ++i)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
-                    Database database= JsonToDatabase(data);
+                    Database database = JsonToDatabase(data);
                     if (database == null)
                     {
                         continue;
@@ -237,7 +237,6 @@ namespace ETL.Utility
 
             File.WriteAllText(PATH_MAP_DT, string.Empty);
             File.WriteAllText(PATH_MAP_DT, json);
-            }
         }
 
         public static List<JobETL> GetETLJobsFromJsonFile()
@@ -279,7 +278,7 @@ namespace ETL.Utility
             {
                 Console.WriteLine(e.Message);
                 return new List<JobETL>();
-            };
+            }
         }
 
         public static Database JsonToDatabase(dynamic data)
