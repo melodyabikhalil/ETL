@@ -81,6 +81,7 @@ namespace ETL.UI
 
         private void SetExpressionDataGridView()
         {
+            this.srcColumnLabel.Text = "Source table columns: ";
             string destTableName = this.destTableComboBox.Text;
             dest.Close();
             dest.SetDatatableSchema(destTableName);
@@ -96,6 +97,12 @@ namespace ETL.UI
             {
                 this.srcTable = this.src.GetQuery(srcTableName);
             }
+            string srcColumnsList = "";
+            foreach(string col in srcTable.GetColumnsNames())
+            {
+                srcColumnsList = srcColumnsList + " " + col;
+            }
+            this.srcColumnLabel.Text = this.srcColumnLabel.Text + " " + srcColumnsList;
             this.destTable = (Table) Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
             CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
             foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
@@ -120,7 +127,7 @@ namespace ETL.UI
         {
             string destTableName = this.destTableComboBox.Text;
             string srcTableName = this.srcTableOrQueriesComboBox.Text;
-            if (destTableName == null || destTableName == "" || srcTableName == null || srcTableName == "")
+                if (destTableName == null || destTableName == "" || srcTableName == null || srcTableName == "")
             {
                 MessageBox.Show("Please choose source & destination tables (or queries) to proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

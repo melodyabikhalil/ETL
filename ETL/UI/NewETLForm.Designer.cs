@@ -55,6 +55,7 @@
             this.backToSrcDestTablesTabButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
             this.ExpressionDataGridView = new System.Windows.Forms.DataGridView();
+            this.srcColumnLabel = new System.Windows.Forms.Label();
             this.ETLTabControl.SuspendLayout();
             this.ETLNameTab.SuspendLayout();
             this.SrcDestDbTab.SuspendLayout();
@@ -173,7 +174,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(85, 158);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(107, 13);
+            this.label4.Size = new System.Drawing.Size(109, 13);
             this.label4.TabIndex = 2;
             this.label4.Text = "Destination database";
             // 
@@ -191,7 +192,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(69, 68);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(205, 13);
+            this.label2.Size = new System.Drawing.Size(208, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "Choose source and destination databases";
             // 
@@ -253,7 +254,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(85, 151);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(86, 13);
+            this.label6.Size = new System.Drawing.Size(88, 13);
             this.label6.TabIndex = 6;
             this.label6.Text = "Destination table";
             // 
@@ -262,7 +263,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(85, 99);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(108, 13);
+            this.label7.Size = new System.Drawing.Size(111, 13);
             this.label7.TabIndex = 5;
             this.label7.Text = "Source table or query";
             // 
@@ -271,13 +272,14 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(54, 53);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(236, 13);
+            this.label5.Size = new System.Drawing.Size(241, 13);
             this.label5.TabIndex = 0;
             this.label5.Text = "Choose source  and destination tables or queries";
             // 
             // ExpressionTab
             // 
             this.ExpressionTab.BackColor = System.Drawing.SystemColors.Control;
+            this.ExpressionTab.Controls.Add(this.srcColumnLabel);
             this.ExpressionTab.Controls.Add(this.label8);
             this.ExpressionTab.Controls.Add(this.backToSrcDestTablesTabButton);
             this.ExpressionTab.Controls.Add(this.SaveButton);
@@ -294,7 +296,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(28, 24);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(493, 104);
+            this.label8.Size = new System.Drawing.Size(507, 104);
             this.label8.TabIndex = 15;
             this.label8.Text = resources.GetString("label8.Text");
             // 
@@ -321,11 +323,20 @@
             // ExpressionDataGridView
             // 
             this.ExpressionDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ExpressionDataGridView.Location = new System.Drawing.Point(31, 154);
+            this.ExpressionDataGridView.Location = new System.Drawing.Point(31, 206);
             this.ExpressionDataGridView.Name = "ExpressionDataGridView";
             this.ExpressionDataGridView.Size = new System.Drawing.Size(914, 289);
             this.ExpressionDataGridView.TabIndex = 0;
             this.ExpressionDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ExpressionDataGridView_RowsAdded);
+            // 
+            // srcColumnLabel
+            // 
+            this.srcColumnLabel.AutoSize = true;
+            this.srcColumnLabel.Location = new System.Drawing.Point(28, 157);
+            this.srcColumnLabel.Name = "srcColumnLabel";
+            this.srcColumnLabel.Size = new System.Drawing.Size(112, 13);
+            this.srcColumnLabel.TabIndex = 16;
+            this.srcColumnLabel.Text = "Source table columns:";
             // 
             // NewETLForm
             // 
@@ -377,5 +388,6 @@
         private System.Windows.Forms.Button backToSrcDestTablesTabButton;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label srcColumnLabel;
     }
 }
