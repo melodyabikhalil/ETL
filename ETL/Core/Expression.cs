@@ -63,10 +63,10 @@ namespace ETL.Core
             }
             if (type == "Map")
             {
-                string sectionName = expRow["SectionName"].ToString();
+                string sectionName = expRow["Section Name"].ToString();
                 string fromValue = row[col.ColumnName].ToString();
-                DataRow[] mapRows = mapDt.Select("SectionName = '" + sectionName + "' AND FromValue = '" + fromValue + "'");
-                value = mapRows[0]["ToValue"].ToString();
+                DataRow[] mapRows = mapDt.Select("Section Name = '" + sectionName + "' AND From Value = '" + fromValue + "'");
+                value = mapRows[0]["To Value"].ToString();
             }
             return value;
 
@@ -99,9 +99,9 @@ namespace ETL.Core
             this.expressionDt.Columns.Add("RegexpColumnName");
             this.expressionDt.Columns.Add("Expression", Type.GetType("System.String"));
             this.expressionDt.Columns.Add("SectionName");
-            this.mapDt.Columns.Add("SectionName");
-            this.mapDt.Columns.Add("FromValue");
-            this.mapDt.Columns.Add("ToValue");
+            this.mapDt.Columns.Add("Section Name");
+            this.mapDt.Columns.Add("From Value");
+            this.mapDt.Columns.Add("To Value");
         }
 
         public static Expression getInstance()

@@ -20,21 +20,21 @@ namespace ETL.Utility
         public static DataTable mapDt = new DataTable();
         static Global()
         {
-            mapDt.Columns.Add("SectionName");
-            mapDt.Columns.Add("FromValue");
-            mapDt.Columns.Add("ToValue");
+            //mapDt.Columns.Add("SectionName");
+            //mapDt.Columns.Add("FromValue");
+            //mapDt.Columns.Add("ToValue");
 
-            DataRow maprow = mapDt.NewRow();
-            maprow["SectionName"] = "Gender";
-            maprow["FromValue"] = "Female";
-            maprow["ToValue"] = 0;
-            mapDt.Rows.Add(maprow);
+            //DataRow maprow = mapDt.NewRow();
+            //maprow["SectionName"] = "Gender";
+            //maprow["FromValue"] = "Female";
+            //maprow["ToValue"] = 0;
+            //mapDt.Rows.Add(maprow);
 
-            DataRow maprow2 = mapDt.NewRow();
-            maprow2["SectionName"] = "Gender";
-            maprow2["FromValue"] = "Male";
-            maprow2["ToValue"] = 1;
-            mapDt.Rows.Add(maprow2);
+            //DataRow maprow2 = mapDt.NewRow();
+            //maprow2["SectionName"] = "Gender";
+            //maprow2["FromValue"] = "Male";
+            //maprow2["ToValue"] = 1;
+            //mapDt.Rows.Add(maprow2);
         }
 
         public static List<Database> Databases

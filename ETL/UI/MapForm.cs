@@ -59,6 +59,7 @@ namespace ETL.UI
             {
                 MessageBox.Show("Map successfully edited", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            JsonHelper.SaveMapDt(Global.mapDt);
             this.Close();
         }
 
