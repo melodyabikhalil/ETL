@@ -103,7 +103,9 @@ namespace ETL.UI
             List<SingleETL> etls = Global.GetEtlsFromNames(etlNamesByOrder);
             this.job.etls = etls;
             Global.jobETLs.Add(this.job);
+            JsonHelper.SaveEtlJob(this.job, true);
             MessageBox.Show("Job successfully created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ETLParent.ReloadEtlJobsListInMenu();
             this.Close();
         }
     }

@@ -34,13 +34,13 @@ namespace ETL.UI
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
             JsonHelper.CreateJsonFolder();
             this.LoadSavedDataFromJsonFiles();
-            this.LoadDatabasesFromJsonFile();
         }
 
         private void LoadSavedDataFromJsonFiles()
         {
             this.LoadDatabasesFromJsonFile();
             this.LoadEtlsFromJsonFile();
+            this.LoadEtlJobsFromJsonFile();
         }
 
         private void LoadDatabasesFromJsonFile()
@@ -71,7 +71,14 @@ namespace ETL.UI
             Global.etls = etls;
         }
 
-        private void ETLParent_Activated(object sender, System.EventArgs e)
+        private void LoadEtlJobsFromJsonFile()
+        {
+            List<JobETL> jobs = JsonHelper.GetETLJobsFromJsonFile();
+            Global.jobETLs = jobs;
+            ETLParent.ReloadEtlJobsListInMenu();
+        }
+
+        private void ETLParent_Activated(object sender, EventArgs e)
         {
             MessageBox.Show("activated:");
         }
@@ -184,8 +191,8 @@ namespace ETL.UI
         {
             foreach (JobETL job in Global.jobETLs)
             {
-                ToolStripItem etlSubITem = new ToolStripMenuItem(job.name);
-                _instance.RunToolStripMenuItem.DropDownItems.Add(etlSubITem);
+                ToolStripItem jobSubITem = new ToolStripMenuItem(job.name);
+                _instance.RunToolStripMenuItem.DropDownItems.Add(jobSubITem);
             }
         }
 
