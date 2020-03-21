@@ -18,7 +18,12 @@ namespace ETL.Core
 
         public void Run()
         {
-            // TODO: for each etl, do the migration
+            // TODO: do the migration
+            //foreach (SingleETL etl in etls)
+            //{
+            //    etl.srcDb.Select(etl.sourceTable.name, etl.sourceTable.query);
+            //    //....
+            //}
         }
 
         public override bool Equals(Object obj)

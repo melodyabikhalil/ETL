@@ -192,6 +192,7 @@ namespace ETL.UI
             foreach (JobETL job in Global.jobETLs)
             {
                 ToolStripItem jobSubITem = new ToolStripMenuItem(job.name);
+                jobSubITem.Click += new EventHandler(_instance.JobMenuItem_Click);
                 _instance.RunToolStripMenuItem.DropDownItems.Add(jobSubITem);
             }
         }
@@ -205,5 +206,21 @@ namespace ETL.UI
             createETLJob.Dock = DockStyle.Fill;
             createETLJob.Show();
         }
+
+        void JobMenuItem_Click(object sender, EventArgs e)
+        {
+            string jobName = sender.ToString();
+            JobETL job = Global.GetJobByName(jobName);
+            if (job != null)
+            {
+                var pressed = MessageBox.Show("Are you sure you want to run this job?", "Run job", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (pressed == DialogResult.Yes)
+                {
+                    job.Run();
+                    // TODO : log result + show progress in window
+                }
+            }
+        }
+        
     }
 }

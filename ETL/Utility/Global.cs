@@ -135,5 +135,17 @@ namespace ETL.Utility
             }
             return etlsToGet;
         }
+
+        public static JobETL GetJobByName(string jobName)
+        {
+            foreach (JobETL existingJob in jobETLs)
+            {
+                if (existingJob.name == jobName)
+                {
+                    return existingJob;
+                }
+            }
+            return null;
+        }
     }
 }
