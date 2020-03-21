@@ -138,7 +138,7 @@ namespace ETL.Core
         abstract public bool Connect();
         abstract public bool Close();
         abstract public bool Insert(string tableName);
-        abstract public bool Select(string tableName, string query);
+        abstract public bool Select(string tableOrQueryName, string type);
         abstract public bool SetDatatableSchema(string tableName);
         abstract public bool TrySelect(string query);
 
