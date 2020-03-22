@@ -124,7 +124,7 @@ namespace ETL.UI
             {
                 sectionNames.Add(section);
             }
-            CreateComboBoxColumn("Section Name", sectionNames, "Section Name");
+            CreateComboBoxColumn("SectionName", sectionNames, "SectionName");
         }
 
         private void FromSrcDestTablesToExpression_Click(object sender, EventArgs e)
@@ -204,7 +204,7 @@ namespace ETL.UI
                 dr["ExpressionType"] = row.Cells["ExpressionType"].Value;
                 dr["RegexpColumnName"] = row.Cells["RegexpColumnName"].Value;
                 dr["Expression"] = row.Cells["Expression"].Value;
-                dr["SectionName"] = row.Cells["Section Name"].Value;
+                dr["SectionName"] = row.Cells["SectionName"].Value;
                 dataTable.Rows.Add(dr);
             }
             return dataTable;

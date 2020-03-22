@@ -45,7 +45,9 @@ namespace ETL.UI
                 ToolStripItem item = new ToolStripMenuItem();
                 item.Text = etl.name;
                 item.Name = etl.name + "ToolStripItem";
-                item.Click += new EventHandler((s, e) => Console.WriteLine("etl clicked"));
+                item.Click += new EventHandler((s, e) => { ViewEditETLForm viewEtlForm = new ViewEditETLForm(etl);
+                    viewEtlForm.Show();
+                });
                 _instance.viewEditToolStripMenuItem.DropDownItems.Add(item);
             }
         }

@@ -63,9 +63,9 @@ namespace ETL.Core
             }
             if (type == "Map")
             {
-                string sectionName = expRow["Section Name"].ToString();
+                string sectionName = expRow["SectionName"].ToString();
                 string fromValue = row[col.ColumnName].ToString();
-                DataRow[] mapRows = mapDt.Select("Section Name = '" + sectionName + "' AND From Value = '" + fromValue + "'");
+                DataRow[] mapRows = mapDt.Select("SectionName = '" + sectionName + "' AND From Value = '" + fromValue + "'");
                 value = mapRows[0]["To Value"].ToString();
             }
             return value;
