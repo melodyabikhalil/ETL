@@ -16,6 +16,8 @@ namespace ETL.Core
         public Table destTable { set; get; }
         public DataTable expressionDt { set; get; }
 
+        public SingleETL() { }
+
         public SingleETL(string name, Database srcDb, Database destDb, TableOrQuery sourceTable, Table destTable, DataTable expressionDt)
         {
             this.name = name;

@@ -75,7 +75,8 @@ namespace ETL.Utility
             if (databaseAlreadySaved  || (!databaseAlreadySaved && addIfNotExists))
             {
                 savedDatabases.Add(database);
-                string json = JsonConvert.SerializeObject(savedDatabases, Formatting.Indented,
+                List<JsonDatabase> jsonDatabases = JsonModels.MapFromListDatabaseToListJsonDatabase(savedDatabases);
+                string json = JsonConvert.SerializeObject(jsonDatabases, Formatting.Indented,
                 new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -88,36 +89,11 @@ namespace ETL.Utility
 
         public static List<Database> GetDatabasesFromJsonFile()
         {
-            List<Database> databases = new List<Database>();
             try
             {
                 string json = ReadAllFile(PATH_DATABASES);
-                JArray jsonArray = JArray.Parse(json);
-                int databasesNumber = jsonArray.Count;
-                for (int i = 0; i < databasesNumber; ++i)
-                {
-                    dynamic data = JObject.Parse(jsonArray[i].ToString());
-                    Database database = JsonToDatabase(data);
-                    if (database == null)
-                    {
-                        continue;
-                    }
-
-                    database.Connect();
-                    database.tablesNames = database.GetTablesNames();
-                    database.Close();
-                    database.CreateTablesList(database.tablesNames);
-                    for (int j = 0; j < database.tablesNames.Count; ++j)
-                    {
-                        database.Connect();
-                        database.SetDatatableSchema(database.tablesNames[j]);
-                        database.Close();
-                    }
-                    if (!databases.Contains(database))
-                    {
-                        databases.Add(database);
-                    }
-                }
+                List<JsonDatabase> jsonDatabases = JsonConvert.DeserializeObject<List<JsonDatabase>>(json);
+                List<Database> databases = JsonModels.MapFromListJsonDatabaseToListDatabase(jsonDatabases);
                 return databases;
             }
             catch (Exception e)
@@ -129,27 +105,11 @@ namespace ETL.Utility
 
         public static List<SingleETL> GetETLsFromJsonFile()
         {
-            List<SingleETL> etls = new List<SingleETL>();
             try
             {
                 string json = ReadAllFile(PATH_ETLS);
-                JArray jsonArray = JArray.Parse(json);
-                int etlsNumber = jsonArray.Count;
-                SingleETL etl;
-                for (int i = 0; i < etlsNumber; ++i)
-                {
-                    dynamic data = JObject.Parse(jsonArray[i].ToString());
-
-                    etl = JsonToEtl(data);
-                    if (etl == null)
-                    {
-                        return null;
-                    }
-                    if (!etls.Contains(etl))
-                    {
-                        etls.Add(etl);
-                    }
-                }
+                List<JsonSingleEtl> jsonEtls = JsonConvert.DeserializeObject<List<JsonSingleEtl>>(json);
+                List<SingleETL> etls = JsonModels.MapFromListJsonsSingleETLToSingleEtl(jsonEtls);
                 return etls;
             }
             catch (Exception e)
@@ -194,7 +154,8 @@ namespace ETL.Utility
             if (etlAlreadySaved || (!etlAlreadySaved && addIfNotExists))
             {
                 savedEtls.Add(etl);
-                string json = JsonConvert.SerializeObject(savedEtls, Formatting.Indented,
+                List<JsonSingleEtl> jsonEtls = JsonModels.MapFromListSingleETLToJsonSingleEtl(savedEtls);
+                string json = JsonConvert.SerializeObject(jsonEtls, Formatting.Indented,
                 new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -218,7 +179,8 @@ namespace ETL.Utility
             if (jobAlreadySaved || (!jobAlreadySaved && addIfNotExists))
             {
                 savedJobs.Add(job);
-                string json = JsonConvert.SerializeObject(savedJobs, Formatting.Indented,
+                List<JsonJobEtl> jsonJobs = JsonModels.MapFromListJobEtlToListJsonJobEtl(savedJobs);
+                string json = JsonConvert.SerializeObject(jsonJobs, Formatting.Indented,
                     new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -243,206 +205,17 @@ namespace ETL.Utility
 
         public static List<JobETL> GetETLJobsFromJsonFile()
         {
-            List<JobETL> jobs = new List<JobETL>();
             try
             {
                 string json = ReadAllFile(PATH_ETL_JOBS);
-                JArray jsonArray = JArray.Parse(json);
-                int jobsNumber = jsonArray.Count;
-                JobETL job = new JobETL();
-                for (int i = 0; i < jobsNumber; ++i)
-                {
-                    dynamic data = JObject.Parse(jsonArray[i].ToString());
-                    string jobName = data.name;
-                    job.name = jobName;
-
-                    if (data.etls != null)
-                    {
-                        for (int j = 0; j < data.etls.Count; ++j)
-                        {
-                            dynamic etlData = JObject.Parse(data.etls[i].ToString());
-                            SingleETL etl = JsonToEtl(etlData);
-                            if (etl != null && !job.etls.Contains(etl))
-                            {
-                                job.etls.Add(etl);
-                            }
-                        }
-                    }
-
-                    if (!jobs.Contains(job))
-                    {
-                        jobs.Add(job);
-                    }
-                }
+                List<JsonJobEtl> jsonJobs = JsonConvert.DeserializeObject<List<JsonJobEtl>>(json);
+                List<JobETL> jobs = JsonModels.MapFromListJsonJobEtlToListJobEtl(jsonJobs);
                 return jobs;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return new List<JobETL>();
-            }
-        }
-
-        public static Database JsonToDatabase(dynamic data)
-        {
-            try
-            {
-                string username = data.username;
-                string password = data.password;
-                string serverName = data.serverName;
-                string databaseName = data.databaseName;
-                string port = data.port;
-                string schema = data.schema;
-                string path = data.path;
-                string connectionString = data.connectionString;
-                string type = data.type;
-                Database database;
-                switch (type)
-                {
-                    case Database.DATABASE_TYPE_MYSQL:
-                        database = new MySQLDatabase(serverName, username, password, databaseName);
-                        break;
-
-                    case Database.DATABASE_TYPE_POSTGRES:
-                        database = new PostgreSQLDatabase(serverName, username, password, databaseName, port, schema);
-                        break;
-
-                    case Database.DATABASE_TYPE_SQLSERVER:
-                        database = new SQLServerDatabase(serverName, username, password, databaseName, schema);
-                        break;
-
-                    case Database.DATABASE_TYPE_ACCESS:
-                        database = new AccessDatabase(path);
-                        break;
-
-                    case Database.DATABASE_TYPE_ODBC:
-                        database = new ODBCDatabase(connectionString);
-                        break;
-
-                    default:
-                        database = new MySQLDatabase(serverName, username, password, databaseName);
-                        break;
-                }
-
-                if (data.queries != null)
-                {
-                    for (int j = 0; j < data.queries.Count; ++j)
-                    {
-                        dynamic queryArray = JObject.Parse(data.queries[j].ToString());
-                        JoinQuery joinQuery = JsonToJoinQuery(queryArray);
-                        if (joinQuery == null)
-                        {
-                            continue;
-                        }
-                        joinQuery.database = database;
-                        database.queries.Add(joinQuery);
-                    }
-                    database.SetQueriesNamesListFromQueriesList();
-                }
-                return database;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-        public static TableOrQuery JsonToSourceTableOrQuery(dynamic data)
-        {
-            string type = data.type;
-            TableOrQuery tableOrQuery;
-            switch (type)
-            {
-                case TableOrQuery.TYPE_JOIN_QUERY:
-                    tableOrQuery = JsonToJoinQuery(data);
-                    break;
-
-                default:
-                    tableOrQuery = JsonToTable(data);
-                    break;
-            }
-            return tableOrQuery;
-        }
-
-        public static JoinQuery JsonToJoinQuery(dynamic data)
-        {
-            JoinQuery joinQuery = new JoinQuery();
-            try
-            {
-                string queryName = data.name;
-                string query = data.query;
-                dynamic columnsData = data.columns;
-                List<string> columns = new List<string>();
-                for ( int i = 0; i < columnsData.Count; ++i)
-                {
-                    columns.Add((string)columnsData[i]);
-                }
-                if (columns.Count == 0)
-                {
-                    return null;
-                }
-                joinQuery.SetName(queryName);
-                joinQuery.query = query;
-                joinQuery.columns = columns;
-                return joinQuery;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-        public static Table JsonToTable(dynamic data)
-        {
-            Table table = new Table();
-            try
-            {
-                string tableName = data.name;
-                var columnsJson = JsonConvert.SerializeObject(data.columns);
-                List<DataColumn> columns = (List<DataColumn>)JsonConvert.DeserializeObject(columnsJson.ToString(), typeof(List<DataColumn>));
-                table.SetName(tableName);
-                return table;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-        public static SingleETL JsonToEtl(dynamic data)
-        {
-            SingleETL etl;
-            try
-            {
-                string ETLName = data.name;
-
-                dynamic sourceDatabaseData = JObject.Parse(data.srcDb.ToString());
-                Database sourceDatabase = JsonToDatabase(sourceDatabaseData);
-
-                dynamic destinationDatabaseData = JObject.Parse(data.destDb.ToString());
-                Database destinationDatabase = JsonToDatabase(destinationDatabaseData);
-
-                TableOrQuery sourceTableOrQuery = JsonToSourceTableOrQuery(data.sourceTable);
-                Table destinationTable = JsonToTable(data.destTable);
-
-                var expressionDatatableJson = JsonConvert.SerializeObject(data.expressionDt);
-                DataTable expressionDt = (DataTable)JsonConvert.DeserializeObject(expressionDatatableJson.ToString(), typeof(DataTable));
-
-                if (destinationDatabase == null || sourceDatabase == null || sourceTableOrQuery == null || destinationTable == null || expressionDt == null)
-                {
-                    return null;
-                }
-
-                etl = new SingleETL(ETLName, sourceDatabase, destinationDatabase, sourceTableOrQuery, destinationTable, expressionDt);
-                return etl;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
             }
         }
     }
