@@ -34,6 +34,20 @@ namespace ETL.UI
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
             JsonHelper.CreateJsonFolder();
             this.LoadSavedDataFromJsonFiles();
+            SetEtlsMenu();
+        }
+
+        public static void SetEtlsMenu()
+        {
+            _instance.viewEditToolStripMenuItem.DropDownItems.Clear();
+            foreach (SingleETL etl in Global.etls)
+            {
+                ToolStripItem item = new ToolStripMenuItem();
+                item.Text = etl.name;
+                item.Name = etl.name + "ToolStripItem";
+                item.Click += new EventHandler((s, e) => Console.WriteLine("etl clicked"));
+                _instance.viewEditToolStripMenuItem.DropDownItems.Add(item);
+            }
         }
 
         private void LoadSavedDataFromJsonFiles()

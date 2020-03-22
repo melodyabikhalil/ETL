@@ -221,6 +221,7 @@ namespace ETL.UI
             Global.etls.Add(etl);
             JsonHelper.SaveETL(etl, true);
             MessageBox.Show("ETL successfully created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ETLParent.SetEtlsMenu();
             this.Close();
         }
 
