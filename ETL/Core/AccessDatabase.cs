@@ -80,20 +80,31 @@ namespace ETL.Core
                 return tablesNames;
             }
         }
-        public override bool Select(string tableName, string query)
+        public override bool Select(string tableOrQueryName, string type)
         {
-            Table table = this.tables[this.GetTableIndexByName(tableName)];
-            if (table == null)
+            TableOrQuery tableOrQuery;
+            if (type == TableOrQuery.TYPE_TABLE)
+            {
+                tableOrQuery = this.tables[this.GetTableIndexByName(tableOrQueryName)];
+            }
+            else
+            {
+                tableOrQuery = this.queries[this.GetQueryIndexByName(tableOrQueryName)];
+            }
+
+            if (tableOrQuery == null)
             {
                 return false;
             }
+            string query = tableOrQuery.query;
+
             OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
             OleDbCommand selectCommand = new OleDbCommand(query, this.connection);
             dataAdapter.SelectCommand = selectCommand;
 
             try
             {
-                dataAdapter.Fill(table.dataTable);
+                dataAdapter.Fill(tableOrQuery.dataTable);
                 return true;
             }
             catch (Exception e)
@@ -160,12 +171,21 @@ namespace ETL.Core
         public override bool SetDatatableSchema(string tableName)
         {
             string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
-            bool result = this.Select(tableName, query);
-            if (result)
+            Table table = GetTable(tableName);
+            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
+            OleDbCommand selectCommand = new OleDbCommand(query, this.connection);
+            dataAdapter.SelectCommand = selectCommand;
+            try
             {
-                this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();
+                dataAdapter.Fill(table.dataTable);
+                this.GetTable(tableName).columns = table.dataTable.Columns.Cast<DataColumn>().ToList();
+                return true;
             }
-            return result;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
 
         public override bool Equals(Object obj)

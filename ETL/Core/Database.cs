@@ -40,7 +40,7 @@ namespace ETL.Core
         {
             for (int i = 0; i < tables.Count; ++i)
             {
-                if (tables[i].tableName == tableName)
+                if (tables[i].GetName() == tableName)
                 {
                     return i;
                 }
@@ -52,7 +52,7 @@ namespace ETL.Core
         {
             for (int i = 0; i < queries.Count; ++i)
             {
-                if (queries[i].queryName == queryName)
+                if (queries[i].GetName() == queryName)
                 {
                     return i;
                 }
@@ -66,7 +66,7 @@ namespace ETL.Core
             for (int i = 0; i < tablesNames.Count; ++i)
             {
                 table = new Table();
-                table.tableName = tablesNames[i];
+                table.SetName(tablesNames[i]);
                 this.tables.Add(table);
             }
         }
@@ -75,7 +75,7 @@ namespace ETL.Core
         {
             foreach (Table table in tables)
             {
-                if (table.tableName == tableName)
+                if (table.GetName() == tableName)
                 {
                     return table;
                 }
@@ -87,7 +87,7 @@ namespace ETL.Core
         {
             foreach (JoinQuery query in queries)
             {
-                if (query.queryName == queryName)
+                if (query.GetName() == queryName)
                 {
                     return query;
                 }
@@ -115,7 +115,7 @@ namespace ETL.Core
             List<string> queriesNames = new List<string>();
             foreach (JoinQuery joinQuery in this.queries)
             {
-                queriesNames.Add(joinQuery.queryName);
+                queriesNames.Add(joinQuery.GetName());
             }
             return queriesNames;
         }
@@ -125,8 +125,27 @@ namespace ETL.Core
             this.queriesNames = new List<string>();
             foreach (JoinQuery joinQuery in queries)
             {
-                queriesNames.Add(joinQuery.queryName);
+                queriesNames.Add(joinQuery.GetName());
             }
+        }
+
+        public TableOrQuery GetTableOrQueryByName(string tableOrQueryName)
+        {
+            foreach (Table table in tables)
+            {
+                if (table.GetName() == tableOrQueryName)
+                {
+                    return table;
+                }
+            }
+            foreach (JoinQuery query in queries)
+            {
+                if (query.GetName() == tableOrQueryName)
+                {
+                    return query;
+                }
+            }
+            return null;
         }
 
         public override string ToString()
@@ -138,7 +157,7 @@ namespace ETL.Core
         abstract public bool Connect();
         abstract public bool Close();
         abstract public bool Insert(string tableName);
-        abstract public bool Select(string tableName, string query);
+        abstract public bool Select(string tableOrQueryName, string type);
         abstract public bool SetDatatableSchema(string tableName);
         abstract public bool TrySelect(string query);
 

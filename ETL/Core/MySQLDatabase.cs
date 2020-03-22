@@ -76,22 +76,31 @@ namespace ETL.Core
             }
         }
 
-        public override bool Select(string tableName, string query)
+        public override bool Select(string tableOrQueryName, string type)
         {
-            Table table = this.tables[this.GetTableIndexByName(tableName)];
-            if (table == null)
+            TableOrQuery tableOrQuery;
+            if (type == TableOrQuery.TYPE_TABLE)
+            {
+                tableOrQuery = this.tables[this.GetTableIndexByName(tableOrQueryName)];
+            }
+            else
+            {
+                tableOrQuery = this.queries[this.GetQueryIndexByName(tableOrQueryName)];
+            }
+
+            if (tableOrQuery == null)
             {
                 return false;
             }
+            string query = tableOrQuery.query;
 
             MySqlDataAdapter da = new MySqlDataAdapter();
             MySqlCommand cmd;
-            // Create the SelectCommand.
             cmd = new MySqlCommand(query, this.connection);
             da.SelectCommand = cmd;
             try
             {
-                da.Fill(table.dataTable);
+                da.Fill(tableOrQuery.dataTable);
                 return true;
             }
             catch (Exception e)
@@ -157,7 +166,7 @@ namespace ETL.Core
         public override bool SetDatatableSchema(string tableName)
         {
             string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
-            bool result = this.Select(tableName, query);
+            bool result = this.Select(tableName, TableOrQuery.TYPE_TABLE);
             if (result)
             {
                 this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();

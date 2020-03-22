@@ -12,11 +12,11 @@ namespace ETL.Core
         public string name { set; get; }
         public Database destDb { set; get; }
         public Database srcDb { set; get; }
-        public SourceTableOrQuery sourceTable { set; get; }
+        public TableOrQuery sourceTable { set; get; }
         public Table destTable { set; get; }
         public DataTable expressionDt { set; get; }
 
-        public SingleETL(string name, Database srcDb, Database destDb, SourceTableOrQuery sourceTable, Table destTable, DataTable expressionDt)
+        public SingleETL(string name, Database srcDb, Database destDb, TableOrQuery sourceTable, Table destTable, DataTable expressionDt)
         {
             this.name = name;
             this.srcDb = srcDb;

@@ -109,7 +109,9 @@ namespace ETL.Utility
                     database.CreateTablesList(database.tablesNames);
                     for (int j = 0; j < database.tablesNames.Count; ++j)
                     {
+                        database.Connect();
                         database.SetDatatableSchema(database.tablesNames[j]);
+                        database.Close();
                     }
                     if (!databases.Contains(database))
                     {
@@ -346,21 +348,21 @@ namespace ETL.Utility
             }
         }
 
-        public static SourceTableOrQuery JsonToSourceTableOrQuery(dynamic data)
+        public static TableOrQuery JsonToSourceTableOrQuery(dynamic data)
         {
             string type = data.type;
-            SourceTableOrQuery sourceTableOrQuery;
+            TableOrQuery tableOrQuery;
             switch (type)
             {
-                case SourceTableOrQuery.TYPE_JOIN_QUERY:
-                    sourceTableOrQuery = JsonToJoinQuery(data);
+                case TableOrQuery.TYPE_JOIN_QUERY:
+                    tableOrQuery = JsonToJoinQuery(data);
                     break;
 
                 default:
-                    sourceTableOrQuery = JsonToTable(data);
+                    tableOrQuery = JsonToTable(data);
                     break;
             }
-            return sourceTableOrQuery;
+            return tableOrQuery;
         }
 
         public static JoinQuery JsonToJoinQuery(dynamic data)
@@ -368,7 +370,7 @@ namespace ETL.Utility
             JoinQuery joinQuery = new JoinQuery();
             try
             {
-                string queryName = data.queryName;
+                string queryName = data.name;
                 string query = data.query;
                 dynamic columnsData = data.columns;
                 List<string> columns = new List<string>();
@@ -380,7 +382,7 @@ namespace ETL.Utility
                 {
                     return null;
                 }
-                joinQuery.queryName = queryName;
+                joinQuery.SetName(queryName);
                 joinQuery.query = query;
                 joinQuery.columns = columns;
                 return joinQuery;
@@ -397,10 +399,10 @@ namespace ETL.Utility
             Table table = new Table();
             try
             {
-                string tableName = data.tableName;
+                string tableName = data.name;
                 var columnsJson = JsonConvert.SerializeObject(data.columns);
                 List<DataColumn> columns = (List<DataColumn>)JsonConvert.DeserializeObject(columnsJson.ToString(), typeof(List<DataColumn>));
-                table.tableName = tableName;
+                table.SetName(tableName);
                 return table;
             }
             catch (Exception e)
@@ -423,7 +425,7 @@ namespace ETL.Utility
                 dynamic destinationDatabaseData = JObject.Parse(data.destDb.ToString());
                 Database destinationDatabase = JsonToDatabase(destinationDatabaseData);
 
-                SourceTableOrQuery sourceTableOrQuery = JsonToSourceTableOrQuery(data.sourceTable);
+                TableOrQuery sourceTableOrQuery = JsonToSourceTableOrQuery(data.sourceTable);
                 Table destinationTable = JsonToTable(data.destTable);
 
                 var expressionDatatableJson = JsonConvert.SerializeObject(data.expressionDt);

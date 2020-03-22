@@ -101,12 +101,26 @@ namespace ETL.Core
             }
         }
 
-        public override bool Select(string tableName, string query)
+        public override bool Select(string tableOrQueryName, string type)
         {
-            Table table = this.tables[this.GetTableIndexByName(tableName)];
-            if (table == null)
+            TableOrQuery tableOrQuery;
+            if (type == TableOrQuery.TYPE_TABLE)
+            {
+                tableOrQuery = this.tables[this.GetTableIndexByName(tableOrQueryName)];
+            }
+            else
+            {
+                tableOrQuery = this.queries[this.GetQueryIndexByName(tableOrQueryName)];
+            }
+
+            if (tableOrQuery == null)
             {
                 return false;
+            }
+            string query = tableOrQuery.query;
+            if (type == TableOrQuery.TYPE_TABLE && this.schema != "" && this.schema != null)
+            {
+                query = "SELECT * FROM " + this.schema + "." + tableOrQueryName +";";
             }
             SqlCommand command = new SqlCommand(query, this.connection);
 
@@ -118,7 +132,7 @@ namespace ETL.Core
                 DataSet dataSet = new DataSet();
 
                 dataAdapter.Fill(dataSet);
-                table.dataTable = dataSet.Tables[0];
+                tableOrQuery.dataTable = dataSet.Tables[0];
                 return true;
             }
             catch (Exception e)
@@ -191,13 +205,28 @@ namespace ETL.Core
         public override bool SetDatatableSchema(string tableName)
         {
             string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
-            bool result = this.Select(tableName, query);
-            if (result)
+            Table table = GetTable(tableName);
+            SqlCommand command = new SqlCommand(query, this.connection);
+
+            try
             {
-                this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();
+                command.Prepare();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+                DataSet dataSet = new DataSet();
+
+                dataAdapter.Fill(dataSet);
+                table.dataTable = dataSet.Tables[0];
+                this.GetTable(tableName).columns = table.dataTable.Columns.Cast<DataColumn>().ToList();
+                return true;
             }
-            return result;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
+
         public override bool Equals(Object obj)
         {
             return (obj is SQLServerDatabase)

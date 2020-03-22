@@ -120,7 +120,7 @@
     <Compile Include="Core\ODBCHelper.cs" />
     <Compile Include="Core\PostgreSQLDatabase.cs" />
     <Compile Include="Core\PostgreSQLHelper.cs" />
-    <Compile Include="Core\SourceTableOrQuery.cs" />
+    <Compile Include="Core\TableOrQuery.cs" />
     <Compile Include="Core\SQLServerDatabase.cs" />
     <Compile Include="Core\SQLServerHelper.cs" />
     <Compile Include="Core\Table.cs" />
@@ -166,6 +166,7 @@
     <Compile Include="Utility\Global.cs" />
     <Compile Include="Utility\Helper.cs" />
     <Compile Include="Utility\JsonHelper.cs" />
+    <Compile Include="Utility\JsonModels.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
