@@ -181,6 +181,20 @@ namespace ETL.Utility
             }
         }
 
+        public static void RemoveETL(SingleETL etl)
+        {
+            List<SingleETL> savedEtls = GetETLsFromJsonFile();
+            savedEtls.Remove(etl);
+            string json = JsonConvert.SerializeObject(savedEtls, Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+
+            File.WriteAllText(PATH_ETLS, string.Empty);
+            File.WriteAllText(PATH_ETLS, json);
+
+        }
         public static void SaveETL(SingleETL etl, bool addIfNotExists)
         {
             List<SingleETL> savedEtls = GetETLsFromJsonFile();

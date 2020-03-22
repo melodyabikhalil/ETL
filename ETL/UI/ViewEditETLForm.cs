@@ -133,6 +133,7 @@ namespace ETL.UI
             SingleETL oldEtl = Global.GetETLByName(etl.name);
             DataTable expressionDt = CreateExpressionDatatable();
             etl.expressionDt = expressionDt;
+            JsonHelper.RemoveETL(oldEtl);
             Global.etls.Remove(oldEtl);
             Global.etls.Add(etl);
             JsonHelper.SaveETL(etl, true);
