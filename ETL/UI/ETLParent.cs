@@ -161,6 +161,18 @@ namespace ETL.UI
             }
         }
 
+        private void DatabasesTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Parent.Text == "Queries")
+            {
+                string databaseName = e.Node.Parent.Parent.Text;
+                Database database = Global.GetDatabaseByName(databaseName);
+                JoinQuery query = database.GetQuery(e.Node.Text);
+                ViewQueryForm viewQueryForm = new ViewQueryForm(query.GetName(), query.mainTableName, query.query);
+                viewQueryForm.Show();
+            }
+        }
+
         void newQueryMenuItem_Click(object sender, EventArgs e)
         {
             CreateQueryForm createQueryForm = new CreateQueryForm();
@@ -234,5 +246,6 @@ namespace ETL.UI
             MapForm mapForm = new MapForm();
             mapForm.Show();
         }
+        
     }
 }

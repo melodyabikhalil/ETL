@@ -132,14 +132,14 @@
             // createJobToolStripMenuItem
             // 
             this.createJobToolStripMenuItem.Name = "createJobToolStripMenuItem";
-            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.createJobToolStripMenuItem.Text = "&Create";
             this.createJobToolStripMenuItem.Click += new System.EventHandler(this.CreateJobToolStripMenuItem_Click);
             // 
             // RunToolStripMenuItem
             // 
             this.RunToolStripMenuItem.Name = "RunToolStripMenuItem";
-            this.RunToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RunToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.RunToolStripMenuItem.Text = "Run";
             // 
             // mappingMenu
@@ -153,7 +153,7 @@
             // editMappingToolStripMenuItem
             // 
             this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
-            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.editMappingToolStripMenuItem.Text = "Edit";
             this.editMappingToolStripMenuItem.Click += new System.EventHandler(this.editMappingToolStripMenuItem_Click);
             // 
@@ -349,8 +349,8 @@
             this.databasesTreeView.Location = new System.Drawing.Point(0, 0);
             this.databasesTreeView.Name = "databasesTreeView";
             this.databasesTreeView.Size = new System.Drawing.Size(278, 678);
-            this.databasesTreeView.TabIndex = 0;
-            this.databasesTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabasesTreeView_NodeMouseClick);
+            this.databasesTreeView.TabIndex = 0; this.databasesTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabasesTreeView_NodeMouseClick);
+            this.databasesTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabasesTreeView_NodeMouseDoubleClick);
             // 
             // ETLParent
             // 
