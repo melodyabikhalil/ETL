@@ -91,6 +91,18 @@ namespace ETL.Utility
             return false;
         }
 
+        public static SingleETL GetETLByName(string etlName)
+        {
+            foreach(SingleETL etl in etls)
+            {
+                if(etl.name == etlName)
+                {
+                    return etl;
+                }
+            }
+            return null;
+        }
+
         public static List<string> GetEtlsNames()
         {
             List<string> etlsNames = new List<string>();

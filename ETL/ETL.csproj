@@ -163,6 +163,18 @@
       <DependentUpon>NewETLForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\UIHelper.cs" />
+    <Compile Include="UI\ViewEditETLForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ViewEditETLForm.Designer.cs">
+      <DependentUpon>ViewEditETLForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ViewQueryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ViewQueryForm.Designer.cs">
+      <DependentUpon>ViewQueryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Global.cs" />
     <Compile Include="Utility\Helper.cs" />
     <Compile Include="Utility\JsonHelper.cs" />
@@ -193,6 +205,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\NewETLForm.resx">
       <DependentUpon>NewETLForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ViewEditETLForm.resx">
+      <DependentUpon>ViewEditETLForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ViewQueryForm.resx">
+      <DependentUpon>ViewQueryForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ETL.Utility.Global.datasource" />

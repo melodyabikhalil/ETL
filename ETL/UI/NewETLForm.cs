@@ -104,7 +104,7 @@ namespace ETL.UI
             string srcColumnsList = "";
             foreach(string col in srcTable.GetColumnsNames())
             {
-                srcColumnsList = srcColumnsList + " " + col;
+                srcColumnsList = srcColumnsList + ", " + col;
             }
             this.srcColumnLabel.Text = this.srcColumnLabel.Text + " " + srcColumnsList;
             this.destTable = (Table) Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
@@ -124,7 +124,7 @@ namespace ETL.UI
             {
                 sectionNames.Add(section);
             }
-            CreateComboBoxColumn("Section Name", sectionNames, "Section Name");
+            CreateComboBoxColumn("SectionName", sectionNames, "SectionName");
         }
 
         private void FromSrcDestTablesToExpression_Click(object sender, EventArgs e)
@@ -204,7 +204,7 @@ namespace ETL.UI
                 dr["ExpressionType"] = row.Cells["ExpressionType"].Value;
                 dr["RegexpColumnName"] = row.Cells["RegexpColumnName"].Value;
                 dr["Expression"] = row.Cells["Expression"].Value;
-                dr["SectionName"] = row.Cells["Section Name"].Value;
+                dr["SectionName"] = row.Cells["SectionName"].Value;
                 dataTable.Rows.Add(dr);
             }
             return dataTable;
@@ -221,6 +221,7 @@ namespace ETL.UI
             Global.etls.Add(etl);
             JsonHelper.SaveETL(etl, true);
             MessageBox.Show("ETL successfully created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ETLParent.ReloadEtlsListInMenu();
             this.Close();
         }
 

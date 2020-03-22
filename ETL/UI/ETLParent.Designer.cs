@@ -63,6 +63,7 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.databasesTreeView = new System.Windows.Forms.TreeView();
+            this.viewEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -107,7 +108,8 @@
             // ETLMenu
             // 
             this.ETLMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createStripMenuItem});
+            this.createStripMenuItem,
+            this.viewEditToolStripMenuItem});
             this.ETLMenu.Name = "ETLMenu";
             this.ETLMenu.Size = new System.Drawing.Size(37, 20);
             this.ETLMenu.Text = "&ETL";
@@ -116,7 +118,7 @@
             // 
             this.createStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.createStripMenuItem.Name = "createStripMenuItem";
-            this.createStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.createStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createStripMenuItem.Text = "&Create";
             this.createStripMenuItem.Click += new System.EventHandler(this.createStripMenuItem_Click);
             // 
@@ -132,14 +134,14 @@
             // createJobToolStripMenuItem
             // 
             this.createJobToolStripMenuItem.Name = "createJobToolStripMenuItem";
-            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.createJobToolStripMenuItem.Text = "&Create";
             this.createJobToolStripMenuItem.Click += new System.EventHandler(this.CreateJobToolStripMenuItem_Click);
             // 
             // RunToolStripMenuItem
             // 
             this.RunToolStripMenuItem.Name = "RunToolStripMenuItem";
-            this.RunToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RunToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.RunToolStripMenuItem.Text = "Run";
             // 
             // mappingMenu
@@ -153,7 +155,7 @@
             // editMappingToolStripMenuItem
             // 
             this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
-            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.editMappingToolStripMenuItem.Text = "Edit";
             this.editMappingToolStripMenuItem.Click += new System.EventHandler(this.editMappingToolStripMenuItem_Click);
             // 
@@ -351,6 +353,13 @@
             this.databasesTreeView.Size = new System.Drawing.Size(278, 678);
             this.databasesTreeView.TabIndex = 0;
             this.databasesTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabasesTreeView_NodeMouseClick);
+            this.databasesTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabasesTreeView_NodeMouseDoubleClick);
+            // 
+            // viewEditToolStripMenuItem
+            // 
+            this.viewEditToolStripMenuItem.Name = "viewEditToolStripMenuItem";
+            this.viewEditToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewEditToolStripMenuItem.Text = "View/ Edit";
             // 
             // ETLParent
             // 
@@ -414,6 +423,7 @@
         private System.Windows.Forms.ToolStripMenuItem RunToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mappingMenu;
         private System.Windows.Forms.ToolStripMenuItem editMappingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewEditToolStripMenuItem;
     }
 }
 
