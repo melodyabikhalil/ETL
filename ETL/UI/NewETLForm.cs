@@ -104,7 +104,7 @@ namespace ETL.UI
             string srcColumnsList = "";
             foreach(string col in srcTable.GetColumnsNames())
             {
-                srcColumnsList = srcColumnsList + " " + col;
+                srcColumnsList = srcColumnsList + ", " + col;
             }
             this.srcColumnLabel.Text = this.srcColumnLabel.Text + " " + srcColumnsList;
             this.destTable = (Table) Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
@@ -221,7 +221,7 @@ namespace ETL.UI
             Global.etls.Add(etl);
             JsonHelper.SaveETL(etl, true);
             MessageBox.Show("ETL successfully created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ETLParent.SetEtlsMenu();
+            ETLParent.ReloadEtlsListInMenu();
             this.Close();
         }
 

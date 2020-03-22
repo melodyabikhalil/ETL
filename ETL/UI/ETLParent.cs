@@ -33,23 +33,7 @@ namespace ETL.UI
             closeDatabaseMenu.MenuItems.Add(closeDatabaseMenuItem);
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
             JsonHelper.CreateJsonFolder();
-            this.LoadSavedDataFromJsonFiles();
-            SetEtlsMenu();
-        }
-
-        public static void SetEtlsMenu()
-        {
-            _instance.viewEditToolStripMenuItem.DropDownItems.Clear();
-            foreach (SingleETL etl in Global.etls)
-            {
-                ToolStripItem item = new ToolStripMenuItem();
-                item.Text = etl.name;
-                item.Name = etl.name + "ToolStripItem";
-                item.Click += new EventHandler((s, e) => { ViewEditETLForm viewEtlForm = new ViewEditETLForm(etl);
-                    viewEtlForm.Show();
-                });
-                _instance.viewEditToolStripMenuItem.DropDownItems.Add(item);
-            }
+           this.LoadSavedDataFromJsonFiles();
         }
 
         private void LoadSavedDataFromJsonFiles()
@@ -92,6 +76,7 @@ namespace ETL.UI
         {
             List<SingleETL> etls = JsonHelper.GetETLsFromJsonFile();
             Global.etls = etls;
+            ETLParent.ReloadEtlsListInMenu();
         }
 
         private void LoadEtlJobsFromJsonFile()
@@ -184,7 +169,7 @@ namespace ETL.UI
                 string databaseName = e.Node.Parent.Parent.Text;
                 Database database = Global.GetDatabaseByName(databaseName);
                 JoinQuery query = database.GetQuery(e.Node.Text);
-                ViewQueryForm viewQueryForm = new ViewQueryForm(query.GetName(), query.mainTableName, query.query);
+                ViewQueryForm viewQueryForm = new ViewQueryForm(query.GetName(), query.query);
                 viewQueryForm.Show();
             }
         }
@@ -224,11 +209,23 @@ namespace ETL.UI
 
         public static void ReloadEtlJobsListInMenu()
         {
+            _instance.RunToolStripMenuItem.DropDownItems.Clear();
             foreach (JobETL job in Global.jobETLs)
             {
                 ToolStripItem jobSubITem = new ToolStripMenuItem(job.name);
                 jobSubITem.Click += new EventHandler(_instance.JobMenuItem_Click);
                 _instance.RunToolStripMenuItem.DropDownItems.Add(jobSubITem);
+            }
+        }
+
+        public static void ReloadEtlsListInMenu()
+        {
+            _instance.viewEditToolStripMenuItem.DropDownItems.Clear();
+            foreach (SingleETL etl in Global.etls)
+            {
+                ToolStripItem etlSubItem = new ToolStripMenuItem(etl.name);
+                etlSubItem.Click += new EventHandler(_instance.ViewEtlMenuItem_Click);
+                _instance.viewEditToolStripMenuItem.DropDownItems.Add(etlSubItem);
             }
         }
 
@@ -256,7 +253,18 @@ namespace ETL.UI
                 }
             }
         }
-        
+
+        void ViewEtlMenuItem_Click(object sender, EventArgs e)
+        {
+            string etlName = sender.ToString();
+            SingleETL etl = Global.GetETLByName(etlName);
+            if (etl != null)
+            {
+                ViewEditETLForm viewEditETLForm = new ViewEditETLForm(etl);
+                viewEditETLForm.ShowDialog();
+            }
+        }
+
         private void editMappingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MapForm mapForm = new MapForm();

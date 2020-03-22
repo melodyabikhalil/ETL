@@ -139,6 +139,7 @@ namespace ETL.Utility
             jsonJoinQuery.name = joinQuery.GetName();
             jsonJoinQuery.query = joinQuery.query;
             jsonJoinQuery.type = TableOrQuery.TYPE_JOIN_QUERY;
+            jsonJoinQuery.columns = joinQuery.columns;
             return jsonJoinQuery;
         }
 
@@ -158,12 +159,14 @@ namespace ETL.Utility
             joinQuery.SetName(jsonJoinQuery.name);
             joinQuery.query = jsonJoinQuery.query;
             joinQuery.type = TableOrQuery.TYPE_JOIN_QUERY;
+            joinQuery.columns = jsonJoinQuery.columns;
             return joinQuery;
         }
 
         public static JsonSingleEtl MapFromSingleEtlToJsonSingleEtl(SingleETL etl)
         {
             JsonSingleEtl jsonEtl = new JsonSingleEtl();
+            jsonEtl.name = etl.name;
             jsonEtl.destDb = MapFromDatabaseToJsonDatabase(etl.destDb);
             jsonEtl.srcDb = MapFromDatabaseToJsonDatabase(etl.srcDb);
             jsonEtl.destTable = MapFromTableToJsonTable(etl.destTable);
@@ -175,6 +178,7 @@ namespace ETL.Utility
         public static SingleETL MapFromJSonSingleEtlToSingleEtl(JsonSingleEtl jsonEtl)
         {
             SingleETL etl = new SingleETL();
+            etl.name = jsonEtl.name;
             etl.destDb = MapFromJsonDatabaseToDatabase(jsonEtl.destDb);
             etl.srcDb = MapFromJsonDatabaseToDatabase(jsonEtl.srcDb);
             etl.destTable = MapFromJsonTableToTable(jsonEtl.destTable);
@@ -315,6 +319,7 @@ namespace ETL.Utility
 
     public partial class JsonJoinQuery: JsonTableOrQuery
     {
+        public List<string> columns { get; set; }
     }
 
     public partial class JsonSingleEtl

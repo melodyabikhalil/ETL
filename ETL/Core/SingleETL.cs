@@ -32,11 +32,10 @@ namespace ETL.Core
         {
             return (obj is SingleETL)
                 && ((SingleETL)obj).name == this.name
-                 && ((SingleETL)obj).destDb == this.destDb
-                  && ((SingleETL)obj).srcDb == this.srcDb
-                   && ((SingleETL)obj).sourceTable == this.sourceTable
-                  && ((SingleETL)obj).destTable == this.destTable
-                  && ((SingleETL)obj).expressionDt == this.expressionDt;
+                 && ((SingleETL)obj).destDb.databaseName == this.destDb.databaseName
+                  && ((SingleETL)obj).srcDb.databaseName == this.srcDb.databaseName
+                   && ((SingleETL)obj).sourceTable.GetName() == this.sourceTable.GetName()
+                  && ((SingleETL)obj).destTable.GetName() == this.destTable.GetName();
         }
     }
 }

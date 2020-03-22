@@ -19,17 +19,31 @@ namespace ETL.UI
         {
             InitializeComponent();
             this.etl = singleETL;
-            this.etlNameLabel.Text = this.etlNameLabel.Text + " " + singleETL.name;
+            this.etlNameLabel.Text += " " + singleETL.name;
+            this.destinationDatabaseLabel.Text += " " + singleETL.destDb.databaseName;
+            this.destinationTableLabel.Text += " " + singleETL.destTable.GetName();
+            this.sourceDatabaseLabel.Text += " " + singleETL.srcDb.databaseName;
+            this.sourceTableOrQueryLabel.Text += " " + singleETL.sourceTable.GetName();
+
+            this.srcColumnLabel.Text = "Source table columns: ";
+            string srcColumnsList = "";
+            foreach (string col in singleETL.srcDb.GetTableOrQueryByName(singleETL.sourceTable.GetName()).GetColumnsNames())
+            {
+                srcColumnsList += col +", ";
+            }
+            srcColumnsList = srcColumnsList.Remove(srcColumnsList.Length - 2);
+            this.srcColumnLabel.Text = this.srcColumnLabel.Text + " " + srcColumnsList;
             SetExpressionDataGridView();
+            CenterToParent();
         }
 
         private void SetExpressionDataGridView()
         {
             CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
-            CreateComboBoxColumn("Column Destination", etl.destTable.GetColumnsNames(), "ColumnDest");
+            CreateComboBoxColumn("Column Destination", etl.destDb.GetTable(etl.destTable.GetName()).GetColumnsNames(), "ColumnDest");
             List<string> expressionTypes = new List<string>(new string[] { "Replace", "Reg", "Map" });
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
-            CreateComboBoxColumn("Regexp Column Name", etl.sourceTable.GetColumnsNames(), "RegexpColumnName");
+            CreateComboBoxColumn("Regexp Column Name", etl.srcDb.GetTableOrQueryByName(etl.sourceTable.GetName()).GetColumnsNames(), "RegexpColumnName");
             CreateTexBoxColumn("Expression", false, "Expression");
             HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("Section Name")).ToHashSet();
             List<string> sectionNames = new List<string>();
@@ -132,13 +146,10 @@ namespace ETL.UI
         {
             SingleETL oldEtl = Global.GetETLByName(etl.name);
             DataTable expressionDt = CreateExpressionDatatable();
-            etl.expressionDt = expressionDt;
-            JsonHelper.RemoveETL(oldEtl);
-            Global.etls.Remove(oldEtl);
-            Global.etls.Add(etl);
-            JsonHelper.SaveETL(etl, true);
+            oldEtl.expressionDt = expressionDt;
+            JsonHelper.SaveETL(oldEtl, true);
             MessageBox.Show("ETL successfully edited", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ETLParent.SetEtlsMenu();
+            ETLParent.ReloadEtlsListInMenu();
             this.Close();
         }
     }

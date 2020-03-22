@@ -141,9 +141,9 @@
             // etlJobDataGridView
             // 
             this.etlJobDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.etlJobDataGridView.Location = new System.Drawing.Point(222, 120);
+            this.etlJobDataGridView.Location = new System.Drawing.Point(331, 124);
             this.etlJobDataGridView.Name = "etlJobDataGridView";
-            this.etlJobDataGridView.Size = new System.Drawing.Size(496, 289);
+            this.etlJobDataGridView.Size = new System.Drawing.Size(315, 289);
             this.etlJobDataGridView.TabIndex = 1;
             this.etlJobDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.EtlJobDataGridView_RowsAdded);
             // 

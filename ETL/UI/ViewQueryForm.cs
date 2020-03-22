@@ -12,12 +12,12 @@ namespace ETL.UI
 {
     public partial class ViewQueryForm : Form
     {
-        public ViewQueryForm(string queryName, string queryMainTable, string query)
+        public ViewQueryForm(string queryName, string query)
         {
             InitializeComponent();
-            this.queryNameLabel.Text = this.queryNameLabel.Text + " " + queryName;
-            this.queryMainTableLabel.Text = this.queryMainTableLabel.Text + " " + queryMainTable;
-            this.queryLabel.Text = this.queryLabel.Text + " " + query;
+            this.queryNameLabel.Text += "\t" + queryName;
+            this.queryLabel.Text +=  "\n\n\t" + query;
+            CenterToParent();
         }
 
 
