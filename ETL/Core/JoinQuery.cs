@@ -9,29 +9,30 @@ namespace ETL.Core
 {
     public class JoinQuery: TableOrQuery
     {
-        public string queryName { get; set; }
-        public string query { get; set; }
         public string mainTableName { get; set; }
         public List<string> columnsToSelect { get; set; }
         public List<string> columns { get; set; }
         public Database database { get; set; }
-        public DataTable dataTable { get; set; }
+        public DataTable queryDatatable { get; set; }
 
         public JoinQuery()
         {
+            this.name = "";
+            this.queryDatatable = new DataTable();
             this.dataTable = new DataTable();
             this.columns = new List<string>();
             this.columnsToSelect = new List<string>();
             this.type = TableOrQuery.TYPE_JOIN_QUERY;
         }
 
-        public JoinQuery(string queryName, string query, Database database)
+        public JoinQuery(string name, string query, Database database)
         {
             this.database = database;
             this.query = query;
-            this.queryName = queryName;
+            this.name = name;
 
             this.dataTable = new DataTable();
+            this.queryDatatable = new DataTable();
             this.columns = new List<string>();
             this.columnsToSelect = new List<string>();
             this.type = TableOrQuery.TYPE_JOIN_QUERY;
@@ -46,7 +47,7 @@ namespace ETL.Core
             }
             query = query.Remove(query.Length - 1);
             query += " \nFROM " + mainTableName;
-            foreach (DataRow datarow in dataTable.Rows)
+            foreach (DataRow datarow in queryDatatable.Rows)
             {
                 string joinType = datarow.Field<string>("Join Type");
                 string table1 = datarow.Field<string>("Table 1");
@@ -100,7 +101,7 @@ namespace ETL.Core
         public override bool Equals(Object obj)
         {
             return (obj is JoinQuery)
-                && ((JoinQuery)obj).queryName == this.queryName
+                && ((JoinQuery)obj).name == this.name
                  && ((JoinQuery)obj).columns == this.columns
                  && ((JoinQuery)obj).query == this.query;
         }

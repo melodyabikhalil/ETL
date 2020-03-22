@@ -12,7 +12,7 @@ namespace ETL.Core
         public string type { get; set; }
         public string query { get; set; }
         public DataTable dataTable { get; set; }
-        protected string name;
+        protected string name { get; set; }
 
         public const string TYPE_TABLE = "table";
         public const string TYPE_JOIN_QUERY = "joinQuery";

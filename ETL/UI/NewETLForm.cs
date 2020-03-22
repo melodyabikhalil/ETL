@@ -84,13 +84,17 @@ namespace ETL.UI
             this.srcColumnLabel.Text = "Source table columns: ";
             string destTableName = this.destTableComboBox.Text;
             dest.Close();
+            dest.Connect();
             dest.SetDatatableSchema(destTableName);
+            dest.Close();
             string srcTableName = this.srcTableOrQueriesComboBox.Text;
             List<string> sourceDatabaseTablesNames = this.src.tablesNames;
             if (sourceDatabaseTablesNames.Contains(srcTableName))
             {
                 src.Close();
+                src.Connect();
                 src.SetDatatableSchema(srcTableName);
+                src.Close();
                 this.srcTable = Global.GetTableByNameAndDbName(this.sourceDbComboBox.Text, srcTableName);
             }
             else //means this source is a query not a table
@@ -200,7 +204,7 @@ namespace ETL.UI
                 dr["ExpressionType"] = row.Cells["ExpressionType"].Value;
                 dr["RegexpColumnName"] = row.Cells["RegexpColumnName"].Value;
                 dr["Expression"] = row.Cells["Expression"].Value;
-                dr["SectionName"] = row.Cells["SectionName"].Value;
+                dr["SectionName"] = row.Cells["Section Name"].Value;
                 dataTable.Rows.Add(dr);
             }
             return dataTable;

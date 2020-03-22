@@ -165,12 +165,26 @@ namespace ETL.Core
         public override bool SetDatatableSchema(string tableName)
         {
             string query = "select * from " + tableName + " where 1=0;";
-            bool result = this.Select(tableName, TableOrQuery.TYPE_TABLE);
-            if (result)
+            Table table = GetTable(tableName);
+            OdbcCommand command = new OdbcCommand(query, this.connection);
+
+            try
             {
-                this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();
+                command.Prepare();
+                OdbcDataAdapter dataAdapter = new OdbcDataAdapter(command);
+
+                DataSet dataSet = new DataSet();
+
+                dataAdapter.Fill(dataSet);
+                table.dataTable = dataSet.Tables[0];
+                this.GetTable(tableName).columns = table.dataTable.Columns.Cast<DataColumn>().ToList();
+                return true;
             }
-            return result;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
 
         public override bool Equals(Object obj)

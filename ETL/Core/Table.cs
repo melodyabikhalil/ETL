@@ -15,6 +15,7 @@ namespace ETL.Core
 
         public Table()
         {
+            this.name = "";
             this.columns = new List<DataColumn>();
             this.dataTable = new DataTable();
             this.type = TableOrQuery.TYPE_TABLE;

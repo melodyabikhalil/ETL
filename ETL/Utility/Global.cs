@@ -56,7 +56,7 @@ namespace ETL.Utility
             }
             foreach(JoinQuery query in db.queries)
             {
-                if(query.queryName == tableName)
+                if(query.GetName() == tableName)
                 {
                     return query;
                 }

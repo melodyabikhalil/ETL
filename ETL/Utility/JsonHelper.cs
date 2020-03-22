@@ -109,7 +109,9 @@ namespace ETL.Utility
                     database.CreateTablesList(database.tablesNames);
                     for (int j = 0; j < database.tablesNames.Count; ++j)
                     {
+                        database.Connect();
                         database.SetDatatableSchema(database.tablesNames[j]);
+                        database.Close();
                     }
                     if (!databases.Contains(database))
                     {
@@ -368,7 +370,7 @@ namespace ETL.Utility
             JoinQuery joinQuery = new JoinQuery();
             try
             {
-                string queryName = data.queryName;
+                string queryName = data.name;
                 string query = data.query;
                 dynamic columnsData = data.columns;
                 List<string> columns = new List<string>();
@@ -380,7 +382,7 @@ namespace ETL.Utility
                 {
                     return null;
                 }
-                joinQuery.queryName = queryName;
+                joinQuery.SetName(queryName);
                 joinQuery.query = query;
                 joinQuery.columns = columns;
                 return joinQuery;

@@ -52,7 +52,7 @@ namespace ETL.UI
                 this.mainTableTextBox.Text = this.mainTableCombobox.SelectedItem.ToString();
                 this.joinQuery.mainTableName = this.mainTableCombobox.SelectedItem.ToString();
                 this.SetCreateQueryDataGridView();
-                this.joinQuery.queryName = queryName;
+                this.joinQuery.SetName(queryName);
                 this.createQueryTabControl.SelectedTab = this.buildQueryTabPage;
             }
         }
@@ -103,7 +103,7 @@ namespace ETL.UI
         private void SetSelectColumnsDataFridView()
         {
             DataTable joinQueryDataTable = UIHelper.CreateDataTableFromDataGridView(buildQueryDataGridView);
-            this.joinQuery.dataTable = joinQueryDataTable;
+            this.joinQuery.queryDatatable = joinQueryDataTable;
             List<string> tables = Helper.SelectOneColumnFromDataTable(joinQueryDataTable, "Table 1");
             tables.AddRange(Helper.SelectOneColumnFromDataTable(joinQueryDataTable, "Table 2"));
             List<string> columns = Helper.GetColumnsFromTables(Helper.ConvertListToSet(tables), this.joinQuery.database);

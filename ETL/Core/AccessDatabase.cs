@@ -91,12 +91,13 @@ namespace ETL.Core
             {
                 tableOrQuery = this.queries[this.GetQueryIndexByName(tableOrQueryName)];
             }
-            
+
             if (tableOrQuery == null)
             {
                 return false;
             }
             string query = tableOrQuery.query;
+
             OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
             OleDbCommand selectCommand = new OleDbCommand(query, this.connection);
             dataAdapter.SelectCommand = selectCommand;
@@ -170,12 +171,21 @@ namespace ETL.Core
         public override bool SetDatatableSchema(string tableName)
         {
             string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
-            bool result = this.Select(tableName, query);
-            if (result)
+            Table table = GetTable(tableName);
+            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
+            OleDbCommand selectCommand = new OleDbCommand(query, this.connection);
+            dataAdapter.SelectCommand = selectCommand;
+            try
             {
-                this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();
+                dataAdapter.Fill(table.dataTable);
+                this.GetTable(tableName).columns = table.dataTable.Columns.Cast<DataColumn>().ToList();
+                return true;
             }
-            return result;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
 
         public override bool Equals(Object obj)

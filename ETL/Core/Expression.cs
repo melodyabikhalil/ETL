@@ -33,7 +33,7 @@ namespace ETL.Core
             string result = expression;
             foreach (DataColumn col in row.Table.Columns)
             {
-                result = result.Replace(col.ColumnName, row[col].ToString());
+                result = result.Replace("[" + col.ColumnName + "]", row[col].ToString());
             }
             return result;
         }
@@ -72,19 +72,28 @@ namespace ETL.Core
 
         }
 
-        public static void AddValuesToDatatableDestination(DataTable source, DataTable dest, DataTable expressionDt, DataTable mapDt)
+        public static bool AddValuesToDatatableDestination(DataTable source, DataTable dest, DataTable expressionDt, DataTable mapDt)
         {
-            foreach (DataRow row in source.Rows)
+            try
             {
-                DataRow newRow = dest.NewRow();
-                foreach (DataColumn col in dest.Columns)
+                foreach (DataRow row in source.Rows)
                 {
-                    DataRow[] expRows = expressionDt.Select("TableNameDest = '" + dest.TableName + "' AND ColumnDest = '" + col.ColumnName + "'");
-                    DataRow expRow = expRows[0];
-                    string value = GetValue(expRow, row, col, mapDt);
-                    newRow[col] = value;
+                    DataRow newRow = dest.NewRow();
+                    foreach (DataColumn col in dest.Columns)
+                    {
+                        DataRow[] expRows = expressionDt.Select("TableNameDest = '" + dest.TableName + "' AND ColumnDest = '" + col.ColumnName + "'");
+                        DataRow expRow = expRows[0];
+                        string value = GetValue(expRow, row, col, mapDt);
+                        newRow[col] = value;
+                    }
+                    dest.Rows.Add(newRow);
                 }
-                dest.Rows.Add(newRow);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
             }
         }
 
