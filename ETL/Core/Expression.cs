@@ -30,7 +30,7 @@ namespace ETL.Core
 
         public static string Replace(string expression, DataRow row)
         {
-            string result = expression;
+            string result = expression.ToLower();
             foreach (DataColumn col in row.Table.Columns)
             {
                 result = result.Replace("[" + col.ColumnName + "]", row[col].ToString());
@@ -49,9 +49,9 @@ namespace ETL.Core
             return null;
         }
 
-        public static string GetValue(DataRow expRow, DataRow row, DataTable mapDt)
+        public static object GetValue(DataRow expRow, DataRow row, DataTable mapDt)
         {
-            string value = "";
+            var value = "";
             string type = expRow["ExpressionType"].ToString();
             if (type == "Replace")
             {
@@ -90,7 +90,7 @@ namespace ETL.Core
                             {
                                 continue;
                             }
-                            string value = GetValue(expRow, row, mapDt);
+                            var value = GetValue(expRow, row, mapDt);
                             newRow[col] = value;
                         }
                     }
