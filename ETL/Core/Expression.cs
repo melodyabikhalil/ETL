@@ -33,7 +33,7 @@ namespace ETL.Core
             string result = expression.ToLower();
             foreach (DataColumn col in row.Table.Columns)
             {
-                result = result.Replace("[" + col.ColumnName + "]", row[col].ToString());
+                result = result.Replace("[" + col.ColumnName.ToLower() + "]", row[col].ToString());
             }
             return result;
         }
@@ -49,9 +49,9 @@ namespace ETL.Core
             return null;
         }
 
-        public static object GetValue(DataRow expRow, DataRow row, DataTable mapDt)
+        public static string GetValue(DataRow expRow, DataRow row, DataTable mapDt)
         {
-            var value = "";
+            string value = "";
             string type = expRow["ExpressionType"].ToString();
             if (type == "Replace")
             {
@@ -90,8 +90,54 @@ namespace ETL.Core
                             {
                                 continue;
                             }
-                            var value = GetValue(expRow, row, mapDt);
-                            newRow[col] = value;
+                            if (col.DataType == System.Type.GetType("System.Int32"))
+                            {
+                                int value;
+                                Int32.TryParse(GetValue(expRow, row, mapDt), out value);
+                                newRow[col] = value;
+                            }
+                            else if (col.DataType == System.Type.GetType("System.DateTime"))
+                            {
+                                DateTime value;
+                                DateTime.TryParse(GetValue(expRow, row, mapDt), out value);
+                                newRow[col] = value;
+                            }
+                            else if (col.DataType == System.Type.GetType("System.String"))
+                            {
+                                string value = GetValue(expRow, row, mapDt).ToString() ;
+                                newRow[col] = value;
+                            }
+                            else if (col.DataType == System.Type.GetType("System.Int16"))
+                            {
+                                short value;
+                                Int16.TryParse(GetValue(expRow, row, mapDt), out value);
+                                newRow[col] = value;
+                            }
+                            else if (col.DataType == System.Type.GetType("System.Boolean"))
+                            {
+                                bool value;
+                                Boolean.TryParse(GetValue(expRow, row, mapDt), out value);
+                                newRow[col] = value;
+                            }
+                            else if (col.DataType == System.Type.GetType("System.TimeSpan"))
+                            {
+                                TimeSpan value;
+                                TimeSpan.TryParse(GetValue(expRow, row, mapDt), out value);
+                                newRow[col] = value;
+                            }
+                            else if (col.DataType == System.Type.GetType("System.Double"))
+                            {
+                                double value;
+                                Double.TryParse(GetValue(expRow, row, mapDt), out value);
+                                newRow[col] = value;
+                            }
+                            else if (col.DataType == System.Type.GetType("System.Char"))
+                            {
+                                char value;
+                                Char.TryParse(GetValue(expRow, row, mapDt), out value);
+                                newRow[col] = value;
+                            }
+
                         }
                     }
                     dest.Rows.Add(newRow);
