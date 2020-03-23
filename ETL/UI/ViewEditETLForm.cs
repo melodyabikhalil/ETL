@@ -45,13 +45,13 @@ namespace ETL.UI
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
             CreateComboBoxColumn("Regexp Column Name", etl.srcDb.GetTableOrQueryByName(etl.sourceTable.GetName()).GetColumnsNames(), "RegexpColumnName");
             CreateTexBoxColumn("Expression", false, "Expression");
-            HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("Section Name")).ToHashSet();
+            HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("SectionName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
             {
                 sectionNames.Add(section);
             }
-            CreateComboBoxColumn("SectionName", sectionNames, "SectionName");
+            CreateComboBoxColumn("Section Name", sectionNames, "SectionName");
             ETLDataGridView.Rows.Add(etl.expressionDt.Rows.Count-1);
             foreach (DataGridViewRow Row in ETLDataGridView.Rows)
             {

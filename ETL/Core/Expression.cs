@@ -65,9 +65,9 @@ namespace ETL.Core
             {
                 string sectionName = expRow["SectionName"].ToString();
                 string fromValue = row[expRow["RegexpColumnName"].ToString()].ToString().Trim();
-                string query = "SectionName = '" + sectionName + "' AND From Value = '" + fromValue + "'";
+                string query = "SectionName = '" + sectionName + "' AND FromValue = '" + fromValue + "'";
                 DataRow[] mapRows = mapDt.Select(query);
-                value = mapRows[0]["To Value"].ToString();
+                value = mapRows[0]["ToValue"].ToString();
             }
             return value;
 
@@ -83,9 +83,16 @@ namespace ETL.Core
                     foreach (DataColumn col in dest.Columns)
                     {
                         DataRow[] expRows = expressionDt.Select("TableNameDest = '" + dest.TableName + "' AND ColumnDest = '" + col.ColumnName + "'");
-                        DataRow expRow = expRows[0];
-                        string value = GetValue(expRow, row, mapDt);
-                        newRow[col] = value;
+                        if (expRows.Length > 0)
+                        {
+                            DataRow expRow = expRows[0];
+                            if (expRow["ColumnDest"].ToString() != col.ColumnName.ToString())
+                            {
+                                continue;
+                            }
+                            string value = GetValue(expRow, row, mapDt);
+                            newRow[col] = value;
+                        }
                     }
                     dest.Rows.Add(newRow);
                 }
@@ -109,9 +116,9 @@ namespace ETL.Core
             this.expressionDt.Columns.Add("RegexpColumnName");
             this.expressionDt.Columns.Add("Expression", Type.GetType("System.String"));
             this.expressionDt.Columns.Add("SectionName");
-            this.mapDt.Columns.Add("Section Name");
-            this.mapDt.Columns.Add("From Value");
-            this.mapDt.Columns.Add("To Value");
+            this.mapDt.Columns.Add("SectionName");
+            this.mapDt.Columns.Add("FromValue");
+            this.mapDt.Columns.Add("ToValue");
         }
 
         public static Expression getInstance()
