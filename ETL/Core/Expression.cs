@@ -137,6 +137,11 @@ namespace ETL.Core
                                 Char.TryParse(GetValue(expRow, row, mapDt), out value);
                                 newRow[col] = value;
                             }
+                            else
+                            {
+                                string value = GetValue(expRow, row, mapDt).ToString();
+                                newRow[col] = value;
+                            }
 
                         }
                     }
