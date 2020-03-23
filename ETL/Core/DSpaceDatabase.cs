@@ -41,7 +41,10 @@ namespace ETL.Core
             dspaceData.TableName = "Dspace table";
             foreach (string field in columns)
             {
-                dspaceData.Columns.Add(field);
+                DataColumn column = new DataColumn();
+                column.ColumnName = field;
+                column.DataType = typeof(string);
+                dspaceData.Columns.Add(column);
             }
         }
 
