@@ -118,7 +118,7 @@ namespace ETL.UI
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
             CreateComboBoxColumn("Regexp/Mapping Source column", srcTable.GetColumnsNames(), "RegexpColumnName");
             CreateTexBoxColumn("Expression", false, "Expression");
-            HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("Section Name")).ToHashSet();
+            HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("SectionName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
             {
