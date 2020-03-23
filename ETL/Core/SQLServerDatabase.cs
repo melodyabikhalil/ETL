@@ -131,6 +131,7 @@ namespace ETL.Core
                 DataSet dataSet = new DataSet();
 
                 dataAdapter.Fill(dataSet);
+                tableOrQuery.dataTable.Clear();
                 tableOrQuery.dataTable = dataSet.Tables[0];
                 return true;
             }
