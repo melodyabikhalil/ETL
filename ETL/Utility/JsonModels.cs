@@ -85,7 +85,7 @@ namespace ETL.Utility
             switch (type)
             {
                 case Database.DATABASE_TYPE_MYSQL:
-                    database = new MySQLDatabase(serverName, username, password, databaseName);
+                    database = new MySQLDatabase(serverName, username, password, databaseName, schema);
                     break;
 
                 case Database.DATABASE_TYPE_POSTGRES:
@@ -105,7 +105,7 @@ namespace ETL.Utility
                     break;
 
                 default:
-                    database = new MySQLDatabase(serverName, username, password, databaseName);
+                    database = new MySQLDatabase(serverName, username, password, databaseName, schema);
                     break;
             }
             database.Connect();

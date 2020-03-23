@@ -17,6 +17,7 @@ namespace ETL.Core
         public List<JoinQuery> queries { get; set; }
         public List<string> queriesNames { get; set; }
         public string type { get; set; }
+        public string schema { get; set; }
 
         public const string DATABASE_TYPE_MYSQL = "MySQL";
         public const string DATABASE_TYPE_POSTGRES = "PostgreSQL";
@@ -24,12 +25,13 @@ namespace ETL.Core
         public const string DATABASE_TYPE_ACCESS = "MS Access";
         public const string DATABASE_TYPE_ODBC = "ODBC";
 
-        public Database(string serverName, string username, string password, string databaseName)
+        public Database(string serverName, string username, string password, string databaseName, string schema = "")
         {
             this.serverName = serverName;
             this.username = username;
             this.password = password;
             this.databaseName = databaseName;
+            this.schema = schema;
             this.tables = new List<Table>();
             this.queries = new List<JoinQuery>();
             this.tablesNames = new List<string>();

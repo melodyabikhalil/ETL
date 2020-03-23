@@ -49,7 +49,7 @@ namespace ETL.Core
             return null;
         }
 
-        public static string GetValue(DataRow expRow, DataRow row, DataColumn col, DataTable mapDt)
+        public static string GetValue(DataRow expRow, DataRow row, DataTable mapDt)
         {
             string value = "";
             string type = expRow["ExpressionType"].ToString();
@@ -64,8 +64,9 @@ namespace ETL.Core
             if (type == "Map")
             {
                 string sectionName = expRow["SectionName"].ToString();
-                string fromValue = row[col.ColumnName].ToString();
-                DataRow[] mapRows = mapDt.Select("SectionName = '" + sectionName + "' AND From Value = '" + fromValue + "'");
+                string fromValue = row[expRow["RegexpColumnName"].ToString()].ToString().Trim();
+                string query = "SectionName = '" + sectionName + "' AND From Value = '" + fromValue + "'";
+                DataRow[] mapRows = mapDt.Select(query);
                 value = mapRows[0]["To Value"].ToString();
             }
             return value;
@@ -83,7 +84,7 @@ namespace ETL.Core
                     {
                         DataRow[] expRows = expressionDt.Select("TableNameDest = '" + dest.TableName + "' AND ColumnDest = '" + col.ColumnName + "'");
                         DataRow expRow = expRows[0];
-                        string value = GetValue(expRow, row, col, mapDt);
+                        string value = GetValue(expRow, row, mapDt);
                         newRow[col] = value;
                     }
                     dest.Rows.Add(newRow);

@@ -40,13 +40,21 @@ namespace ETL.Core
 
         public void CreateAndSetJoinQuery()
         {
+            bool hasSchema = this.database.schema != "" && this.database.schema != null;
             string query = "SELECT ";
             foreach (string column in columnsToSelect)
             {
                 query += column + ",";
             }
             query = query.Remove(query.Length - 1);
-            query += " \nFROM " + mainTableName;
+            if (hasSchema)
+            {
+                query += " \nFROM " + this.database.schema + ".\"" + mainTableName + "\"";
+            }
+            else
+            {
+                query += " \nFROM " + mainTableName;
+            }
             foreach (DataRow datarow in queryDatatable.Rows)
             {
                 string joinType = datarow.Field<string>("Join Type");
@@ -57,6 +65,11 @@ namespace ETL.Core
                 if (joinType == null || table1 == null || table2 == null || column1 == null || column2 == null)
                 {
                     continue;
+                }
+                if (hasSchema)
+                {
+                    table1 = this.database.schema + ".\"" + table1 + "\"";
+                    table2 = this.database.schema + ".\"" + table2 + "\"";
                 }
                 query += " \n" + joinType + " " + table1 + " ON " + table1 + "." + column1 + "=" + table2 + "." + column2;
             }

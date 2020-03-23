@@ -147,7 +147,10 @@ namespace ETL.UI
             SingleETL oldEtl = Global.GetETLByName(etl.name);
             DataTable expressionDt = CreateExpressionDatatable();
             oldEtl.expressionDt = expressionDt;
+            JobETL job = Global.GetJobContainingEtl(oldEtl);
+            job.ReplaceEtlInJob(oldEtl);
             JsonHelper.SaveETL(oldEtl, true);
+            JsonHelper.SaveEtlJob(job, true);
             MessageBox.Show("ETL successfully edited", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             ETLParent.ReloadEtlsListInMenu();
             this.Close();

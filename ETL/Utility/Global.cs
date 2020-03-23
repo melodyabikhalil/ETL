@@ -140,5 +140,20 @@ namespace ETL.Utility
             }
             return null;
         }
+
+        public static JobETL GetJobContainingEtl(SingleETL etl)
+        {
+            foreach (JobETL job in jobETLs)
+            {
+                foreach (SingleETL existingEtl in job.etls)
+                {
+                    if (etl.Equals(existingEtl))
+                    {
+                        return job;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

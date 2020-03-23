@@ -55,6 +55,18 @@ namespace ETL.Core
             }
         }
 
+        public void ReplaceEtlInJob(SingleETL etl)
+        {
+            foreach (SingleETL existingEtl in etls)
+            {
+                if (etl.Equals(existingEtl))
+                {
+                    existingEtl.expressionDt = etl.expressionDt;
+                    return;
+                }
+            }
+        }
+
         public void LogError(SingleETL etl)
         {
             this.errorEtls.Add(etl);
@@ -64,8 +76,7 @@ namespace ETL.Core
         public override bool Equals(Object obj)
         {
             return (obj is JobETL)
-                && ((JobETL)obj).name == this.name
-                 && ((JobETL)obj).etls == this.etls;
+                && ((JobETL)obj).name == this.name;
         }
     }
 }

@@ -13,13 +13,11 @@ namespace ETL.Core
     {
         private NpgsqlConnection connection { get; set; }
         public string port { get; set; }
-        public string schema { get; set; }
 
         public PostgreSQLDatabase(string serverName, string username, string password, string databaseName, string port, string schema = "") :
-            base(serverName, username, password, databaseName)
+            base(serverName, username, password, databaseName, schema)
         {
             this.port = port;
-            this.schema = schema;
             this.type = Database.DATABASE_TYPE_POSTGRES;
         }
 

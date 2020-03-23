@@ -12,8 +12,8 @@ namespace ETL.Core
     {
         private MySqlConnection connection { get; set; }
 
-        public MySQLDatabase(string serverName, string username, string password, string databaseName) :
-            base(serverName, username, password, databaseName)
+        public MySQLDatabase(string serverName, string username, string password, string databaseName, string schema = "") :
+            base(serverName, username, password, databaseName, schema)
         {
             this.type = Database.DATABASE_TYPE_MYSQL;
         }

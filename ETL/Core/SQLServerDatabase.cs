@@ -11,11 +11,10 @@ namespace ETL.Core
     class SQLServerDatabase : Database
     {
         private SqlConnection connection { get; set; }
-        public string schema { get; set; }
+
         public SQLServerDatabase(string serverName, string username, string password, string databaseName, string schema = "") :
-            base(serverName, username, password, databaseName)
+            base(serverName, username, password, databaseName, schema)
         {
-            this.schema = schema;
             this.type = Database.DATABASE_TYPE_SQLSERVER;
         }
 
