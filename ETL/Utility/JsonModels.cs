@@ -52,6 +52,10 @@ namespace ETL.Utility
                     jsonDatabase.path = ((AccessDatabase)database).path;
                     break;
 
+                case Database.DATABASE_TYPE_DSPACE:
+                    jsonDatabase.folderPath = ((DSpaceDatabase)database).folderPath;
+                    break;
+
                 case Database.DATABASE_TYPE_ODBC:
                     jsonDatabase.connectionString = ((ODBCDatabase)database).connectionString;
                     break;
@@ -80,6 +84,7 @@ namespace ETL.Utility
             string schema = jsonDatabase.schema;
             string path = jsonDatabase.path;
             string connectionString = jsonDatabase.connectionString;
+            string folderPath = jsonDatabase.folderPath;
 
             Database database;
             switch (type)
@@ -104,22 +109,32 @@ namespace ETL.Utility
                     database = new ODBCDatabase(connectionString);
                     break;
 
+                case Database.DATABASE_TYPE_DSPACE:
+                    database = new DSpaceDatabase();
+                    ((DSpaceDatabase)database).folderPath = folderPath;
+                    break;
+
                 default:
                     database = new MySQLDatabase(serverName, username, password, databaseName, schema);
                     break;
             }
-            database.Connect();
-            database.tablesNames = database.GetTablesNames();
-            database.Close();
-            database.CreateTablesList(database.tablesNames);
-            for (int j = 0; j < database.tablesNames.Count; ++j)
+
+            if (type != Database.DATABASE_TYPE_DSPACE)
             {
                 database.Connect();
-                database.SetDatatableSchema(database.tablesNames[j]);
+                database.tablesNames = database.GetTablesNames();
                 database.Close();
+                database.CreateTablesList(database.tablesNames);
+                for (int j = 0; j < database.tablesNames.Count; ++j)
+                {
+                    database.Connect();
+                    database.SetDatatableSchema(database.tablesNames[j]);
+                    database.Close();
+                }
+                database.queries = MapFromListJsonJoinQueriesToListJoinQueries(jsonDatabase.queries);
+                database.SetQueriesNamesListFromQueriesList();
             }
-            database.queries = MapFromListJsonJoinQueriesToListJoinQueries(jsonDatabase.queries);
-            database.SetQueriesNamesListFromQueriesList();
+           
             return database;
         }
 
@@ -167,13 +182,15 @@ namespace ETL.Utility
         {
             JsonSingleEtl jsonEtl = new JsonSingleEtl();
             jsonEtl.name = etl.name;
+            jsonEtl.isDspaceDestination = etl.isDspaceDestination;
             jsonEtl.destDb = MapFromDatabaseToJsonDatabase(etl.destDb);
             jsonEtl.srcDb = MapFromDatabaseToJsonDatabase(etl.srcDb);
-            jsonEtl.destTable = MapFromTableToJsonTable(etl.destTable);
+            if (!jsonEtl.isDspaceDestination)
+            {
+                jsonEtl.destTable = MapFromTableToJsonTable(etl.destTable);
+            }
             jsonEtl.sourceTable = MapFromTableOrQueryToJsonTableOrQuery(etl.sourceTable);
             jsonEtl.expressionDt = etl.expressionDt;
-            jsonEtl.isDspaceDestination = etl.isDspaceDestination;
-            jsonEtl.dspacePath = etl.dspacePath;
             return jsonEtl;
         }
 
@@ -181,13 +198,15 @@ namespace ETL.Utility
         {
             SingleETL etl = new SingleETL();
             etl.name = jsonEtl.name;
+            etl.isDspaceDestination = jsonEtl.isDspaceDestination;
             etl.destDb = MapFromJsonDatabaseToDatabase(jsonEtl.destDb);
             etl.srcDb = MapFromJsonDatabaseToDatabase(jsonEtl.srcDb);
-            etl.destTable = MapFromJsonTableToTable(jsonEtl.destTable);
+            if (!etl.isDspaceDestination)
+            {
+                etl.destTable = MapFromJsonTableToTable(jsonEtl.destTable);
+            }
             etl.sourceTable = MapFromJsonTableOrQueryToTableOrQuery(jsonEtl.sourceTable);
             etl.expressionDt = jsonEtl.expressionDt;
-            etl.isDspaceDestination = jsonEtl.isDspaceDestination;
-            etl.dspacePath = jsonEtl.dspacePath;
             return etl;
         }
 
@@ -305,6 +324,7 @@ namespace ETL.Utility
         public string port { get; set; }
         public string schema { get; set; }
         public string connectionString { get; set; }
+        public string folderPath { get; set; }
 
         public List<JsonJoinQuery> queries { get; set; }
         public string type { get; set; }
@@ -335,7 +355,6 @@ namespace ETL.Utility
         public JsonTable destTable { set; get; }
         public DataTable expressionDt { set; get; }
         public bool isDspaceDestination { set; get; }
-        public string dspacePath { get; set; }
     }
 
     public partial class JsonJobEtl

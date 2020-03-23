@@ -1,6 +1,7 @@
 ﻿using ETL.Utility;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,8 +27,12 @@ namespace ETL.Core
                 Database sourceDb = etl.srcDb;
                 TableOrQuery sourceTableOrQuery = etl.sourceTable;
 
+                Table destinationTable = new Table();
                 Database destinationDb = etl.destDb;
-                Table destinationTable = etl.destTable;
+                if (!etl.isDspaceDestination)
+                {
+                    destinationTable = etl.destTable;
+                }
 
                 sourceDb.Close();
                 sourceDb.Connect();
@@ -36,15 +41,28 @@ namespace ETL.Core
                 if (selectDataSuccess)
                 {
                     sourceTableOrQuery = sourceDb.GetTableOrQueryByName(sourceTableOrQuery.GetName());
-                    destinationTable = destinationDb.GetTable(destinationTable.GetName());
+                    DataTable destinationDt;
+                    string destinationTableName;
+                    if (!etl.isDspaceDestination)
+                    {
+                        destinationTable = destinationDb.GetTable(destinationTable.GetName());
+                        destinationTable.dataTable.TableName = destinationTable.GetName();
+                        destinationDt = destinationTable.dataTable;
+                        destinationTableName = destinationTable.GetName();
+                    }
+                    else
+                    {
+                        destinationDt = ((DSpaceDatabase)destinationDb).dspaceData;
+                        destinationTableName = "";
+                    }
+
                     sourceTableOrQuery.dataTable.TableName = sourceTableOrQuery.GetName();
-                    destinationTable.dataTable.TableName = destinationTable.GetName();
-                    bool createDestinationDatatableSucess = Expression.AddValuesToDatatableDestination(sourceTableOrQuery.dataTable, destinationTable.dataTable, etl.expressionDt, Global.mapDt);
+                    bool createDestinationDatatableSucess = Expression.AddValuesToDatatableDestination(sourceTableOrQuery.dataTable, destinationDt, etl.expressionDt, Global.mapDt);
                     if (createDestinationDatatableSucess)
                     {
                         destinationDb.Close();
                         destinationDb.Connect();
-                        bool insertInDestinationSuccess = destinationDb.Insert(destinationTable.GetName());
+                        bool insertInDestinationSuccess = destinationDb.Insert(destinationTableName);
                         destinationDb.Close();
                         if (insertInDestinationSuccess)
                         {

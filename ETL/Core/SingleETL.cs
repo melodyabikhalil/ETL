@@ -16,7 +16,6 @@ namespace ETL.Core
         public Table destTable { set; get; }
         public DataTable expressionDt { set; get; }
         public bool isDspaceDestination { get; set; }
-        public string dspacePath { get; set; }
 
         public SingleETL() { }
 
@@ -28,6 +27,7 @@ namespace ETL.Core
             this.sourceTable = sourceTable;
             this.destTable = destTable;
             this.expressionDt = expressionDt;
+            isDspaceDestination = false;
         }
 
         public void SetDspaceDestinationDatatable()

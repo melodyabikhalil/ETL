@@ -108,6 +108,7 @@
     <Compile Include="Core\AccessDatabase.cs" />
     <Compile Include="Core\AccessHelper.cs" />
     <Compile Include="Core\Database.cs" />
+    <Compile Include="Core\DSpaceDatabase.cs" />
     <Compile Include="Core\DSpaceHelper.cs" />
     <Compile Include="Core\DSpaceMetadataField.cs" />
     <Compile Include="Core\SingleETL.cs" />
