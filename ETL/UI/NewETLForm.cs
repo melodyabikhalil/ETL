@@ -35,6 +35,8 @@ namespace ETL.UI
                 sourceDbComboBox.Items.Insert(i, Global.Databases[i].databaseName);
                 destinationDbComboBox.Items.Insert(i, Global.Databases[i].databaseName);
             }
+            dspacePathLabel.Visible = false;
+            dspacePathTextBox.Visible = false;
         }
 
         private void FromETLNameToSrcDrstDbButton_Click(object sender, EventArgs e)
@@ -231,6 +233,23 @@ namespace ETL.UI
             {
                 DataGridViewRow row = ExpressionDataGridView.Rows[index];
                 row.Cells[0].Value = this.destTableComboBox.Text;
+            }
+        }
+
+        private void DspaceDestinationCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            bool isChecked = dspaceDestinationCheckBox.Checked;
+            if (isChecked)
+            {
+                dspacePathLabel.Visible = true;
+                dspacePathTextBox.Visible = true;
+                destinationDbComboBox.Enabled = false;
+            }
+            else
+            {
+                dspacePathLabel.Visible = false;
+                dspacePathTextBox.Visible = false;
+                destinationDbComboBox.Enabled = true;
             }
         }
     }

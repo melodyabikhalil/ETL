@@ -172,6 +172,8 @@ namespace ETL.Utility
             jsonEtl.destTable = MapFromTableToJsonTable(etl.destTable);
             jsonEtl.sourceTable = MapFromTableOrQueryToJsonTableOrQuery(etl.sourceTable);
             jsonEtl.expressionDt = etl.expressionDt;
+            jsonEtl.isDspaceDestination = etl.isDspaceDestination;
+            jsonEtl.dspacePath = etl.dspacePath;
             return jsonEtl;
         }
 
@@ -184,6 +186,8 @@ namespace ETL.Utility
             etl.destTable = MapFromJsonTableToTable(jsonEtl.destTable);
             etl.sourceTable = MapFromJsonTableOrQueryToTableOrQuery(jsonEtl.sourceTable);
             etl.expressionDt = jsonEtl.expressionDt;
+            etl.isDspaceDestination = jsonEtl.isDspaceDestination;
+            etl.dspacePath = jsonEtl.dspacePath;
             return etl;
         }
 
@@ -330,6 +334,8 @@ namespace ETL.Utility
         public JsonTableOrQuery sourceTable { set; get; }
         public JsonTable destTable { set; get; }
         public DataTable expressionDt { set; get; }
+        public bool isDspaceDestination { set; get; }
+        public string dspacePath { get; set; }
     }
 
     public partial class JsonJobEtl

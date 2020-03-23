@@ -15,6 +15,8 @@ namespace ETL.Core
         public TableOrQuery sourceTable { set; get; }
         public Table destTable { set; get; }
         public DataTable expressionDt { set; get; }
+        public bool isDspaceDestination { get; set; }
+        public string dspacePath { get; set; }
 
         public SingleETL() { }
 
@@ -26,6 +28,14 @@ namespace ETL.Core
             this.sourceTable = sourceTable;
             this.destTable = destTable;
             this.expressionDt = expressionDt;
+        }
+
+        public void SetDspaceDestinationDatatable()
+        {
+            if (isDspaceDestination)
+            {
+                // TODO : create dspace database and table
+            }
         }
 
         public override bool Equals(Object obj)

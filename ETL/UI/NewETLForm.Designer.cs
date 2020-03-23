@@ -56,6 +56,9 @@
             this.backToSrcDestTablesTabButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
             this.ExpressionDataGridView = new System.Windows.Forms.DataGridView();
+            this.dspaceDestinationCheckBox = new System.Windows.Forms.CheckBox();
+            this.dspacePathTextBox = new System.Windows.Forms.TextBox();
+            this.dspacePathLabel = new System.Windows.Forms.Label();
             this.ETLTabControl.SuspendLayout();
             this.ETLNameTab.SuspendLayout();
             this.SrcDestDbTab.SuspendLayout();
@@ -119,6 +122,9 @@
             // SrcDestDbTab
             // 
             this.SrcDestDbTab.BackColor = System.Drawing.SystemColors.Control;
+            this.SrcDestDbTab.Controls.Add(this.dspacePathLabel);
+            this.SrcDestDbTab.Controls.Add(this.dspacePathTextBox);
+            this.SrcDestDbTab.Controls.Add(this.dspaceDestinationCheckBox);
             this.SrcDestDbTab.Controls.Add(this.backFromSrcDestDbToETLNameButton);
             this.SrcDestDbTab.Controls.Add(this.fromSrcDestDbToSrcDestTablesButton);
             this.SrcDestDbTab.Controls.Add(this.destinationDbComboBox);
@@ -158,7 +164,7 @@
             this.destinationDbComboBox.FormattingEnabled = true;
             this.destinationDbComboBox.Location = new System.Drawing.Point(203, 155);
             this.destinationDbComboBox.Name = "destinationDbComboBox";
-            this.destinationDbComboBox.Size = new System.Drawing.Size(173, 21);
+            this.destinationDbComboBox.Size = new System.Drawing.Size(231, 21);
             this.destinationDbComboBox.TabIndex = 4;
             // 
             // sourceDbComboBox
@@ -166,7 +172,7 @@
             this.sourceDbComboBox.FormattingEnabled = true;
             this.sourceDbComboBox.Location = new System.Drawing.Point(203, 103);
             this.sourceDbComboBox.Name = "sourceDbComboBox";
-            this.sourceDbComboBox.Size = new System.Drawing.Size(173, 21);
+            this.sourceDbComboBox.Size = new System.Drawing.Size(231, 21);
             this.sourceDbComboBox.TabIndex = 3;
             // 
             // label4
@@ -190,11 +196,13 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(69, 68);
+            this.label2.Location = new System.Drawing.Point(53, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(205, 13);
+            this.label2.Size = new System.Drawing.Size(663, 26);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Choose source and destination databases";
+            this.label2.Text = "Choose source and destination databases. \r\nIf you wish to migrate to DSpace, simp" +
+    "ly tick the \'DSpace destination\' box and the data will be migrated into a folder" +
+    " in the path you entered.\r\n";
             // 
             // SrcDestTablesTab
             // 
@@ -338,6 +346,33 @@
             this.ExpressionDataGridView.TabIndex = 0;
             this.ExpressionDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ExpressionDataGridView_RowsAdded);
             // 
+            // dspaceDestinationCheckBox
+            // 
+            this.dspaceDestinationCheckBox.AutoSize = true;
+            this.dspaceDestinationCheckBox.Location = new System.Drawing.Point(203, 200);
+            this.dspaceDestinationCheckBox.Name = "dspaceDestinationCheckBox";
+            this.dspaceDestinationCheckBox.Size = new System.Drawing.Size(119, 17);
+            this.dspaceDestinationCheckBox.TabIndex = 11;
+            this.dspaceDestinationCheckBox.Text = "DSpace destination";
+            this.dspaceDestinationCheckBox.UseVisualStyleBackColor = true;
+            this.dspaceDestinationCheckBox.CheckedChanged += new System.EventHandler(this.DspaceDestinationCheckBox_CheckedChanged);
+            // 
+            // dspacePathTextBox
+            // 
+            this.dspacePathTextBox.Location = new System.Drawing.Point(203, 223);
+            this.dspacePathTextBox.Name = "dspacePathTextBox";
+            this.dspacePathTextBox.Size = new System.Drawing.Size(231, 20);
+            this.dspacePathTextBox.TabIndex = 12;
+            // 
+            // dspacePathLabel
+            // 
+            this.dspacePathLabel.AutoSize = true;
+            this.dspacePathLabel.Location = new System.Drawing.Point(163, 226);
+            this.dspacePathLabel.Name = "dspacePathLabel";
+            this.dspacePathLabel.Size = new System.Drawing.Size(29, 13);
+            this.dspacePathLabel.TabIndex = 13;
+            this.dspacePathLabel.Text = "Path";
+            // 
             // NewETLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -389,5 +424,8 @@
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label srcColumnLabel;
+        private System.Windows.Forms.Label dspacePathLabel;
+        private System.Windows.Forms.TextBox dspacePathTextBox;
+        private System.Windows.Forms.CheckBox dspaceDestinationCheckBox;
     }
 }
