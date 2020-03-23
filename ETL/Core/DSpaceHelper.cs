@@ -110,6 +110,8 @@ namespace ETL.Core
 
         public static void DownloadResource(string resourcePath, string downloadPath)
         {
+            // TODO : uncomment & test
+
             //Path.GetFullPath(resourcePath).Replace(@"\", @"\\");
             //Path.GetFullPath(downloadPath).Replace(@"\", @"\\");
             //string resourceName = Path.GetFileName(resourcePath).Trim();
