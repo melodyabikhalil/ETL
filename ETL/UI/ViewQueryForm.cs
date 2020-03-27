@@ -17,6 +17,8 @@ namespace ETL.UI
             InitializeComponent();
             this.queryNameLabel.Text += "\t" + queryName;
             this.queryLabel.Text +=  "\n\n\t" + query;
+            this.queryLabel.MaximumSize = new Size(355, 160);
+            this.queryLabel.AutoSize = true;
             CenterToParent();
         }
 

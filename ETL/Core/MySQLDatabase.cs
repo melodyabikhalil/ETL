@@ -111,7 +111,7 @@ namespace ETL.Core
             }
         }
 
-        public override bool TrySelect(string query)
+        public override DataTable TrySelect(string query)
         {
             MySqlDataAdapter adapter = new MySqlDataAdapter();
             MySqlCommand command = new MySqlCommand(query, this.connection);
@@ -120,12 +120,12 @@ namespace ETL.Core
             try
             {
                 adapter.Fill(testDatatable);
-                return true;
+                return testDatatable;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return false;
+                return null;
             }
         }
 

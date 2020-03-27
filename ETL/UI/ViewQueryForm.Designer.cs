@@ -36,7 +36,7 @@
             // queryNameLabel
             // 
             this.queryNameLabel.AutoSize = true;
-            this.queryNameLabel.Location = new System.Drawing.Point(33, 44);
+            this.queryNameLabel.Location = new System.Drawing.Point(23, 25);
             this.queryNameLabel.Name = "queryNameLabel";
             this.queryNameLabel.Size = new System.Drawing.Size(72, 13);
             this.queryNameLabel.TabIndex = 0;
@@ -45,7 +45,7 @@
             // queryLabel
             // 
             this.queryLabel.AutoSize = true;
-            this.queryLabel.Location = new System.Drawing.Point(33, 94);
+            this.queryLabel.Location = new System.Drawing.Point(23, 63);
             this.queryLabel.Name = "queryLabel";
             this.queryLabel.Size = new System.Drawing.Size(41, 13);
             this.queryLabel.TabIndex = 2;
@@ -53,7 +53,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(346, 254);
+            this.closeButton.Location = new System.Drawing.Point(306, 248);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(75, 23);
             this.closeButton.TabIndex = 3;
@@ -65,7 +65,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(447, 299);
+            this.ClientSize = new System.Drawing.Size(412, 299);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.queryLabel);
             this.Controls.Add(this.queryNameLabel);

@@ -115,7 +115,7 @@ namespace ETL.Core
             }
         }
 
-        public override bool TrySelect(string query)
+        public override DataTable TrySelect(string query)
         {
             OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
             OleDbCommand selectCommand = new OleDbCommand(query, this.connection);
@@ -125,12 +125,12 @@ namespace ETL.Core
             try
             {
                 dataAdapter.Fill(testDatatable);
-                return true;
+                return testDatatable;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return false;
+                return null;
             }
         }
 
