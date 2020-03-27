@@ -44,7 +44,7 @@
             this.etlNameLabel.AutoSize = true;
             this.etlNameLabel.Location = new System.Drawing.Point(35, 36);
             this.etlNameLabel.Name = "etlNameLabel";
-            this.etlNameLabel.Size = new System.Drawing.Size(64, 13);
+            this.etlNameLabel.Size = new System.Drawing.Size(61, 13);
             this.etlNameLabel.TabIndex = 0;
             this.etlNameLabel.Text = "ETL Name: ";
             // 
@@ -56,6 +56,7 @@
             this.ETLDataGridView.Size = new System.Drawing.Size(911, 217);
             this.ETLDataGridView.TabIndex = 1;
             this.ETLDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.ETLDataGridView_DataError);
+            this.ETLDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.ETLDataGridView_EditingControlShowing);
             // 
             // doneButton
             // 
@@ -72,7 +73,7 @@
             this.sourceDatabaseLabel.AutoSize = true;
             this.sourceDatabaseLabel.Location = new System.Drawing.Point(35, 86);
             this.sourceDatabaseLabel.Name = "sourceDatabaseLabel";
-            this.sourceDatabaseLabel.Size = new System.Drawing.Size(91, 13);
+            this.sourceDatabaseLabel.Size = new System.Drawing.Size(92, 13);
             this.sourceDatabaseLabel.TabIndex = 3;
             this.sourceDatabaseLabel.Text = "Source database:";
             // 
@@ -81,7 +82,7 @@
             this.sourceTableOrQueryLabel.AutoSize = true;
             this.sourceTableOrQueryLabel.Location = new System.Drawing.Point(35, 120);
             this.sourceTableOrQueryLabel.Name = "sourceTableOrQueryLabel";
-            this.sourceTableOrQueryLabel.Size = new System.Drawing.Size(111, 13);
+            this.sourceTableOrQueryLabel.Size = new System.Drawing.Size(115, 13);
             this.sourceTableOrQueryLabel.TabIndex = 4;
             this.sourceTableOrQueryLabel.Text = "Source table or query:";
             // 
@@ -90,7 +91,7 @@
             this.destinationTableLabel.AutoSize = true;
             this.destinationTableLabel.Location = new System.Drawing.Point(359, 120);
             this.destinationTableLabel.Name = "destinationTableLabel";
-            this.destinationTableLabel.Size = new System.Drawing.Size(89, 13);
+            this.destinationTableLabel.Size = new System.Drawing.Size(92, 13);
             this.destinationTableLabel.TabIndex = 6;
             this.destinationTableLabel.Text = "Destination table:";
             // 
@@ -99,7 +100,7 @@
             this.destinationDatabaseLabel.AutoSize = true;
             this.destinationDatabaseLabel.Location = new System.Drawing.Point(359, 86);
             this.destinationDatabaseLabel.Name = "destinationDatabaseLabel";
-            this.destinationDatabaseLabel.Size = new System.Drawing.Size(110, 13);
+            this.destinationDatabaseLabel.Size = new System.Drawing.Size(113, 13);
             this.destinationDatabaseLabel.TabIndex = 5;
             this.destinationDatabaseLabel.Text = "Destination database:";
             // 

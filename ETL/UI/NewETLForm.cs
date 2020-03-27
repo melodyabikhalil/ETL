@@ -303,5 +303,25 @@ namespace ETL.UI
             this.destTableComboBox.Items.Clear();
             this.destTableComboBox.Items.AddRange(dest.tablesNames.ToArray());
         }
+
+        private void ExpressionDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            string titleText = ExpressionDataGridView.Columns["Expression"].HeaderText;
+            if (titleText.Equals("Expression"))
+            {
+                TextBox autoText = e.Control as TextBox;
+                if (autoText != null)
+                {
+                    autoText.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    autoText.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    AutoCompleteStringCollection DataCollection = new AutoCompleteStringCollection();
+                    foreach(string col in this.srcTable.GetColumnsNames())
+                    {
+                        DataCollection.Add(col);
+                    }
+                    autoText.AutoCompleteCustomSource = DataCollection;
+                }
+            }
+        }
     }
 }

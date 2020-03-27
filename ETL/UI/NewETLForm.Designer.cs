@@ -123,6 +123,7 @@
             this.ExpressionDataGridView.Size = new System.Drawing.Size(914, 289);
             this.ExpressionDataGridView.TabIndex = 0;
             this.ExpressionDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ExpressionDataGridView_CellEndEdit);
+            this.ExpressionDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.ExpressionDataGridView_EditingControlShowing);
             this.ExpressionDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ExpressionDataGridView_RowsAdded);
             // 
             // ETLNameTab
@@ -146,7 +147,7 @@
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Location = new System.Drawing.Point(30, 230);
+            this.groupBox3.Location = new System.Drawing.Point(28, 260);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(440, 214);
             this.groupBox3.TabIndex = 11;
