@@ -237,5 +237,49 @@ namespace ETL.UI
                 
             }
         }
+
+        private void ExpressionDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            string headerText = ExpressionDataGridView.Columns[e.ColumnIndex].HeaderText;
+            if (!headerText.Equals("Expression Type")) return;
+            DataGridViewRow currentRow = ExpressionDataGridView.Rows[e.RowIndex];
+            if (currentRow.Cells["ExpressionType"].Value.Equals("Replace"))
+            {
+                currentRow.Cells["RegexpColumnName"].Value = "";
+                currentRow.Cells["RegexpColumnName"].ReadOnly = true;
+                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["SectionName"].Value = "";
+                currentRow.Cells["SectionName"].ReadOnly = true;
+                currentRow.Cells["SectionName"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["Expression"].ReadOnly = false;
+                currentRow.Cells["Expression"].Style.BackColor = Color.White;
+            }
+            else if (currentRow.Cells["ExpressionType"].Value.Equals("Map"))
+            {
+                currentRow.Cells["Expression"].ReadOnly = true;
+                currentRow.Cells["Expression"].Value = "";
+                currentRow.Cells["Expression"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["RegexpColumnName"].ReadOnly = false;
+                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.White;
+                currentRow.Cells["SectionName"].ReadOnly = false;
+                currentRow.Cells["SectionName"].Style.BackColor = Color.White;
+            }
+            else if (currentRow.Cells["ExpressionType"].Value.Equals("Reg"))
+            {
+                currentRow.Cells["Expression"].ReadOnly = false;
+                currentRow.Cells["Expression"].Style.BackColor = Color.White;
+                currentRow.Cells["RegexpColumnName"].ReadOnly = false;
+                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.White;
+
+                currentRow.Cells["SectionName"].Value = "";
+                currentRow.Cells["SectionName"].ReadOnly = true;
+                currentRow.Cells["SectionName"].Style.BackColor = Color.LightGray;
+            }
+
+            return;
+        }
     }
 }
