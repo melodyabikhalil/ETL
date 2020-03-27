@@ -99,6 +99,7 @@ namespace ETL.Core
 
                 DataSet dataSet = new DataSet();
 
+                tableOrQuery.dataTable.Clear();
                 dataAdapter.Fill(dataSet);
                 tableOrQuery.dataTable = dataSet.Tables[0];
                 return true;

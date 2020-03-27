@@ -100,6 +100,7 @@ namespace ETL.Core
             da.SelectCommand = cmd;
             try
             {
+                tableOrQuery.dataTable.Clear();
                 da.Fill(tableOrQuery.dataTable);
                 return true;
             }

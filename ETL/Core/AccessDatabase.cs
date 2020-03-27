@@ -104,6 +104,7 @@ namespace ETL.Core
 
             try
             {
+                tableOrQuery.dataTable.Clear();
                 dataAdapter.Fill(tableOrQuery.dataTable);
                 return true;
             }
