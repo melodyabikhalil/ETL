@@ -30,14 +30,6 @@ namespace ETL.Core
             isDspaceDestination = false;
         }
 
-        public void SetDspaceDestinationDatatable()
-        {
-            if (isDspaceDestination)
-            {
-                // TODO : create dspace database and table
-            }
-        }
-
         public override bool Equals(Object obj)
         {
             return (obj is SingleETL)
