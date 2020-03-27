@@ -39,11 +39,11 @@ namespace ETL.UI
 
         private void SetExpressionDataGridView()
         {
+            CreateComboBoxColumn("Regexp/Mapping Source column", etl.srcDb.GetTableOrQueryByName(etl.sourceTable.GetName()).GetColumnsNames(), "RegexpColumnName");
             CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
             CreateComboBoxColumn("Column Destination", etl.destDb.GetTable(etl.destTable.GetName()).GetColumnsNames(), "ColumnDest");
             List<string> expressionTypes = new List<string>(new string[] { "Replace", "Reg", "Map" });
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
-            CreateComboBoxColumn("Regexp Column Name", etl.srcDb.GetTableOrQueryByName(etl.sourceTable.GetName()).GetColumnsNames(), "RegexpColumnName");
             CreateTexBoxColumn("Expression", false, "Expression");
             HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("SectionName")).ToHashSet();
             List<string> sectionNames = new List<string>();
@@ -55,7 +55,7 @@ namespace ETL.UI
             ETLDataGridView.Rows.Add(etl.expressionDt.Rows.Count-1);
             foreach (DataGridViewRow Row in ETLDataGridView.Rows)
             {
-                Row.Cells[0].Value = etl.destTable.GetName();
+                Row.Cells[1].Value = etl.destTable.GetName();
             }
             try
             {
