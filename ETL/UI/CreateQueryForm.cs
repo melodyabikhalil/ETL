@@ -24,7 +24,6 @@ namespace ETL.UI
             this.buildQueryTabPage.Enabled = false;
             this.selectColumnsTabPage.Enabled = false;
             this.queryPreviewTabPage.Enabled = false;
-            this.AcceptButton = saveButton;
         }
 
         public void SetJoinQuery(JoinQuery newJoinQuery)
@@ -189,10 +188,13 @@ namespace ETL.UI
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            bool queryIsValid = this.joinQuery.database.TrySelect(this.joinQuery.query.Insert(this.joinQuery.query.Length - 1, " WHERE 1=0"));
-            if (queryIsValid)
+            string query = queryRichTextBox.Text;
+            this.joinQuery.query = query;
+            DataTable columnsDatatable = this.joinQuery.database.TrySelect(this.joinQuery.query.Insert(this.joinQuery.query.Length - 1, " WHERE 1=0"));
+            if (columnsDatatable != null)
             {
-                string query = this.joinQuery.query;
+                List<string> columns = Helper.GetColumnsNamesFromDatatable(columnsDatatable);
+                this.joinQuery.columns = columns;
                 this.joinQuery.database.queries.Add(this.joinQuery);
                 List<string> queriesNames = this.joinQuery.database.GetQueriesNames();
                 this.joinQuery.database.queriesNames = queriesNames;
