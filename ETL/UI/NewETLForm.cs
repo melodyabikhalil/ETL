@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ETL.Utility;
+using System.IO;
 
 namespace ETL.UI
 {
@@ -27,12 +28,10 @@ namespace ETL.UI
         {
             InitializeComponent();
             this.ExpressionTab.Enabled = false;
-
             // Hide the tabs headers
             this.ETLTabControl.Appearance = TabAppearance.FlatButtons;
             this.ETLTabControl.ItemSize = new Size(0, 1);
             this.ETLTabControl.SizeMode = TabSizeMode.Fixed;
-
 
             for (int i = 0; i< Global.Databases.Count; ++i)
             {
@@ -322,6 +321,12 @@ namespace ETL.UI
                     autoText.AutoCompleteCustomSource = DataCollection;
                 }
             }
+        }
+
+        private void helpButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("There is three types of expressions: Replace, Reg (Regular Expression) and Map.\r Usage examples:\r REPLACE: table1, FullName, Replace, null, [FirstName].[LastName], null \rREGULAR EXPRESSION: table1, Gender, Reg, Gender, ^[A - Za - z]{ 2}, null(takes the first two letters of the gender value) \rMAPPING: table1, Gender, Map, Gender, null, Gender(maps the gender value to another one using the mapping table)", "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
     }
 }

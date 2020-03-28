@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewETLForm));
             this.ExpressionTab = new System.Windows.Forms.TabPage();
+            this.helpButton = new System.Windows.Forms.Button();
             this.srcColumnLabel = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.backToSrcDestTablesTabButton = new System.Windows.Forms.Button();
@@ -65,6 +66,7 @@
             // ExpressionTab
             // 
             this.ExpressionTab.BackColor = System.Drawing.SystemColors.Control;
+            this.ExpressionTab.Controls.Add(this.helpButton);
             this.ExpressionTab.Controls.Add(this.srcColumnLabel);
             this.ExpressionTab.Controls.Add(this.label8);
             this.ExpressionTab.Controls.Add(this.backToSrcDestTablesTabButton);
@@ -76,6 +78,16 @@
             this.ExpressionTab.Size = new System.Drawing.Size(976, 565);
             this.ExpressionTab.TabIndex = 3;
             this.ExpressionTab.Text = "Mapping Expressions";
+            // 
+            // helpButton
+            // 
+            this.helpButton.Location = new System.Drawing.Point(31, 524);
+            this.helpButton.Name = "helpButton";
+            this.helpButton.Size = new System.Drawing.Size(75, 23);
+            this.helpButton.TabIndex = 17;
+            this.helpButton.Text = "Help";
+            this.helpButton.UseVisualStyleBackColor = true;
+            this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
             // 
             // srcColumnLabel
             // 
@@ -310,6 +322,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 591);
             this.Controls.Add(this.ETLTabControl);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.HelpButton = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "NewETLForm";
             this.Text = "Create ETL";
             this.ExpressionTab.ResumeLayout(false);
@@ -353,5 +369,6 @@
         private System.Windows.Forms.TextBox ETLNameTextBox;
         private System.Windows.Forms.Button fromEtlDetailsToExpressionTabButton;
         private System.Windows.Forms.TabControl ETLTabControl;
+        private System.Windows.Forms.Button helpButton;
     }
 }
