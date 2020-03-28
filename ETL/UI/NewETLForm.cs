@@ -337,8 +337,8 @@ namespace ETL.UI
 
         private void helpButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("There is three types of expressions: Replace, Reg (Regular Expression) and Map.\r Usage examples:\r REPLACE: table1, FullName, Replace, null, [FirstName].[LastName], null \r REGULAR EXPRESSION: table1, Gender, Reg, Gender, ^[A - Za - z]{ 2}, null(takes the first two letters of the gender value) \r MAPPING: table1, Gender, Map, Gender, null, Gender(maps the gender value to another one using the mapping table)", "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            HelpForm help = new HelpForm("\\Utility\\HelpETL.html");
+            help.Show();
         }
     }
 }

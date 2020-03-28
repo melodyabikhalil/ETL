@@ -78,9 +78,9 @@
             // 
             // helpButton
             // 
-            this.helpButton.Location = new System.Drawing.Point(31, 524);
+            this.helpButton.Location = new System.Drawing.Point(20, 524);
             this.helpButton.Name = "helpButton";
-            this.helpButton.Size = new System.Drawing.Size(75, 23);
+            this.helpButton.Size = new System.Drawing.Size(38, 23);
             this.helpButton.TabIndex = 17;
             this.helpButton.Text = "Help";
             this.helpButton.UseVisualStyleBackColor = true;

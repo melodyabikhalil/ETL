@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>ETL Help</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h2>ETL Help</h2>
+    <div>
+        <div><b>There are 3 expression types:</b></div>
+        <ul>
+            <li>Replace</li>
+            <li>Regular Expression</li>
+            <li>Map</li>
+        </ul>
+        <div>
+            <p><b>Replace</b> type consists of concatenating one or more source columns. <br>
+                Example: “[FirstName] [LastName]”, this way the destination column will be a concatenation of FirstName & LastName with a space between them.
+                This string should be added in the ‘Expression’ column of the datatable.
+            </p>
+            <p><b>Regular expressions</b> type consist of creating regular expressions on certain strings (expressions). Same as the Replace type, the user can enter an ‘Expression’ that will be evaluated and replaced with the values of the source columns. In addition to that, a ‘Regular Expression’ should be added.<br>
+                Example: “[FirstName]” as Expression, “^[A-Za-z]{2}”. This way will be having the first 2 letters of the FirstName field.
+            </p>
+            <p><b>Map</b> type consists of mapping values from the source table to the destination table based on predefined mapping sections. These maps are set in a datatable called ‘Mapping datatable’ where these columns should be defined: ‘Map Name’, ‘From Value’, ‘To Value’.<br>
+                Example: Map Name = ‘Gender’, From Value = ‘1’, To Value = ‘Female’.
+            </p>
+        </div>
+        <br>
+        <div><b>Table columns usage:</b></div>
+        <ul>
+            <li><u>Expression Type:</u></li> 
+            Type of the Expression: Replace, Regular Expression or Map.<br><br>
+
+            <li><u>Expression:</u></li>
+            Only used for Replace & Regular expressions which is the expression to replace source columns with actual values.<br><br>
+
+            <li><u>Regular Expression:</u></li>
+            Regular expression the user wishes to apply to the ‘Expression’ field.<br><br>
+
+            <li><u>Map Source Column:</u></li>
+            Column from the source table that the user wishes to map from.<br><br>
+
+            <li><u>Map Name:</u></li>
+            Name of the predefined Map to use.<br><br>
+
+            <li><u>Destination Column:</u></li>
+            Name of the destination column.<br><br>
+
+            <li><u>Destination Table:</u></li>
+            Name of the table to migrate the data to (which is the same for all the rows of this ETL).
+        </ul>
+        <br>
+        <div><b>Examples:</b></div>
+        <table>
+            <tr>
+                <th>Expression Type</th>
+                <th>Expression</th>
+                <th>Regular Expression</th>
+                <th>Map Source Column</th>
+                <th>Map Name</th>
+                <th>Destination Column</th>
+                <th>Destination Table</th>
+            </tr>
+            <tr>
+                <td>Replace</td>
+                <td>[fname] [lname]
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>fullname
+                <td>users     
+            </tr>
+            <tr>
+                <td>Regular Expression</td>
+                <td>[dob]</td>
+                <td>^[A-Za-z]{2}</td>
+                <td></td>
+                <td></td>
+                <td>dateofbirth</td>
+                <td>users</td>
+            </tr>
+            <tr>
+                <td>Map
+                <td></td>
+                <td></td>    
+                <td>gender</td>
+                <td>Gender</td>
+                <td>sex</td>
+                <td>users</td>
+            </tr>
+        </table>
+              
+    </div>
+</body>
+</html>
