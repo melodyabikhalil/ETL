@@ -107,13 +107,8 @@ namespace ETL.UI
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
             CreateTexBoxColumn("Expression", false, "Expression");
             CreateTexBoxColumn("Regular Expression", false, "RegularExpression");
+
             CreateComboBoxColumn("Mapping Source column", srcTable.GetColumnsNames(), "MapColumnName");
-            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
-            foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
-            {
-                Row.Cells[4].Value = destTableName;
-            }
-            CreateComboBoxColumn("Column Destination", destTable.GetColumnsNames(), "ColumnDest");
             HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("MappingName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
@@ -121,6 +116,13 @@ namespace ETL.UI
                 sectionNames.Add(section);
             }
             CreateComboBoxColumn("Mapping Name", sectionNames, "MappingName");
+
+            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
+            foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
+            {
+                Row.Cells[5].Value = destTableName;
+            }
+            CreateComboBoxColumn("Column Destination", destTable.GetColumnsNames(), "ColumnDest");
         }
 
         private void FromSrcDestTablesToExpression_Click(object sender, EventArgs e)
@@ -220,7 +222,7 @@ namespace ETL.UI
                 DataGridViewRow row = ExpressionDataGridView.Rows[index];
                 //Adds default value for the destination table name
                 if (row.Cells.Count > 1) {
-                    row.Cells[4].Value = this.destTableComboBox.Text;
+                    row.Cells[5].Value = this.destTableComboBox.Text;
                 }
                 
             }
