@@ -43,40 +43,26 @@ namespace ETL.UI
         private void FromETLNameToSrcDrstDbButton_Click(object sender, EventArgs e)
         {
             string etlName = ETLNameTextBox.Text;
-            if (etlName == "" || etlName == null)
+            string srcDatabaseName = this.sourceDbComboBox.Text;
+            string destDatabaseName = this.destinationDbComboBox.Text;
+            string destTableName = this.destTableComboBox.Text;
+            string srcTableName = this.srcTableOrQueriesComboBox.Text;
+            if (etlName == "" || etlName == null || srcDatabaseName == null || srcDatabaseName == "" || destDatabaseName == null || destDatabaseName == "" || destTableName == null || destTableName == "" || srcTableName == null || srcTableName == "")
             {
-                MessageBox.Show("Please choose a name for this new ETL to proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please fill all the fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 this.ETLName = etlName;
-            }
-
-            string srcDatabase = this.sourceDbComboBox.Text;
-            string destDatabase = this.destinationDbComboBox.Text;
-            if (srcDatabase == null || srcDatabase == "" || destDatabase == null || destDatabase == "")
-            {
-                MessageBox.Show("Please choose source & destination databases to proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                src = Global.GetDatabaseByName(srcDatabase);
-                dest = Global.GetDatabaseByName(destDatabase);
+            
+                src = Global.GetDatabaseByName(srcDatabaseName);
+                dest = Global.GetDatabaseByName(destDatabaseName);
                 this.srcTableOrQueriesComboBox.Items.Clear();
                 this.destTableComboBox.Items.Clear();
                 this.srcTableOrQueriesComboBox.Items.AddRange(src.tablesNames.ToArray());
                 this.srcTableOrQueriesComboBox.Items.AddRange(src.queriesNames.ToArray());
                 this.destTableComboBox.Items.AddRange(dest.tablesNames.ToArray());
-            }
-
-            string destTableName = this.destTableComboBox.Text;
-            string srcTableName = this.srcTableOrQueriesComboBox.Text;
-            if (destTableName == null || destTableName == "" || srcTableName == null || srcTableName == "")
-            {
-                MessageBox.Show("Please choose source & destination tables (or queries) to proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
+           
                 SetExpressionDataGridView();
                 this.ExpressionTab.Enabled = true;
                 this.ETLTabControl.SelectedTab = this.ExpressionTab;
@@ -109,7 +95,14 @@ namespace ETL.UI
             string srcColumnsList = "";
             foreach(string col in srcTable.GetColumnsNames())
             {
-                srcColumnsList = srcColumnsList + ", " + col;
+                if (srcColumnsList == "")
+                {
+                    srcColumnsList += col;
+                }
+                else
+                {
+                    srcColumnsList += ", " + col;
+                }
             }
             this.srcColumnLabel.Text = this.srcColumnLabel.Text + " " + srcColumnsList;
             this.destTable = (Table) Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
@@ -155,7 +148,7 @@ namespace ETL.UI
                 new DataGridViewComboBoxColumn();
             {
                 column.Name = name;
-                column.Width = 145;
+                column.Width = 130;
                 column.MaxDropDownItems = 5;
                 column.HeaderText = header;
                 column.DataPropertyName = name;
@@ -175,7 +168,7 @@ namespace ETL.UI
                 new DataGridViewTextBoxColumn();
             {
                 column.Name = name;
-                column.Width = 145;
+                column.Width = 130;
                 column.HeaderText = header;
                 column.ReadOnly = readOnly;
                 column.DataPropertyName = name;
