@@ -43,17 +43,17 @@ namespace ETL.UI
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
             CreateTexBoxColumn("Expression", false, "Expression");
             CreateTexBoxColumn("RegularExpression", false, "RegularExpression");
-            CreateComboBoxColumn("Mapping Source column", etl.srcDb.GetTableOrQueryByName(etl.sourceTable.GetName()).GetColumnsNames(), "RegexpColumnName");
+            CreateComboBoxColumn("Mapping Source column", etl.srcDb.GetTableOrQueryByName(etl.sourceTable.GetName()).GetColumnsNames(), "MapColumnName");
             CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
             CreateComboBoxColumn("Column Destination", etl.destDb.GetTable(etl.destTable.GetName()).GetColumnsNames(), "ColumnDest");
            
-            HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("SectionName")).ToHashSet();
+            HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("MappingName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
             {
                 sectionNames.Add(section);
             }
-            CreateComboBoxColumn("Mapping Name", sectionNames, "SectionName");
+            CreateComboBoxColumn("Mapping Name", sectionNames, "MappingName");
             ETLDataGridView.Rows.Add(etl.expressionDt.Rows.Count-1);
             foreach (DataGridViewRow Row in ETLDataGridView.Rows)
             {
@@ -65,10 +65,10 @@ namespace ETL.UI
                 {
                     ETLDataGridView.Rows[i].Cells["ColumnDest"].Value = etl.expressionDt.Rows[i]["ColumnDest"];
                     ETLDataGridView.Rows[i].Cells["ExpressionType"].Value = etl.expressionDt.Rows[i]["ExpressionType"];
-                    ETLDataGridView.Rows[i].Cells["RegexpColumnName"].Value = etl.expressionDt.Rows[i]["RegexpColumnName"];
+                    ETLDataGridView.Rows[i].Cells["MapColumnName"].Value = etl.expressionDt.Rows[i]["MapColumnName"];
                     ETLDataGridView.Rows[i].Cells["Expression"].Value = etl.expressionDt.Rows[i]["Expression"];
                     ETLDataGridView.Rows[i].Cells["RegularExpression"].Value = etl.expressionDt.Rows[i]["RegularExpression"];
-                    ETLDataGridView.Rows[i].Cells["SectionName"].Value = etl.expressionDt.Rows[i]["SectionName"];
+                    ETLDataGridView.Rows[i].Cells["MappingName"].Value = etl.expressionDt.Rows[i]["MappingName"];
 
                 }
             }
@@ -126,10 +126,10 @@ namespace ETL.UI
             dataTable.Columns.Add("TableNameDest");
             dataTable.Columns.Add("ColumnDest");
             dataTable.Columns.Add("ExpressionType");
-            dataTable.Columns.Add("RegexpColumnName");
+            dataTable.Columns.Add("MapColumnName");
             dataTable.Columns.Add("Expression");
             dataTable.Columns.Add("RegularExpression");
-            dataTable.Columns.Add("SectionName");
+            dataTable.Columns.Add("MappingName");
 
             //populate data
             foreach (DataGridViewRow row in ETLDataGridView.Rows)
@@ -138,9 +138,9 @@ namespace ETL.UI
                 dr["TableNameDest"] = row.Cells["TableNameDest"].Value;
                 dr["ColumnDest"] = row.Cells["ColumnDest"].Value;
                 dr["ExpressionType"] = row.Cells["ExpressionType"].Value;
-                dr["RegexpColumnName"] = row.Cells["RegexpColumnName"].Value;
+                dr["MapColumnName"] = row.Cells["MapColumnName"].Value;
                 dr["Expression"] = row.Cells["Expression"].Value;
-                dr["SectionName"] = row.Cells["SectionName"].Value;
+                dr["MappingName"] = row.Cells["MappingName"].Value;
                 dr["RegularExpression"] = row.Cells["RegularExpression"].Value;
                 dataTable.Rows.Add(dr);
             }
@@ -153,7 +153,11 @@ namespace ETL.UI
             DataTable expressionDt = CreateExpressionDatatable();
             oldEtl.expressionDt = expressionDt;
             JobETL job = Global.GetJobContainingEtl(oldEtl);
-            job.ReplaceEtlInJob(oldEtl);
+            if (job != null)
+            {
+                job.ReplaceEtlInJob(oldEtl);
+
+            }
             JsonHelper.SaveETL(oldEtl, true);
             JsonHelper.SaveEtlJob(job, true);
             MessageBox.Show("ETL successfully edited", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -189,17 +193,17 @@ namespace ETL.UI
             if (currentRow.Cells["ExpressionType"].Value.Equals("Replace"))
             {
                 // To disable a field we make it as read only and change its back color (changed only for the current row)
-                currentRow.Cells["RegexpColumnName"].Value = "";
-                currentRow.Cells["RegexpColumnName"].ReadOnly = true;
-                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.LightGray;
+                currentRow.Cells["MapColumnName"].Value = "";
+                currentRow.Cells["MapColumnName"].ReadOnly = true;
+                currentRow.Cells["MapColumnName"].Style.BackColor = Color.LightGray;
 
                 currentRow.Cells["RegularExpression"].Value = "";
                 currentRow.Cells["RegularExpression"].ReadOnly = true;
                 currentRow.Cells["RegularExpression"].Style.BackColor = Color.LightGray;
 
-                currentRow.Cells["SectionName"].Value = "";
-                currentRow.Cells["SectionName"].ReadOnly = true;
-                currentRow.Cells["SectionName"].Style.BackColor = Color.LightGray;
+                currentRow.Cells["MappingName"].Value = "";
+                currentRow.Cells["MappingName"].ReadOnly = true;
+                currentRow.Cells["MappingName"].Style.BackColor = Color.LightGray;
 
                 // We have to enable the other field that may be disabled earlier due to a previous expression type selection
                 currentRow.Cells["Expression"].ReadOnly = false;
@@ -211,10 +215,10 @@ namespace ETL.UI
                 currentRow.Cells["Expression"].Value = "";
                 currentRow.Cells["Expression"].Style.BackColor = Color.LightGray;
 
-                currentRow.Cells["RegexpColumnName"].ReadOnly = false;
-                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.White;
-                currentRow.Cells["SectionName"].ReadOnly = false;
-                currentRow.Cells["SectionName"].Style.BackColor = Color.White;
+                currentRow.Cells["MapColumnName"].ReadOnly = false;
+                currentRow.Cells["MapColumnName"].Style.BackColor = Color.White;
+                currentRow.Cells["MappingName"].ReadOnly = false;
+                currentRow.Cells["MappingName"].Style.BackColor = Color.White;
 
                 currentRow.Cells["RegularExpression"].Value = "";
                 currentRow.Cells["RegularExpression"].ReadOnly = true;
@@ -225,16 +229,16 @@ namespace ETL.UI
                 currentRow.Cells["Expression"].ReadOnly = false;
                 currentRow.Cells["Expression"].Style.BackColor = Color.White;
 
-                currentRow.Cells["RegexpColumnName"].Value = "";
-                currentRow.Cells["RegexpColumnName"].ReadOnly = true;
-                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.LightGray;
+                currentRow.Cells["MapColumnName"].Value = "";
+                currentRow.Cells["MapColumnName"].ReadOnly = true;
+                currentRow.Cells["MapColumnName"].Style.BackColor = Color.LightGray;
 
                 currentRow.Cells["RegularExpression"].ReadOnly = false;
                 currentRow.Cells["RegularExpression"].Style.BackColor = Color.White;
 
-                currentRow.Cells["SectionName"].Value = "";
-                currentRow.Cells["SectionName"].ReadOnly = true;
-                currentRow.Cells["SectionName"].Style.BackColor = Color.LightGray;
+                currentRow.Cells["MappingName"].Value = "";
+                currentRow.Cells["MappingName"].ReadOnly = true;
+                currentRow.Cells["MappingName"].Style.BackColor = Color.LightGray;
             }
 
             return;

@@ -117,20 +117,20 @@ namespace ETL.UI
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
             CreateTexBoxColumn("Expression", false, "Expression");
             CreateTexBoxColumn("Regular Expression", false, "RegularExpression");
-            CreateComboBoxColumn("Mapping Source column", srcTable.GetColumnsNames(), "RegexpColumnName");
+            CreateComboBoxColumn("Mapping Source column", srcTable.GetColumnsNames(), "MapColumnName");
             CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
             foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
             {
                 Row.Cells[4].Value = destTableName;
             }
             CreateComboBoxColumn("Column Destination", destTable.GetColumnsNames(), "ColumnDest");
-            HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("SectionName")).ToHashSet();
+            HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("MappingName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
             {
                 sectionNames.Add(section);
             }
-            CreateComboBoxColumn("Mapping Name", sectionNames, "SectionName");
+            CreateComboBoxColumn("Mapping Name", sectionNames, "MappingName");
         }
 
         private void FromSrcDestTablesToExpression_Click(object sender, EventArgs e)
@@ -192,10 +192,10 @@ namespace ETL.UI
             dataTable.Columns.Add("TableNameDest");
             dataTable.Columns.Add("ColumnDest");
             dataTable.Columns.Add("ExpressionType");
-            dataTable.Columns.Add("RegexpColumnName");
+            dataTable.Columns.Add("MapColumnName");
             dataTable.Columns.Add("Expression");
             dataTable.Columns.Add("RegularExpression");
-            dataTable.Columns.Add("SectionName");
+            dataTable.Columns.Add("MappingName");
 
             //populate data
             foreach (DataGridViewRow row in ExpressionDataGridView.Rows)
@@ -204,9 +204,9 @@ namespace ETL.UI
                 dr["TableNameDest"] = row.Cells["TableNameDest"].Value;
                 dr["ColumnDest"] = row.Cells["ColumnDest"].Value;
                 dr["ExpressionType"] = row.Cells["ExpressionType"].Value;
-                dr["RegexpColumnName"] = row.Cells["RegexpColumnName"].Value;
+                dr["MapColumnName"] = row.Cells["MapColumnName"].Value;
                 dr["Expression"] = row.Cells["Expression"].Value;
-                dr["SectionName"] = row.Cells["SectionName"].Value;
+                dr["MappingName"] = row.Cells["MappingName"].Value;
                 dr["RegularExpression"] = row.Cells["RegularExpression"].Value;
                 dataTable.Rows.Add(dr);
             }
@@ -244,17 +244,17 @@ namespace ETL.UI
             if (currentRow.Cells["ExpressionType"].Value.Equals("Replace"))
             {
                 // To disable a field we make it as read only and change its back color (changed only for the current row)
-                currentRow.Cells["RegexpColumnName"].Value = "";
-                currentRow.Cells["RegexpColumnName"].ReadOnly = true;
-                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.LightGray;
+                currentRow.Cells["MapColumnName"].Value = "";
+                currentRow.Cells["MapColumnName"].ReadOnly = true;
+                currentRow.Cells["MapColumnName"].Style.BackColor = Color.LightGray;
 
                 currentRow.Cells["RegularExpression"].Value = "";
                 currentRow.Cells["RegularExpression"].ReadOnly = true;
                 currentRow.Cells["RegularExpression"].Style.BackColor = Color.LightGray;
 
-                currentRow.Cells["SectionName"].Value = "";
-                currentRow.Cells["SectionName"].ReadOnly = true;
-                currentRow.Cells["SectionName"].Style.BackColor = Color.LightGray;
+                currentRow.Cells["MappingName"].Value = "";
+                currentRow.Cells["MappingName"].ReadOnly = true;
+                currentRow.Cells["MappingName"].Style.BackColor = Color.LightGray;
 
                 // We have to enable the other field that may be disabled earlier due to a previous expression type selection
                 currentRow.Cells["Expression"].ReadOnly = false;
@@ -266,10 +266,10 @@ namespace ETL.UI
                 currentRow.Cells["Expression"].Value = "";
                 currentRow.Cells["Expression"].Style.BackColor = Color.LightGray;
 
-                currentRow.Cells["RegexpColumnName"].ReadOnly = false;
-                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.White;
-                currentRow.Cells["SectionName"].ReadOnly = false;
-                currentRow.Cells["SectionName"].Style.BackColor = Color.White;
+                currentRow.Cells["MapColumnName"].ReadOnly = false;
+                currentRow.Cells["MapColumnName"].Style.BackColor = Color.White;
+                currentRow.Cells["MappingName"].ReadOnly = false;
+                currentRow.Cells["MappingName"].Style.BackColor = Color.White;
 
                 currentRow.Cells["RegularExpression"].Value = "";
                 currentRow.Cells["RegularExpression"].ReadOnly = true;
@@ -280,16 +280,16 @@ namespace ETL.UI
                 currentRow.Cells["Expression"].ReadOnly = false;
                 currentRow.Cells["Expression"].Style.BackColor = Color.White;
 
-                currentRow.Cells["RegexpColumnName"].Value = "";
-                currentRow.Cells["RegexpColumnName"].ReadOnly = true;
-                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.LightGray;
+                currentRow.Cells["MapColumnName"].Value = "";
+                currentRow.Cells["MapColumnName"].ReadOnly = true;
+                currentRow.Cells["MapColumnName"].Style.BackColor = Color.LightGray;
 
                 currentRow.Cells["RegularExpression"].ReadOnly = false;
                 currentRow.Cells["RegularExpression"].Style.BackColor = Color.White;
 
-                currentRow.Cells["SectionName"].Value = "";
-                currentRow.Cells["SectionName"].ReadOnly = true;
-                currentRow.Cells["SectionName"].Style.BackColor = Color.LightGray;
+                currentRow.Cells["MappingName"].Value = "";
+                currentRow.Cells["MappingName"].ReadOnly = true;
+                currentRow.Cells["MappingName"].Style.BackColor = Color.LightGray;
             }
 
             return;
@@ -341,7 +341,7 @@ namespace ETL.UI
 
         private void helpButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("There is three types of expressions: Replace, Reg (Regular Expression) and Map.\r Usage examples:\r REPLACE: table1, FullName, Replace, null, [FirstName].[LastName], null \rREGULAR EXPRESSION: table1, Gender, Reg, Gender, ^[A - Za - z]{ 2}, null(takes the first two letters of the gender value) \rMAPPING: table1, Gender, Map, Gender, null, Gender(maps the gender value to another one using the mapping table)", "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("There is three types of expressions: Replace, Reg (Regular Expression) and Map.\r Usage examples:\r REPLACE: table1, FullName, Replace, null, [FirstName].[LastName], null \r REGULAR EXPRESSION: table1, Gender, Reg, Gender, ^[A - Za - z]{ 2}, null(takes the first two letters of the gender value) \r MAPPING: table1, Gender, Map, Gender, null, Gender(maps the gender value to another one using the mapping table)", "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
     }
