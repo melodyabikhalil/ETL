@@ -128,7 +128,7 @@ namespace ETL.Utility
                 if(mapDt == null ||mapDt.Rows.Count == 0)
                 {
                     mapDt = new DataTable();
-                    mapDt.Columns.Add("SectionName");
+                    mapDt.Columns.Add("MappingName");
                     mapDt.Columns.Add("FromValue");
                     mapDt.Columns.Add("ToValue");
                 }

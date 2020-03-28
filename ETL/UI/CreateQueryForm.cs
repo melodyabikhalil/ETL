@@ -20,6 +20,11 @@ namespace ETL.UI
         public CreateQueryForm()
         {
             InitializeComponent();
+            // Hide the tabs headers
+            this.createQueryTabControl.Appearance = TabAppearance.FlatButtons;
+            this.createQueryTabControl.ItemSize = new Size(0, 1);
+            this.createQueryTabControl.SizeMode = TabSizeMode.Fixed;
+
             this.joinQuery = new JoinQuery();
             this.buildQueryTabPage.Enabled = false;
             this.selectColumnsTabPage.Enabled = false;

@@ -38,10 +38,10 @@ namespace ETL.Core
             return result;
         }
 
-        public static string Regexp(string expression, DataRow row, string regexColumnName)
+        public static string Regexp(string expression, DataRow row, string text)
         {
             Regex rg = new Regex(expression);
-            Match match = rg.Match(row[regexColumnName].ToString());
+            Match match = rg.Match(text);
             if (match.Success)
             {
                 return match.Value;
@@ -59,13 +59,15 @@ namespace ETL.Core
             }
             if (type == "Reg")
             {
-                value = Regexp(expRow["Expression"].ToString(), row, expRow["RegexpColumnName"].ToString());
+                string replacedText = Replace(expRow["Expression"].ToString(), row);
+                Console.WriteLine("replaced text "+replacedText);
+                value = Regexp(expRow["RegularExpression"].ToString(), row, replacedText);
             }
             if (type == "Map")
             {
-                string sectionName = expRow["SectionName"].ToString();
-                string fromValue = row[expRow["RegexpColumnName"].ToString()].ToString().Trim();
-                string query = "SectionName = '" + sectionName + "' AND FromValue = '" + fromValue + "'";
+                string sectionName = expRow["MappingName"].ToString();
+                string fromValue = row[expRow["MapColumnName"].ToString()].ToString().Trim();
+                string query = "MappingName = '" + sectionName + "' AND FromValue = '" + fromValue + "'";
                 DataRow[] mapRows = mapDt.Select(query);
                 value = mapRows[0]["ToValue"].ToString();
             }
@@ -164,10 +166,11 @@ namespace ETL.Core
             this.expressionDt.Columns.Add("TableNameDest");
             this.expressionDt.Columns.Add("ColumnDest");
             this.expressionDt.Columns.Add("ExpressionType");
-            this.expressionDt.Columns.Add("RegexpColumnName");
+            this.expressionDt.Columns.Add("MapColumnName");
             this.expressionDt.Columns.Add("Expression", Type.GetType("System.String"));
-            this.expressionDt.Columns.Add("SectionName");
-            this.mapDt.Columns.Add("SectionName");
+            this.expressionDt.Columns.Add("RegularExpression", Type.GetType("System.String"));
+            this.expressionDt.Columns.Add("MappingName");
+            this.mapDt.Columns.Add("MappingName");
             this.mapDt.Columns.Add("FromValue");
             this.mapDt.Columns.Add("ToValue");
         }

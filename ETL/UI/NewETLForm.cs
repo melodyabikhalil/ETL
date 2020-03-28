@@ -9,14 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ETL.Utility;
+using System.IO;
 
 namespace ETL.UI
 {
     public partial class NewETLForm : Form
     {
-        private Dictionary<int, String> dbDictionary = new Dictionary<int, string>();
-        private Dictionary<int, String> srcTablesDictionary = new Dictionary<int, string>();
-        private Dictionary<int, String> destTablesDictionary = new Dictionary<int, string>();
         private Database src;
         private Database dest;
         private TableOrQuery srcTable;
@@ -26,11 +24,13 @@ namespace ETL.UI
         public NewETLForm()
         {
             InitializeComponent();
-            this.SrcDestDbTab.Enabled = false;
-            this.SrcDestTablesTab.Enabled = false;
             this.ExpressionTab.Enabled = false;
-            
-            for(int i = 0; i< Global.Databases.Count; ++i)
+            // Hide the tabs headers
+            this.ETLTabControl.Appearance = TabAppearance.FlatButtons;
+            this.ETLTabControl.ItemSize = new Size(0, 1);
+            this.ETLTabControl.SizeMode = TabSizeMode.Fixed;
+
+            for (int i = 0; i< Global.Databases.Count; ++i)
             {
                 sourceDbComboBox.Items.Insert(i, Global.Databases[i].databaseName);
                 destinationDbComboBox.Items.Insert(i, Global.Databases[i].databaseName);
@@ -40,45 +40,33 @@ namespace ETL.UI
         private void FromETLNameToSrcDrstDbButton_Click(object sender, EventArgs e)
         {
             string etlName = ETLNameTextBox.Text;
-            if (etlName == "" || etlName == null)
+            string srcDatabaseName = this.sourceDbComboBox.Text;
+            string destDatabaseName = this.destinationDbComboBox.Text;
+            string destTableName = this.destTableComboBox.Text;
+            string srcTableName = this.srcTableOrQueriesComboBox.Text;
+            if (etlName == "" || etlName == null || srcDatabaseName == null || srcDatabaseName == "" || destDatabaseName == null || destDatabaseName == "" || destTableName == null || destTableName == "" || srcTableName == null || srcTableName == "")
             {
-                MessageBox.Show("Please choose a name for this new ETL to proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please fill all the fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 this.ETLName = etlName;
-                this.SrcDestDbTab.Enabled = true;
-                this.ETLTabControl.SelectedTab = this.SrcDestDbTab;
-            }
-        }
-
-        private void BackFromSrcDestDbToETLNameButton_Click(object sender, EventArgs e)
-        { 
-            this.ETLTabControl.SelectedTab = this.ETLNameTab;
-        }
-
-        private void FromSrcDestDbToSrcDestTablesButton_Click(object sender, EventArgs e)
-        {
-            string srcDatabase = this.sourceDbComboBox.Text;
-            string destDatabase = this.destinationDbComboBox.Text;
-            if (srcDatabase == null || srcDatabase == "" || destDatabase == null || destDatabase == "")
-            {
-                MessageBox.Show("Please choose source & destination databases to proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                src = Global.GetDatabaseByName(srcDatabase);
-                dest = Global.GetDatabaseByName(destDatabase);
+            
+                src = Global.GetDatabaseByName(srcDatabaseName);
+                dest = Global.GetDatabaseByName(destDatabaseName);
                 this.srcTableOrQueriesComboBox.Items.Clear();
                 this.destTableComboBox.Items.Clear();
                 this.srcTableOrQueriesComboBox.Items.AddRange(src.tablesNames.ToArray());
                 this.srcTableOrQueriesComboBox.Items.AddRange(src.queriesNames.ToArray());
                 this.destTableComboBox.Items.AddRange(dest.tablesNames.ToArray());
-                this.SrcDestTablesTab.Enabled = true;
-                this.ETLTabControl.SelectedTab = this.SrcDestTablesTab;
+           
+                SetExpressionDataGridView();
+                this.ExpressionTab.Enabled = true;
+                this.ETLTabControl.SelectedTab = this.ExpressionTab;
             }
-        }
 
+        }
+        
         private void SetExpressionDataGridView()
         {
             this.srcColumnLabel.Text = "Source table columns: ";
@@ -104,27 +92,37 @@ namespace ETL.UI
             string srcColumnsList = "";
             foreach(string col in srcTable.GetColumnsNames())
             {
-                srcColumnsList = srcColumnsList + ", " + col;
+                if (srcColumnsList == "")
+                {
+                    srcColumnsList += col;
+                }
+                else
+                {
+                    srcColumnsList += ", " + col;
+                }
             }
             this.srcColumnLabel.Text = this.srcColumnLabel.Text + " " + srcColumnsList;
             this.destTable = (Table) Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
-            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
-            foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
-            {
-                Row.Cells[0].Value = destTableName;
-            }
-            CreateComboBoxColumn("Column Destination", destTable.GetColumnsNames(), "ColumnDest");
             List<string> expressionTypes = new List<string>(new string[] { "Replace", "Reg", "Map" });
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
-            CreateComboBoxColumn("Regexp/Mapping Source column", srcTable.GetColumnsNames(), "RegexpColumnName");
             CreateTexBoxColumn("Expression", false, "Expression");
-            HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("SectionName")).ToHashSet();
+            CreateTexBoxColumn("Regular Expression", false, "RegularExpression");
+
+            CreateComboBoxColumn("Mapping Source column", srcTable.GetColumnsNames(), "MapColumnName");
+            HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("MappingName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
             {
                 sectionNames.Add(section);
             }
-            CreateComboBoxColumn("SectionName", sectionNames, "SectionName");
+            CreateComboBoxColumn("Mapping Name", sectionNames, "MappingName");
+
+            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
+            foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
+            {
+                Row.Cells[5].Value = destTableName;
+            }
+            CreateComboBoxColumn("Column Destination", destTable.GetColumnsNames(), "ColumnDest");
         }
 
         private void FromSrcDestTablesToExpression_Click(object sender, EventArgs e)
@@ -143,18 +141,13 @@ namespace ETL.UI
             }
         }
 
-        private void BackToSrcDestDbFromSrcDestTables_Click(object sender, EventArgs e)
-        {
-            this.ETLTabControl.SelectedTab = this.SrcDestDbTab;
-        }
-
         private void CreateComboBoxColumn(string header, List<string> values, string name)
         {
             DataGridViewComboBoxColumn column =
                 new DataGridViewComboBoxColumn();
             {
                 column.Name = name;
-                column.Width = 145;
+                column.Width = 130;
                 column.MaxDropDownItems = 5;
                 column.HeaderText = header;
                 column.DataPropertyName = name;
@@ -174,7 +167,7 @@ namespace ETL.UI
                 new DataGridViewTextBoxColumn();
             {
                 column.Name = name;
-                column.Width = 145;
+                column.Width = 130;
                 column.HeaderText = header;
                 column.ReadOnly = readOnly;
                 column.DataPropertyName = name;
@@ -191,9 +184,10 @@ namespace ETL.UI
             dataTable.Columns.Add("TableNameDest");
             dataTable.Columns.Add("ColumnDest");
             dataTable.Columns.Add("ExpressionType");
-            dataTable.Columns.Add("RegexpColumnName");
+            dataTable.Columns.Add("MapColumnName");
             dataTable.Columns.Add("Expression");
-            dataTable.Columns.Add("SectionName");
+            dataTable.Columns.Add("RegularExpression");
+            dataTable.Columns.Add("MappingName");
 
             //populate data
             foreach (DataGridViewRow row in ExpressionDataGridView.Rows)
@@ -202,17 +196,13 @@ namespace ETL.UI
                 dr["TableNameDest"] = row.Cells["TableNameDest"].Value;
                 dr["ColumnDest"] = row.Cells["ColumnDest"].Value;
                 dr["ExpressionType"] = row.Cells["ExpressionType"].Value;
-                dr["RegexpColumnName"] = row.Cells["RegexpColumnName"].Value;
+                dr["MapColumnName"] = row.Cells["MapColumnName"].Value;
                 dr["Expression"] = row.Cells["Expression"].Value;
-                dr["SectionName"] = row.Cells["SectionName"].Value;
+                dr["MappingName"] = row.Cells["MappingName"].Value;
+                dr["RegularExpression"] = row.Cells["RegularExpression"].Value;
                 dataTable.Rows.Add(dr);
             }
             return dataTable;
-        }
-
-        private void BackToSrcDestTablesTabButton_Click(object sender, EventArgs e)
-        {
-            this.ETLTabControl.SelectedTab = this.SrcDestTablesTab;
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -230,8 +220,125 @@ namespace ETL.UI
             for (int index = e.RowIndex; index <= e.RowIndex + e.RowCount - 1; index++)
             {
                 DataGridViewRow row = ExpressionDataGridView.Rows[index];
-                row.Cells[0].Value = this.destTableComboBox.Text;
+                //Adds default value for the destination table name
+                if (row.Cells.Count > 1) {
+                    row.Cells[5].Value = this.destTableComboBox.Text;
+                }
+                
             }
+        }
+
+        private void ExpressionDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            string headerText = ExpressionDataGridView.Columns[e.ColumnIndex].HeaderText;
+            if (!headerText.Equals("Expression Type")) return;
+            DataGridViewRow currentRow = ExpressionDataGridView.Rows[e.RowIndex];
+            if (currentRow.Cells["ExpressionType"].Value == null)
+            {
+                return;
+            }
+            if (currentRow.Cells["ExpressionType"].Value.Equals("Replace"))
+            {
+                // To disable a field we make it as read only and change its back color (changed only for the current row)
+                currentRow.Cells["MapColumnName"].Value = "";
+                currentRow.Cells["MapColumnName"].ReadOnly = true;
+                currentRow.Cells["MapColumnName"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["RegularExpression"].Value = "";
+                currentRow.Cells["RegularExpression"].ReadOnly = true;
+                currentRow.Cells["RegularExpression"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["MappingName"].Value = "";
+                currentRow.Cells["MappingName"].ReadOnly = true;
+                currentRow.Cells["MappingName"].Style.BackColor = Color.LightGray;
+
+                // We have to enable the other field that may be disabled earlier due to a previous expression type selection
+                currentRow.Cells["Expression"].ReadOnly = false;
+                currentRow.Cells["Expression"].Style.BackColor = Color.White;
+            }
+            else if (currentRow.Cells["ExpressionType"].Value.Equals("Map"))
+            {
+                currentRow.Cells["Expression"].ReadOnly = true;
+                currentRow.Cells["Expression"].Value = "";
+                currentRow.Cells["Expression"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["MapColumnName"].ReadOnly = false;
+                currentRow.Cells["MapColumnName"].Style.BackColor = Color.White;
+                currentRow.Cells["MappingName"].ReadOnly = false;
+                currentRow.Cells["MappingName"].Style.BackColor = Color.White;
+
+                currentRow.Cells["RegularExpression"].Value = "";
+                currentRow.Cells["RegularExpression"].ReadOnly = true;
+                currentRow.Cells["RegularExpression"].Style.BackColor = Color.LightGray;
+            }
+            else if (currentRow.Cells["ExpressionType"].Value.Equals("Reg"))
+            {
+                currentRow.Cells["Expression"].ReadOnly = false;
+                currentRow.Cells["Expression"].Style.BackColor = Color.White;
+
+                currentRow.Cells["MapColumnName"].Value = "";
+                currentRow.Cells["MapColumnName"].ReadOnly = true;
+                currentRow.Cells["MapColumnName"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["RegularExpression"].ReadOnly = false;
+                currentRow.Cells["RegularExpression"].Style.BackColor = Color.White;
+
+                currentRow.Cells["MappingName"].Value = "";
+                currentRow.Cells["MappingName"].ReadOnly = true;
+                currentRow.Cells["MappingName"].Style.BackColor = Color.LightGray;
+            }
+
+            return;
+        }
+
+        private void backToSrcDestTablesTabButton_Click(object sender, EventArgs e)
+        {
+            this.ETLTabControl.SelectedTab = this.ETLNameTab;
+        }
+
+        // Set the combobox of the source tables after choosing a source database
+        private void sourceDbComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string srcDatabase = this.sourceDbComboBox.Text;
+            src = Global.GetDatabaseByName(srcDatabase);
+            this.srcTableOrQueriesComboBox.Items.Clear();
+            this.srcTableOrQueriesComboBox.Items.AddRange(src.tablesNames.ToArray());
+            this.srcTableOrQueriesComboBox.Items.AddRange(src.queriesNames.ToArray());
+        }
+
+        // Set the combobox of the destination tables after choosing a destination database
+        private void destinationDbComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string destDatabase = this.destinationDbComboBox.Text;
+            dest = Global.GetDatabaseByName(destDatabase);
+            this.destTableComboBox.Items.Clear();
+            this.destTableComboBox.Items.AddRange(dest.tablesNames.ToArray());
+        }
+
+        private void ExpressionDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            string titleText = ExpressionDataGridView.Columns["Expression"].HeaderText;
+            if (titleText.Equals("Expression"))
+            {
+                TextBox autoText = e.Control as TextBox;
+                if (autoText != null)
+                {
+                    autoText.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    autoText.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    AutoCompleteStringCollection DataCollection = new AutoCompleteStringCollection();
+                    foreach(string col in this.srcTable.GetColumnsNames())
+                    {
+                        DataCollection.Add("["+col+"]");
+                    }
+                    autoText.AutoCompleteCustomSource = DataCollection;
+                }
+            }
+        }
+
+        private void helpButton_Click(object sender, EventArgs e)
+        {
+            HelpForm help = new HelpForm("\\Utility\\HelpETL.html");
+            help.Show();
         }
     }
 }

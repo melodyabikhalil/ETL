@@ -17,6 +17,11 @@ namespace ETL.UI
         public NewDatabaseForm()
         {
             InitializeComponent();
+            // Hide the tabs headers
+            this.newDatabaseTabControl.Appearance = TabAppearance.FlatButtons;
+            this.newDatabaseTabControl.ItemSize = new Size(0, 1);
+            this.newDatabaseTabControl.SizeMode = TabSizeMode.Fixed;
+
             this.CenterToParent();
             this.credentialsTabPage.Enabled = false;
             this.AcceptButton = connectButton;
