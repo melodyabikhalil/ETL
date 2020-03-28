@@ -39,24 +39,25 @@ namespace ETL.UI
 
         private void SetExpressionDataGridView()
         {
-            CreateComboBoxColumn("Regexp/Mapping Source column", etl.srcDb.GetTableOrQueryByName(etl.sourceTable.GetName()).GetColumnsNames(), "RegexpColumnName");
-            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
-            CreateComboBoxColumn("Column Destination", etl.destDb.GetTable(etl.destTable.GetName()).GetColumnsNames(), "ColumnDest");
             List<string> expressionTypes = new List<string>(new string[] { "Replace", "Reg", "Map" });
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
             CreateTexBoxColumn("Expression", false, "Expression");
             CreateTexBoxColumn("RegularExpression", false, "RegularExpression");
+            CreateComboBoxColumn("Mapping Source column", etl.srcDb.GetTableOrQueryByName(etl.sourceTable.GetName()).GetColumnsNames(), "RegexpColumnName");
+            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
+            CreateComboBoxColumn("Column Destination", etl.destDb.GetTable(etl.destTable.GetName()).GetColumnsNames(), "ColumnDest");
+           
             HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("SectionName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
             {
                 sectionNames.Add(section);
             }
-            CreateComboBoxColumn("Section Name", sectionNames, "SectionName");
+            CreateComboBoxColumn("Mapping Name", sectionNames, "SectionName");
             ETLDataGridView.Rows.Add(etl.expressionDt.Rows.Count-1);
             foreach (DataGridViewRow Row in ETLDataGridView.Rows)
             {
-                Row.Cells[1].Value = etl.destTable.GetName();
+                Row.Cells[4].Value = etl.destTable.GetName();
             }
             try
             {
