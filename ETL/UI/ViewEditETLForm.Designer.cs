@@ -55,8 +55,10 @@
             this.ETLDataGridView.Name = "ETLDataGridView";
             this.ETLDataGridView.Size = new System.Drawing.Size(911, 217);
             this.ETLDataGridView.TabIndex = 1;
+            this.ETLDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ETLDataGridView_CellEndEdit);
             this.ETLDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.ETLDataGridView_DataError);
             this.ETLDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.ETLDataGridView_EditingControlShowing);
+            this.ETLDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ETLDataGridView_RowsAdded);
             // 
             // doneButton
             // 

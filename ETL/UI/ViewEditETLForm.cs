@@ -180,5 +180,78 @@ namespace ETL.UI
                 }
             }
         }
+
+        private void ETLDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            string headerText = ETLDataGridView.Columns[e.ColumnIndex].HeaderText;
+            if (!headerText.Equals("Expression Type")) return;
+            DataGridViewRow currentRow = ETLDataGridView.Rows[e.RowIndex];
+            if (currentRow.Cells["ExpressionType"].Value.Equals("Replace"))
+            {
+                // To disable a field we make it as read only and change its back color (changed only for the current row)
+                currentRow.Cells["RegexpColumnName"].Value = "";
+                currentRow.Cells["RegexpColumnName"].ReadOnly = true;
+                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["RegularExpression"].Value = "";
+                currentRow.Cells["RegularExpression"].ReadOnly = true;
+                currentRow.Cells["RegularExpression"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["SectionName"].Value = "";
+                currentRow.Cells["SectionName"].ReadOnly = true;
+                currentRow.Cells["SectionName"].Style.BackColor = Color.LightGray;
+
+                // We have to enable the other field that may be disabled earlier due to a previous expression type selection
+                currentRow.Cells["Expression"].ReadOnly = false;
+                currentRow.Cells["Expression"].Style.BackColor = Color.White;
+            }
+            else if (currentRow.Cells["ExpressionType"].Value.Equals("Map"))
+            {
+                currentRow.Cells["Expression"].ReadOnly = true;
+                currentRow.Cells["Expression"].Value = "";
+                currentRow.Cells["Expression"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["RegexpColumnName"].ReadOnly = false;
+                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.White;
+                currentRow.Cells["SectionName"].ReadOnly = false;
+                currentRow.Cells["SectionName"].Style.BackColor = Color.White;
+
+                currentRow.Cells["RegularExpression"].Value = "";
+                currentRow.Cells["RegularExpression"].ReadOnly = true;
+                currentRow.Cells["RegularExpression"].Style.BackColor = Color.LightGray;
+            }
+            else if (currentRow.Cells["ExpressionType"].Value.Equals("Reg"))
+            {
+                currentRow.Cells["Expression"].ReadOnly = false;
+                currentRow.Cells["Expression"].Style.BackColor = Color.White;
+
+                currentRow.Cells["RegexpColumnName"].Value = "";
+                currentRow.Cells["RegexpColumnName"].ReadOnly = true;
+                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["RegularExpression"].ReadOnly = false;
+                currentRow.Cells["RegularExpression"].Style.BackColor = Color.White;
+
+                currentRow.Cells["SectionName"].Value = "";
+                currentRow.Cells["SectionName"].ReadOnly = true;
+                currentRow.Cells["SectionName"].Style.BackColor = Color.LightGray;
+            }
+
+            return;
+        }
+
+        private void ETLDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            for (int index = e.RowIndex; index <= e.RowIndex + e.RowCount - 1; index++)
+            {
+                DataGridViewRow row = ETLDataGridView.Rows[index];
+                //Adds default value for the destination table name
+                if (row.Cells.Count > 1)
+                {
+                    row.Cells[4].Value = etl.destTable.GetName();
+                }
+
+            }
+        }
     }
 }
