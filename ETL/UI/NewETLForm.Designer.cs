@@ -72,7 +72,7 @@
             this.ExpressionTab.Location = new System.Drawing.Point(4, 22);
             this.ExpressionTab.Name = "ExpressionTab";
             this.ExpressionTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ExpressionTab.Size = new System.Drawing.Size(1001, 578);
+            this.ExpressionTab.Size = new System.Drawing.Size(1011, 578);
             this.ExpressionTab.TabIndex = 3;
             this.ExpressionTab.Text = "Mapping Expressions";
             // 
@@ -97,7 +97,7 @@
             // 
             // backToSrcDestTablesTabButton
             // 
-            this.backToSrcDestTablesTabButton.Location = new System.Drawing.Point(792, 524);
+            this.backToSrcDestTablesTabButton.Location = new System.Drawing.Point(801, 524);
             this.backToSrcDestTablesTabButton.Name = "backToSrcDestTablesTabButton";
             this.backToSrcDestTablesTabButton.Size = new System.Drawing.Size(75, 23);
             this.backToSrcDestTablesTabButton.TabIndex = 14;
@@ -107,7 +107,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(897, 524);
+            this.SaveButton.Location = new System.Drawing.Point(906, 524);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 13;
@@ -120,7 +120,7 @@
             this.ExpressionDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ExpressionDataGridView.Location = new System.Drawing.Point(20, 48);
             this.ExpressionDataGridView.Name = "ExpressionDataGridView";
-            this.ExpressionDataGridView.Size = new System.Drawing.Size(952, 452);
+            this.ExpressionDataGridView.Size = new System.Drawing.Size(949, 452);
             this.ExpressionDataGridView.TabIndex = 0;
             this.ExpressionDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ExpressionDataGridView_CellEndEdit);
             this.ExpressionDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.ExpressionDataGridView_EditingControlShowing);
@@ -136,7 +136,7 @@
             this.ETLNameTab.Location = new System.Drawing.Point(4, 22);
             this.ETLNameTab.Name = "ETLNameTab";
             this.ETLNameTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ETLNameTab.Size = new System.Drawing.Size(976, 565);
+            this.ETLNameTab.Size = new System.Drawing.Size(1011, 578);
             this.ETLNameTab.TabIndex = 0;
             this.ETLNameTab.Text = "ETL Name";
             // 
@@ -147,7 +147,7 @@
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Location = new System.Drawing.Point(28, 327);
+            this.groupBox3.Location = new System.Drawing.Point(48, 334);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(910, 151);
             this.groupBox3.TabIndex = 11;
@@ -204,7 +204,7 @@
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Location = new System.Drawing.Point(28, 165);
+            this.groupBox2.Location = new System.Drawing.Point(48, 172);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(910, 133);
             this.groupBox2.TabIndex = 10;
@@ -260,7 +260,7 @@
             // 
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.ETLNameTextBox);
-            this.groupBox1.Location = new System.Drawing.Point(28, 29);
+            this.groupBox1.Location = new System.Drawing.Point(48, 36);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(910, 97);
             this.groupBox1.TabIndex = 9;
@@ -285,7 +285,7 @@
             // 
             // fromEtlDetailsToExpressionTabButton
             // 
-            this.fromEtlDetailsToExpressionTabButton.Location = new System.Drawing.Point(863, 517);
+            this.fromEtlDetailsToExpressionTabButton.Location = new System.Drawing.Point(883, 515);
             this.fromEtlDetailsToExpressionTabButton.Name = "fromEtlDetailsToExpressionTabButton";
             this.fromEtlDetailsToExpressionTabButton.Size = new System.Drawing.Size(75, 23);
             this.fromEtlDetailsToExpressionTabButton.TabIndex = 8;
@@ -301,14 +301,14 @@
             this.ETLTabControl.Location = new System.Drawing.Point(0, 0);
             this.ETLTabControl.Name = "ETLTabControl";
             this.ETLTabControl.SelectedIndex = 0;
-            this.ETLTabControl.Size = new System.Drawing.Size(1009, 604);
+            this.ETLTabControl.Size = new System.Drawing.Size(1019, 604);
             this.ETLTabControl.TabIndex = 0;
             // 
             // NewETLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1009, 604);
+            this.ClientSize = new System.Drawing.Size(1019, 604);
             this.Controls.Add(this.ETLTabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.HelpButton = true;

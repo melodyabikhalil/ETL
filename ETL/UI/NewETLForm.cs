@@ -233,6 +233,10 @@ namespace ETL.UI
             string headerText = ExpressionDataGridView.Columns[e.ColumnIndex].HeaderText;
             if (!headerText.Equals("Expression Type")) return;
             DataGridViewRow currentRow = ExpressionDataGridView.Rows[e.RowIndex];
+            if (currentRow.Cells["ExpressionType"].Value == null)
+            {
+                return;
+            }
             if (currentRow.Cells["ExpressionType"].Value.Equals("Replace"))
             {
                 // To disable a field we make it as read only and change its back color (changed only for the current row)

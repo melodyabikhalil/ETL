@@ -44,9 +44,6 @@ namespace ETL.UI
             CreateTexBoxColumn("Expression", false, "Expression");
             CreateTexBoxColumn("RegularExpression", false, "RegularExpression");
             CreateComboBoxColumn("Mapping Source column", etl.srcDb.GetTableOrQueryByName(etl.sourceTable.GetName()).GetColumnsNames(), "MapColumnName");
-            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
-            CreateComboBoxColumn("Column Destination", etl.destDb.GetTable(etl.destTable.GetName()).GetColumnsNames(), "ColumnDest");
-           
             HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("MappingName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
@@ -54,10 +51,13 @@ namespace ETL.UI
                 sectionNames.Add(section);
             }
             CreateComboBoxColumn("Mapping Name", sectionNames, "MappingName");
+            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
+            CreateComboBoxColumn("Column Destination", etl.destDb.GetTable(etl.destTable.GetName()).GetColumnsNames(), "ColumnDest");
+           
             ETLDataGridView.Rows.Add(etl.expressionDt.Rows.Count-1);
             foreach (DataGridViewRow Row in ETLDataGridView.Rows)
             {
-                Row.Cells[4].Value = etl.destTable.GetName();
+                Row.Cells[5].Value = etl.destTable.GetName();
             }
             try
             {
@@ -66,9 +66,9 @@ namespace ETL.UI
                     ETLDataGridView.Rows[i].Cells["ColumnDest"].Value = etl.expressionDt.Rows[i]["ColumnDest"];
                     ETLDataGridView.Rows[i].Cells["ExpressionType"].Value = etl.expressionDt.Rows[i]["ExpressionType"];
                     ETLDataGridView.Rows[i].Cells["MapColumnName"].Value = etl.expressionDt.Rows[i]["MapColumnName"];
+                    ETLDataGridView.Rows[i].Cells["MappingName"].Value = etl.expressionDt.Rows[i]["MappingName"];
                     ETLDataGridView.Rows[i].Cells["Expression"].Value = etl.expressionDt.Rows[i]["Expression"];
                     ETLDataGridView.Rows[i].Cells["RegularExpression"].Value = etl.expressionDt.Rows[i]["RegularExpression"];
-                    ETLDataGridView.Rows[i].Cells["MappingName"].Value = etl.expressionDt.Rows[i]["MappingName"];
 
                 }
             }
@@ -89,7 +89,7 @@ namespace ETL.UI
                 new DataGridViewComboBoxColumn();
             {
                 column.Name = name;
-                column.Width = 145;
+                column.Width = 130;
                 column.MaxDropDownItems = 5;
                 column.HeaderText = header;
                 column.DataPropertyName = name;
@@ -109,7 +109,7 @@ namespace ETL.UI
                 new DataGridViewTextBoxColumn();
             {
                 column.Name = name;
-                column.Width = 145;
+                column.Width = 130;
                 column.HeaderText = header;
                 column.ReadOnly = readOnly;
                 column.DataPropertyName = name;
@@ -156,10 +156,10 @@ namespace ETL.UI
             if (job != null)
             {
                 job.ReplaceEtlInJob(oldEtl);
+                JsonHelper.SaveEtlJob(job, true);
 
             }
             JsonHelper.SaveETL(oldEtl, true);
-            JsonHelper.SaveEtlJob(job, true);
             MessageBox.Show("ETL successfully edited", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             ETLParent.ReloadEtlsListInMenu();
             this.Close();
@@ -190,6 +190,10 @@ namespace ETL.UI
             string headerText = ETLDataGridView.Columns[e.ColumnIndex].HeaderText;
             if (!headerText.Equals("Expression Type")) return;
             DataGridViewRow currentRow = ETLDataGridView.Rows[e.RowIndex];
+            if (currentRow.Cells["ExpressionType"].Value == null)
+            {
+                return;
+            }
             if (currentRow.Cells["ExpressionType"].Value.Equals("Replace"))
             {
                 // To disable a field we make it as read only and change its back color (changed only for the current row)
@@ -252,9 +256,8 @@ namespace ETL.UI
                 //Adds default value for the destination table name
                 if (row.Cells.Count > 1)
                 {
-                    row.Cells[4].Value = etl.destTable.GetName();
+                    row.Cells[5].Value = etl.destTable.GetName();
                 }
-
             }
         }
     }
