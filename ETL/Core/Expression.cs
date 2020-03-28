@@ -38,10 +38,10 @@ namespace ETL.Core
             return result;
         }
 
-        public static string Regexp(string expression, DataRow row, string regexColumnName)
+        public static string Regexp(string expression, DataRow row, string text)
         {
             Regex rg = new Regex(expression);
-            Match match = rg.Match(row[regexColumnName].ToString());
+            Match match = rg.Match(text);
             if (match.Success)
             {
                 return match.Value;
@@ -59,7 +59,9 @@ namespace ETL.Core
             }
             if (type == "Reg")
             {
-                value = Regexp(expRow["Expression"].ToString(), row, expRow["RegexpColumnName"].ToString());
+                string replacedText = Replace(expRow["Expression"].ToString(), row);
+                Console.WriteLine("replaced text "+replacedText);
+                value = Regexp(expRow["RegularExpression"].ToString(), row, replacedText);
             }
             if (type == "Map")
             {
@@ -166,6 +168,7 @@ namespace ETL.Core
             this.expressionDt.Columns.Add("ExpressionType");
             this.expressionDt.Columns.Add("RegexpColumnName");
             this.expressionDt.Columns.Add("Expression", Type.GetType("System.String"));
+            this.expressionDt.Columns.Add("RegularExpression", Type.GetType("System.String"));
             this.expressionDt.Columns.Add("SectionName");
             this.mapDt.Columns.Add("SectionName");
             this.mapDt.Columns.Add("FromValue");

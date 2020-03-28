@@ -45,6 +45,7 @@ namespace ETL.UI
             List<string> expressionTypes = new List<string>(new string[] { "Replace", "Reg", "Map" });
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
             CreateTexBoxColumn("Expression", false, "Expression");
+            CreateTexBoxColumn("RegularExpression", false, "RegularExpression");
             HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("SectionName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
@@ -65,6 +66,7 @@ namespace ETL.UI
                     ETLDataGridView.Rows[i].Cells["ExpressionType"].Value = etl.expressionDt.Rows[i]["ExpressionType"];
                     ETLDataGridView.Rows[i].Cells["RegexpColumnName"].Value = etl.expressionDt.Rows[i]["RegexpColumnName"];
                     ETLDataGridView.Rows[i].Cells["Expression"].Value = etl.expressionDt.Rows[i]["Expression"];
+                    ETLDataGridView.Rows[i].Cells["RegularExpression"].Value = etl.expressionDt.Rows[i]["RegularExpression"];
                     ETLDataGridView.Rows[i].Cells["SectionName"].Value = etl.expressionDt.Rows[i]["SectionName"];
 
                 }
@@ -125,6 +127,7 @@ namespace ETL.UI
             dataTable.Columns.Add("ExpressionType");
             dataTable.Columns.Add("RegexpColumnName");
             dataTable.Columns.Add("Expression");
+            dataTable.Columns.Add("RegularExpression");
             dataTable.Columns.Add("SectionName");
 
             //populate data
@@ -137,6 +140,7 @@ namespace ETL.UI
                 dr["RegexpColumnName"] = row.Cells["RegexpColumnName"].Value;
                 dr["Expression"] = row.Cells["Expression"].Value;
                 dr["SectionName"] = row.Cells["SectionName"].Value;
+                dr["RegularExpression"] = row.Cells["RegularExpression"].Value;
                 dataTable.Rows.Add(dr);
             }
             return dataTable;

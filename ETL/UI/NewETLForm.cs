@@ -123,6 +123,7 @@ namespace ETL.UI
             List<string> expressionTypes = new List<string>(new string[] { "Replace", "Reg", "Map" });
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
             CreateTexBoxColumn("Expression", false, "Expression");
+            CreateTexBoxColumn("RegularExpression", false, "RegularExpression");
             HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("SectionName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
@@ -193,6 +194,7 @@ namespace ETL.UI
             dataTable.Columns.Add("ExpressionType");
             dataTable.Columns.Add("RegexpColumnName");
             dataTable.Columns.Add("Expression");
+            dataTable.Columns.Add("RegularExpression");
             dataTable.Columns.Add("SectionName");
 
             //populate data
@@ -205,6 +207,7 @@ namespace ETL.UI
                 dr["RegexpColumnName"] = row.Cells["RegexpColumnName"].Value;
                 dr["Expression"] = row.Cells["Expression"].Value;
                 dr["SectionName"] = row.Cells["SectionName"].Value;
+                dr["RegularExpression"] = row.Cells["RegularExpression"].Value;
                 dataTable.Rows.Add(dr);
             }
             return dataTable;
@@ -245,6 +248,10 @@ namespace ETL.UI
                 currentRow.Cells["RegexpColumnName"].ReadOnly = true;
                 currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.LightGray;
 
+                currentRow.Cells["RegularExpression"].Value = "";
+                currentRow.Cells["RegularExpression"].ReadOnly = true;
+                currentRow.Cells["RegularExpression"].Style.BackColor = Color.LightGray;
+
                 currentRow.Cells["SectionName"].Value = "";
                 currentRow.Cells["SectionName"].ReadOnly = true;
                 currentRow.Cells["SectionName"].Style.BackColor = Color.LightGray;
@@ -263,13 +270,22 @@ namespace ETL.UI
                 currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.White;
                 currentRow.Cells["SectionName"].ReadOnly = false;
                 currentRow.Cells["SectionName"].Style.BackColor = Color.White;
+
+                currentRow.Cells["RegularExpression"].Value = "";
+                currentRow.Cells["RegularExpression"].ReadOnly = true;
+                currentRow.Cells["RegularExpression"].Style.BackColor = Color.LightGray;
             }
             else if (currentRow.Cells["ExpressionType"].Value.Equals("Reg"))
             {
                 currentRow.Cells["Expression"].ReadOnly = false;
                 currentRow.Cells["Expression"].Style.BackColor = Color.White;
-                currentRow.Cells["RegexpColumnName"].ReadOnly = false;
-                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.White;
+
+                currentRow.Cells["RegexpColumnName"].Value = "";
+                currentRow.Cells["RegexpColumnName"].ReadOnly = true;
+                currentRow.Cells["RegexpColumnName"].Style.BackColor = Color.LightGray;
+
+                currentRow.Cells["RegularExpression"].ReadOnly = false;
+                currentRow.Cells["RegularExpression"].Style.BackColor = Color.White;
 
                 currentRow.Cells["SectionName"].Value = "";
                 currentRow.Cells["SectionName"].ReadOnly = true;
@@ -316,7 +332,7 @@ namespace ETL.UI
                     AutoCompleteStringCollection DataCollection = new AutoCompleteStringCollection();
                     foreach(string col in this.srcTable.GetColumnsNames())
                     {
-                        DataCollection.Add(col);
+                        DataCollection.Add("["+col+"]");
                     }
                     autoText.AutoCompleteCustomSource = DataCollection;
                 }
