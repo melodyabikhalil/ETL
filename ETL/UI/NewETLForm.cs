@@ -15,9 +15,6 @@ namespace ETL.UI
 {
     public partial class NewETLForm : Form
     {
-        private Dictionary<int, String> dbDictionary = new Dictionary<int, string>();
-        private Dictionary<int, String> srcTablesDictionary = new Dictionary<int, string>();
-        private Dictionary<int, String> destTablesDictionary = new Dictionary<int, string>();
         private Database src;
         private Database dest;
         private TableOrQuery srcTable;
