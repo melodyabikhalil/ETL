@@ -17,6 +17,7 @@ namespace ETL.UI
             InitializeComponent();
             string path = @"" + Application.StartupPath + relativePath;
             this.webBrowser.Url = new Uri(path);
+            this.CenterToParent();
         }
     }
 }
