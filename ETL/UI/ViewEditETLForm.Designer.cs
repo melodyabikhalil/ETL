@@ -42,7 +42,7 @@
             // etlNameLabel
             // 
             this.etlNameLabel.AutoSize = true;
-            this.etlNameLabel.Location = new System.Drawing.Point(35, 36);
+            this.etlNameLabel.Location = new System.Drawing.Point(44, 9);
             this.etlNameLabel.Name = "etlNameLabel";
             this.etlNameLabel.Size = new System.Drawing.Size(64, 13);
             this.etlNameLabel.TabIndex = 0;
@@ -51,9 +51,9 @@
             // ETLDataGridView
             // 
             this.ETLDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ETLDataGridView.Location = new System.Drawing.Point(33, 199);
+            this.ETLDataGridView.Location = new System.Drawing.Point(33, 153);
             this.ETLDataGridView.Name = "ETLDataGridView";
-            this.ETLDataGridView.Size = new System.Drawing.Size(951, 217);
+            this.ETLDataGridView.Size = new System.Drawing.Size(951, 268);
             this.ETLDataGridView.TabIndex = 1;
             this.ETLDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ETLDataGridView_CellEndEdit);
             this.ETLDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.ETLDataGridView_DataError);
@@ -73,7 +73,7 @@
             // sourceDatabaseLabel
             // 
             this.sourceDatabaseLabel.AutoSize = true;
-            this.sourceDatabaseLabel.Location = new System.Drawing.Point(37, 75);
+            this.sourceDatabaseLabel.Location = new System.Drawing.Point(46, 48);
             this.sourceDatabaseLabel.Name = "sourceDatabaseLabel";
             this.sourceDatabaseLabel.Size = new System.Drawing.Size(91, 13);
             this.sourceDatabaseLabel.TabIndex = 3;
@@ -82,7 +82,7 @@
             // sourceTableOrQueryLabel
             // 
             this.sourceTableOrQueryLabel.AutoSize = true;
-            this.sourceTableOrQueryLabel.Location = new System.Drawing.Point(37, 109);
+            this.sourceTableOrQueryLabel.Location = new System.Drawing.Point(46, 82);
             this.sourceTableOrQueryLabel.Name = "sourceTableOrQueryLabel";
             this.sourceTableOrQueryLabel.Size = new System.Drawing.Size(111, 13);
             this.sourceTableOrQueryLabel.TabIndex = 4;
@@ -91,7 +91,7 @@
             // destinationTableLabel
             // 
             this.destinationTableLabel.AutoSize = true;
-            this.destinationTableLabel.Location = new System.Drawing.Point(361, 109);
+            this.destinationTableLabel.Location = new System.Drawing.Point(486, 82);
             this.destinationTableLabel.Name = "destinationTableLabel";
             this.destinationTableLabel.Size = new System.Drawing.Size(89, 13);
             this.destinationTableLabel.TabIndex = 6;
@@ -100,7 +100,7 @@
             // destinationDatabaseLabel
             // 
             this.destinationDatabaseLabel.AutoSize = true;
-            this.destinationDatabaseLabel.Location = new System.Drawing.Point(361, 75);
+            this.destinationDatabaseLabel.Location = new System.Drawing.Point(486, 48);
             this.destinationDatabaseLabel.Name = "destinationDatabaseLabel";
             this.destinationDatabaseLabel.Size = new System.Drawing.Size(110, 13);
             this.destinationDatabaseLabel.TabIndex = 5;
@@ -109,7 +109,7 @@
             // srcColumnLabel
             // 
             this.srcColumnLabel.AutoSize = true;
-            this.srcColumnLabel.Location = new System.Drawing.Point(40, 146);
+            this.srcColumnLabel.Location = new System.Drawing.Point(49, 119);
             this.srcColumnLabel.Name = "srcColumnLabel";
             this.srcColumnLabel.Size = new System.Drawing.Size(0, 13);
             this.srcColumnLabel.TabIndex = 7;

@@ -154,7 +154,7 @@
             this.ClientSize = new System.Drawing.Size(986, 591);
             this.Controls.Add(this.etlJobTabControl);
             this.Name = "CreateETLJob";
-            this.Text = "CreateETLJob";
+            this.Text = "Create ETL job";
             this.etlJobTabControl.ResumeLayout(false);
             this.etlJobNameTabPage.ResumeLayout(false);
             this.etlJobNameTabPage.PerformLayout();
