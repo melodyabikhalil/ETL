@@ -20,30 +20,7 @@ namespace ETL.UI
         public CreateETLJob()
         {
             InitializeComponent();
-            etlsTabPage.Enabled = false;
-        }
-
-        private void FromJobNameToEtlsListButton_Click(object sender, EventArgs e)
-        {
-            string name = ETLJobNameTextBox.Text;
-            if (name == null || name == "")
-            {
-                MessageBox.Show("Please choose a name for the ETL Job", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                if (Global.EtlJobNameAlreadyExists(name))
-                {
-                    MessageBox.Show("Another ETL job with the same name already exists. Please choose another name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    this.job.name = name;
-                    etlsTabPage.Enabled = true;
-                    this.SetEtlsDataGridView();
-                    etlJobTabControl.SelectedTab = etlsTabPage;
-                }
-            }
+            SetEtlsDataGridView();
         }
 
         private void SetEtlsDataGridView()
@@ -91,22 +68,30 @@ namespace ETL.UI
             etlJobDataGridView.Rows[rowsNumber - 1].Cells[0].Value = rowsNumber;
         }
 
-        private void GoBackToNameTabFromETLsTabButton_Click(object sender, EventArgs e)
-        {
-            etlJobTabControl.SelectedTab = etlJobNameTabPage;
-        }
-
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            DataTable datatable = UIHelper.CreateDataTableFromDataGridView(etlJobDataGridView);
-            List<string> etlNamesByOrder = Helper.ConvertDataColumnToList(datatable, "ETLs");
-            List<SingleETL> etls = Global.GetEtlsFromNames(etlNamesByOrder);
-            this.job.etls = etls;
-            Global.jobETLs.Add(this.job);
-            JsonHelper.SaveEtlJob(this.job, true);
-            MessageBox.Show("Job successfully created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ETLParent.ReloadEtlJobsListInMenu();
-            this.Close();
+            string jobName = ETLJobNameTextBox.Text;
+            if (jobName == null || jobName == "")
+            {
+                MessageBox.Show("Please choose a name for this job.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (Global.GetJobByName(jobName) != null)
+            {
+                MessageBox.Show("Please choose another name for the job. This name already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                DataTable datatable = UIHelper.CreateDataTableFromDataGridView(etlJobDataGridView);
+                List<string> etlNamesByOrder = Helper.ConvertDataColumnToList(datatable, "ETLs");
+                List<SingleETL> etls = Global.GetEtlsFromNames(etlNamesByOrder);
+                this.job.name = jobName;
+                this.job.etls = etls;
+                Global.jobETLs.Add(this.job);
+                JsonHelper.SaveEtlJob(this.job, true);
+                MessageBox.Show("Job successfully created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ETLParent.ReloadEtlJobsListInMenu();
+                this.Close();
+            }
         }
     }
 }
