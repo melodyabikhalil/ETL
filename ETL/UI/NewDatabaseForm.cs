@@ -161,81 +161,89 @@ namespace ETL.UI
 
         private void GoToCredentialsTabFromTypeTabButton_Click(object sender, EventArgs e)
         {
-            this.credentialsTabPage.Enabled = true;
-            this.newDatabaseTabControl.SelectedTab = this.credentialsTabPage;
-            switch (this.dbTypesComboBox.SelectedIndex)
+            int typeIndex = this.dbTypesComboBox.SelectedIndex;
+            if (typeIndex == -1)
             {
+                MessageBox.Show("Please choose a database type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                this.credentialsTabPage.Enabled = true;
+                this.newDatabaseTabControl.SelectedTab = this.credentialsTabPage;
+                switch (typeIndex)
+                {
 
-                case 0:
-                    schemaLabel.Hide();
-                    schemaTextBox.Hide();
-                    portLabel.Hide();
-                    portTextBox.Hide();
-                    hostTextBox.Show();
-                    hostLabel.Show();
-                    usernameTextBox.Show();
-                    usernameLabel.Show();
-                    passTextBox.Show();
-                    passwordLabel.Show();
-                    dbNameLabel.Show();
-                    dbNameTextBox.Show();
-                    break;
-                case 1:
-                    schemaLabel.Show();
-                    schemaTextBox.Show();
-                    portLabel.Hide();
-                    portTextBox.Hide();
-                    hostTextBox.Show();
-                    hostLabel.Show();
-                    usernameTextBox.Show();
-                    usernameLabel.Show();
-                    passTextBox.Show();
-                    passwordLabel.Show();
-                    dbNameLabel.Show();
-                    dbNameTextBox.Show();
-                    break;
-                case 2:
-                    schemaLabel.Show();
-                    schemaTextBox.Show();
-                    portLabel.Show();
-                    portTextBox.Show();
-                    hostTextBox.Show();
-                    hostLabel.Show();
-                    usernameTextBox.Show();
-                    usernameLabel.Show();
-                    passTextBox.Show();
-                    passwordLabel.Show();
-                    dbNameLabel.Show();
-                    dbNameTextBox.Show();
-                    break;
-                case 3:
-                    hostTextBox.Hide();
-                    hostLabel.Hide();
-                    usernameTextBox.Hide();
-                    usernameLabel.Hide();
-                    passTextBox.Hide();
-                    passwordLabel.Hide();
-                    dbNameLabel.Text = "Path";
-                    dbNameTextBox.Show();
-                    portLabel.Hide();
-                    portTextBox.Hide();
-                    schemaLabel.Hide();
-                    schemaTextBox.Hide();
-                    break;
-                case 4:
-                    hostTextBox.Hide();
-                    hostLabel.Hide();
-                    usernameTextBox.Hide();
-                    usernameLabel.Hide();
-                    passTextBox.Hide();
-                    passwordLabel.Hide();
-                    dbNameLabel.Text = "Connection String";
-                    dbNameTextBox.Show();
-                    portLabel.Hide();
-                    portTextBox.Hide();
-                    schemaLabel.Hide();
-                    schemaTextBox.Hide();
-                    break;
+                    case 0:
+                        schemaLabel.Hide();
+                        schemaTextBox.Hide();
+                        portLabel.Hide();
+                        portTextBox.Hide();
+                        hostTextBox.Show();
+                        hostLabel.Show();
+                        usernameTextBox.Show();
+                        usernameLabel.Show();
+                        passTextBox.Show();
+                        passwordLabel.Show();
+                        dbNameLabel.Show();
+                        dbNameTextBox.Show();
+                        break;
+                    case 1:
+                        schemaLabel.Show();
+                        schemaTextBox.Show();
+                        portLabel.Hide();
+                        portTextBox.Hide();
+                        hostTextBox.Show();
+                        hostLabel.Show();
+                        usernameTextBox.Show();
+                        usernameLabel.Show();
+                        passTextBox.Show();
+                        passwordLabel.Show();
+                        dbNameLabel.Show();
+                        dbNameTextBox.Show();
+                        break;
+                    case 2:
+                        schemaLabel.Show();
+                        schemaTextBox.Show();
+                        portLabel.Show();
+                        portTextBox.Show();
+                        hostTextBox.Show();
+                        hostLabel.Show();
+                        usernameTextBox.Show();
+                        usernameLabel.Show();
+                        passTextBox.Show();
+                        passwordLabel.Show();
+                        dbNameLabel.Show();
+                        dbNameTextBox.Show();
+                        break;
+                    case 3:
+                        hostTextBox.Hide();
+                        hostLabel.Hide();
+                        usernameTextBox.Hide();
+                        usernameLabel.Hide();
+                        passTextBox.Hide();
+                        passwordLabel.Hide();
+                        dbNameLabel.Text = "Path";
+                        dbNameTextBox.Show();
+                        portLabel.Hide();
+                        portTextBox.Hide();
+                        schemaLabel.Hide();
+                        schemaTextBox.Hide();
+                        break;
+                    case 4:
+                        hostTextBox.Hide();
+                        hostLabel.Hide();
+                        usernameTextBox.Hide();
+                        usernameLabel.Hide();
+                        passTextBox.Hide();
+                        passwordLabel.Hide();
+                        dbNameLabel.Text = "Connection String";
+                        dbNameTextBox.Show();
+                        portLabel.Hide();
+                        portTextBox.Hide();
+                        schemaLabel.Hide();
+                        schemaTextBox.Hide();
+                        break;
+                }
             }
         }
 
