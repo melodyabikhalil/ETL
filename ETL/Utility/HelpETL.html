@@ -8,9 +8,32 @@
         table, th, td {
             border: 1px solid black;
         }
+        #table {
+            border-collapse: collapse;
+        }
+
+        #table td, #table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #ffffff;
+        }
+
+        #table tr:nth-child(even){background-color: #f2f2f2;}
+
+        #table tr:hover {background-color: #ddd;}
+
+        #table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #ffffff;
+        }
     </style>
 </head>
-<body>
+<body style="background: #fffbf2;">
     <h2>ETL Help</h2>
     <div>
         <div><b>There are 3 expression types:</b></div>
@@ -57,7 +80,7 @@
         </ul>
         <br>
         <div><b>Examples:</b></div>
-        <table>
+        <table id="table">
             <tr>
                 <th>Expression Type</th>
                 <th>Expression</th>
