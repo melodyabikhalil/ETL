@@ -44,7 +44,7 @@
             // 
             this.nameGroupbox.Controls.Add(this.ETLJobNameTextBox);
             this.nameGroupbox.Controls.Add(this.label1);
-            this.nameGroupbox.Location = new System.Drawing.Point(21, 23);
+            this.nameGroupbox.Location = new System.Drawing.Point(21, 33);
             this.nameGroupbox.Name = "nameGroupbox";
             this.nameGroupbox.Size = new System.Drawing.Size(953, 96);
             this.nameGroupbox.TabIndex = 0;
@@ -100,9 +100,9 @@
             // 
             this.datagridviewGroupBox.Controls.Add(this.etlJobDataGridView);
             this.datagridviewGroupBox.Controls.Add(this.etlsLabel);
-            this.datagridviewGroupBox.Location = new System.Drawing.Point(21, 138);
+            this.datagridviewGroupBox.Location = new System.Drawing.Point(21, 153);
             this.datagridviewGroupBox.Name = "datagridviewGroupBox";
-            this.datagridviewGroupBox.Size = new System.Drawing.Size(953, 412);
+            this.datagridviewGroupBox.Size = new System.Drawing.Size(953, 386);
             this.datagridviewGroupBox.TabIndex = 21;
             this.datagridviewGroupBox.TabStop = false;
             this.datagridviewGroupBox.Text = "ETLs order";

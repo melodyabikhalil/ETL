@@ -337,7 +337,7 @@ namespace ETL.UI
 
         private void helpButton_Click(object sender, EventArgs e)
         {
-            HelpForm help = new HelpForm("\\Utility\\HelpETL.html");
+            HelpForm help = new HelpForm("\\HTML\\HelpETL.html");
             help.Show();
         }
     }
