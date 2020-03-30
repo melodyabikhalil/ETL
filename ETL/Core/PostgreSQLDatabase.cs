@@ -125,7 +125,7 @@ namespace ETL.Core
             }
         }
 
-        public override bool TrySelect(string query)
+        public override DataTable TrySelect(string query)
         {
             NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(command);
@@ -133,12 +133,13 @@ namespace ETL.Core
             try
             {
                 dataAdapter.Fill(dataSet);
-                return true;
+                DataTable datatable = dataSet.Tables[0];
+                return datatable;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return false;
+                return null;
             }
         }
 

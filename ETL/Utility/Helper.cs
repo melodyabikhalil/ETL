@@ -126,5 +126,19 @@ namespace ETL.Utility
                 return new List<string>();
             }
         }
+
+        public static List<string> GetColumnsNamesFromDatatable(DataTable datatable)
+        {
+            List<string> columnsNames = new List<string>();
+            if (datatable == null)
+            {
+                return columnsNames;
+            }
+            foreach (DataColumn column in datatable.Columns)
+            {
+                columnsNames.Add(column.ColumnName);
+            }
+            return columnsNames;
+        }
     }
 }

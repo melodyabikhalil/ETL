@@ -142,7 +142,7 @@ namespace ETL.Core
             }
         }
 
-        public override bool TrySelect(string query)
+        public override DataTable TrySelect(string query)
         {
             SqlCommand command = new SqlCommand(query, this.connection);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
@@ -150,12 +150,13 @@ namespace ETL.Core
             try
             {
                 dataAdapter.Fill(dataSet);
-                return true;
+                DataTable datatable = dataSet.Tables[0];
+                return datatable;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return false;
+                return null;
             }
         }
 

@@ -79,9 +79,9 @@ namespace ETL.Core
             return true;
         }
 
-        public override bool TrySelect(string query)
+        public override DataTable TrySelect(string query)
         {
-            return true;
+            return new DataTable();
         }
     }
 }

@@ -230,7 +230,7 @@
             // 
             // goBackToBuildQueryTabFromSelectColumnsTabButton
             // 
-            this.goBackToBuildQueryTabFromSelectColumnsTabButton.Location = new System.Drawing.Point(749, 492);
+            this.goBackToBuildQueryTabFromSelectColumnsTabButton.Location = new System.Drawing.Point(758, 510);
             this.goBackToBuildQueryTabFromSelectColumnsTabButton.Name = "goBackToBuildQueryTabFromSelectColumnsTabButton";
             this.goBackToBuildQueryTabFromSelectColumnsTabButton.Size = new System.Drawing.Size(75, 23);
             this.goBackToBuildQueryTabFromSelectColumnsTabButton.TabIndex = 13;
@@ -240,7 +240,7 @@
             // 
             // goToPreviewTabFromSelectColumnsTabButton
             // 
-            this.goToPreviewTabFromSelectColumnsTabButton.Location = new System.Drawing.Point(843, 492);
+            this.goToPreviewTabFromSelectColumnsTabButton.Location = new System.Drawing.Point(852, 510);
             this.goToPreviewTabFromSelectColumnsTabButton.Name = "goToPreviewTabFromSelectColumnsTabButton";
             this.goToPreviewTabFromSelectColumnsTabButton.Size = new System.Drawing.Size(75, 23);
             this.goToPreviewTabFromSelectColumnsTabButton.TabIndex = 12;
@@ -253,9 +253,9 @@
             this.selectColumnsDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.selectColumnsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.selectColumnsDataGridView.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.selectColumnsDataGridView.Location = new System.Drawing.Point(249, 76);
+            this.selectColumnsDataGridView.Location = new System.Drawing.Point(240, 63);
             this.selectColumnsDataGridView.Name = "selectColumnsDataGridView";
-            this.selectColumnsDataGridView.Size = new System.Drawing.Size(490, 382);
+            this.selectColumnsDataGridView.Size = new System.Drawing.Size(518, 423);
             this.selectColumnsDataGridView.TabIndex = 0;
             // 
             // queryPreviewTabPage
@@ -294,16 +294,17 @@
             // 
             // queryRichTextBox
             // 
-            this.queryRichTextBox.Location = new System.Drawing.Point(70, 106);
+            this.queryRichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.queryRichTextBox.Location = new System.Drawing.Point(55, 90);
             this.queryRichTextBox.Name = "queryRichTextBox";
-            this.queryRichTextBox.Size = new System.Drawing.Size(642, 238);
+            this.queryRichTextBox.Size = new System.Drawing.Size(862, 362);
             this.queryRichTextBox.TabIndex = 1;
             this.queryRichTextBox.Text = "";
             // 
             // previewLabel
             // 
             this.previewLabel.AutoSize = true;
-            this.previewLabel.Location = new System.Drawing.Point(67, 40);
+            this.previewLabel.Location = new System.Drawing.Point(52, 38);
             this.previewLabel.Name = "previewLabel";
             this.previewLabel.Size = new System.Drawing.Size(645, 13);
             this.previewLabel.TabIndex = 0;

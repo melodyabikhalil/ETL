@@ -99,6 +99,7 @@ namespace ETL.Core
 
                 DataSet dataSet = new DataSet();
 
+                tableOrQuery.dataTable.Clear();
                 dataAdapter.Fill(dataSet);
                 tableOrQuery.dataTable.Clear();
                 tableOrQuery.dataTable = dataSet.Tables[0];
@@ -111,7 +112,7 @@ namespace ETL.Core
             }
         }
 
-        public override bool TrySelect(string query)
+        public override DataTable TrySelect(string query)
         {
             OdbcCommand command = new OdbcCommand(query, this.connection);
             OdbcDataAdapter dataAdapter = new OdbcDataAdapter(command);
@@ -119,12 +120,13 @@ namespace ETL.Core
             try
             {
                 dataAdapter.Fill(dataSet);
-                return true;
+                DataTable datatable = dataSet.Tables[0];
+                return datatable;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return false;
+                return null;
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -162,7 +163,7 @@ namespace ETL.Core
         abstract public bool Insert(string tableName);
         abstract public bool Select(string tableOrQueryName, string type);
         abstract public bool SetDatatableSchema(string tableName);
-        abstract public bool TrySelect(string query);
+        abstract public DataTable TrySelect(string query);
 
         //for later
         //abstract public void Update(DataTable dataTable);

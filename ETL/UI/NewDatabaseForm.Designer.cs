@@ -264,7 +264,7 @@
             this.ClientSize = new System.Drawing.Size(500, 315);
             this.Controls.Add(this.newDatabaseTabControl);
             this.Name = "NewDatabaseForm";
-            this.Text = "NewDatabaseForm";
+            this.Text = "Add database";
             this.credentialsTabPage.ResumeLayout(false);
             this.credentialsTabPage.PerformLayout();
             this.typeTabPage.ResumeLayout(false);
