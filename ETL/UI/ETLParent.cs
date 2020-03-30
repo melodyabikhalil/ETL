@@ -28,12 +28,17 @@ namespace ETL.UI
             CenterToScreen();
             _instance = this;
             this.mainSplitContainer.Visible = false;
+            this.AddMenuItems();
+            JsonHelper.CreateJsonFolder();
+           this.LoadSavedDataFromJsonFiles();
+        }
+
+        private void AddMenuItems()
+        {
             newQueryMenu.MenuItems.Add(newQueryMenuItem);
             newQueryMenuItem.Click += new EventHandler(newQueryMenuItem_Click);
             closeDatabaseMenu.MenuItems.Add(closeDatabaseMenuItem);
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
-            JsonHelper.CreateJsonFolder();
-           this.LoadSavedDataFromJsonFiles();
         }
 
         private void LoadSavedDataFromJsonFiles()
