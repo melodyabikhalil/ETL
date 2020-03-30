@@ -78,11 +78,11 @@
             // 
             // helpButton
             // 
-            this.helpButton.Location = new System.Drawing.Point(20, 524);
+            this.helpButton.Location = new System.Drawing.Point(948, 12);
             this.helpButton.Name = "helpButton";
-            this.helpButton.Size = new System.Drawing.Size(38, 23);
+            this.helpButton.Size = new System.Drawing.Size(21, 20);
             this.helpButton.TabIndex = 17;
-            this.helpButton.Text = "Help";
+            this.helpButton.Text = "?";
             this.helpButton.UseVisualStyleBackColor = true;
             this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
             // 
@@ -97,7 +97,7 @@
             // 
             // backToSrcDestTablesTabButton
             // 
-            this.backToSrcDestTablesTabButton.Location = new System.Drawing.Point(801, 524);
+            this.backToSrcDestTablesTabButton.Location = new System.Drawing.Point(789, 521);
             this.backToSrcDestTablesTabButton.Name = "backToSrcDestTablesTabButton";
             this.backToSrcDestTablesTabButton.Size = new System.Drawing.Size(75, 23);
             this.backToSrcDestTablesTabButton.TabIndex = 14;
@@ -107,7 +107,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(906, 524);
+            this.SaveButton.Location = new System.Drawing.Point(894, 521);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 13;

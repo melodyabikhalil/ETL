@@ -37,17 +37,17 @@
             this.webBrowser.Location = new System.Drawing.Point(0, 0);
             this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(859, 497);
+            this.webBrowser.Size = new System.Drawing.Size(888, 497);
             this.webBrowser.TabIndex = 0;
             this.webBrowser.Url = new System.Uri("", System.UriKind.Relative);
             // 
-            // Help
+            // HelpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(859, 497);
+            this.ClientSize = new System.Drawing.Size(888, 497);
             this.Controls.Add(this.webBrowser);
-            this.Name = "Help";
+            this.Name = "HelpForm";
             this.Text = "Help";
             this.ResumeLayout(false);
 
