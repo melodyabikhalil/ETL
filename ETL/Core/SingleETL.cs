@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ETL.Utility;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -26,6 +27,46 @@ namespace ETL.Core
             this.sourceTable = sourceTable;
             this.destTable = destTable;
             this.expressionDt = expressionDt;
+        }
+
+        public bool FetchSourceData()
+        {
+            Database sourceDb = this.srcDb;
+            TableOrQuery sourceTableOrQuery = this.sourceTable;
+
+            sourceDb.Close();
+            sourceDb.Connect();
+            bool selectDataSuccess = sourceDb.Select(sourceTableOrQuery.GetName(), sourceTableOrQuery.type);
+            sourceDb.Close();
+            return selectDataSuccess;
+        }
+
+        public bool CreateDestinationDataTable()
+        {
+            Database sourceDb = this.srcDb;
+            TableOrQuery sourceTableOrQuery = this.sourceTable;
+
+            Database destinationDb = this.destDb;
+            Table destinationTable = this.destTable;
+
+            sourceTableOrQuery = sourceDb.GetTableOrQueryByName(sourceTableOrQuery.GetName());
+            destinationTable = destinationDb.GetTable(destinationTable.GetName());
+            sourceTableOrQuery.dataTable.TableName = sourceTableOrQuery.GetName();
+            destinationTable.dataTable.TableName = destinationTable.GetName();
+            bool createDestinationDatatableSucess = Expression.AddValuesToDatatableDestination(sourceTableOrQuery.dataTable, destinationTable.dataTable, this.expressionDt, Global.mapDt);
+            return createDestinationDatatableSucess;
+        }
+
+        public bool InsertDataToDestination()
+        {
+            Database destinationDb = this.destDb;
+            Table destinationTable = this.destTable;
+
+            destinationDb.Close();
+            destinationDb.Connect();
+            bool insertInDestinationSuccess = destinationDb.Insert(destinationTable.GetName());
+            destinationDb.Close();
+            return insertInDestinationSuccess;
         }
 
         public override bool Equals(Object obj)

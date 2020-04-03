@@ -23,29 +23,13 @@ namespace ETL.Core
         {
             foreach (SingleETL etl in etls)
             {
-                Database sourceDb = etl.srcDb;
-                TableOrQuery sourceTableOrQuery = etl.sourceTable;
-
-                Database destinationDb = etl.destDb;
-                Table destinationTable = etl.destTable;
-
-                sourceDb.Close();
-                sourceDb.Connect();
-                bool selectDataSuccess = sourceDb.Select(sourceTableOrQuery.GetName(), sourceTableOrQuery.type);
-                sourceDb.Close();
+                bool selectDataSuccess = etl.FetchSourceData();
                 if (selectDataSuccess)
                 {
-                    sourceTableOrQuery = sourceDb.GetTableOrQueryByName(sourceTableOrQuery.GetName());
-                    destinationTable = destinationDb.GetTable(destinationTable.GetName());
-                    sourceTableOrQuery.dataTable.TableName = sourceTableOrQuery.GetName();
-                    destinationTable.dataTable.TableName = destinationTable.GetName();
-                    bool createDestinationDatatableSucess = Expression.AddValuesToDatatableDestination(sourceTableOrQuery.dataTable, destinationTable.dataTable, etl.expressionDt, Global.mapDt);
+                    bool createDestinationDatatableSucess = etl.CreateDestinationDataTable();
                     if (createDestinationDatatableSucess)
                     {
-                        destinationDb.Close();
-                        destinationDb.Connect();
-                        bool insertInDestinationSuccess = destinationDb.Insert(destinationTable.GetName());
-                        destinationDb.Close();
+                        bool insertInDestinationSuccess = etl.InsertDataToDestination();
                         if (insertInDestinationSuccess)
                         {
                             LogError(etl);
