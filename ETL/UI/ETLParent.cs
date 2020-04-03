@@ -22,6 +22,9 @@ namespace ETL.UI
         string databaseToClose = "";
         JoinQuery joinQuery;
 
+        private BackgroundWorker backgroundWorker;
+        private ProgressForm progressForm;
+
         public ETLParent()
         {
             InitializeComponent();
@@ -31,6 +34,40 @@ namespace ETL.UI
             this.AddMenuItems();
             JsonHelper.CreateJsonFolder();
            this.LoadSavedDataFromJsonFiles();
+
+            InitializeBackgroundWorker();
+        }
+
+        // Set up the BackgroundWorker object by 
+        // attaching event handlers. 
+        private void InitializeBackgroundWorker()
+        {
+            backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
+            backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
+        }
+
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            JobETL job = (JobETL)e.Argument;
+            Global.progressForm = this.progressForm;
+            job.Run();
+        }
+
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show(e.Error.Message);
+            }
+            else if (e.Cancelled)
+            {
+                MessageBox.Show("ETL was cancelled");
+            }
+            else
+            {
+                progressForm.SetActionLabel("Done.");
+            }
         }
 
         private void AddMenuItems()
@@ -253,8 +290,8 @@ namespace ETL.UI
                 var pressed = MessageBox.Show("Are you sure you want to run this job?", "Run job", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (pressed == DialogResult.Yes)
                 {
-                    job.Run();
-                    // TODO : log result + show progress in window
+                    progressForm = new ProgressForm();
+                    backgroundWorker.RunWorkerAsync(job);
                 }
             }
         }

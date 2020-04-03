@@ -1,4 +1,5 @@
-﻿using ETL.Utility;
+﻿using ETL.UI;
+using ETL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace ETL.Core
         {
             foreach (SingleETL etl in etls)
             {
+                Global.progressForm.SetEtlLabel(etl.name);
                 bool selectDataSuccess = etl.FetchSourceData();
                 if (selectDataSuccess)
                 {
@@ -30,10 +32,6 @@ namespace ETL.Core
                     if (createDestinationDatatableSucess)
                     {
                         bool insertInDestinationSuccess = etl.InsertDataToDestination();
-                        if (insertInDestinationSuccess)
-                        {
-                            LogError(etl);
-                        }
                     }
                 }
             }

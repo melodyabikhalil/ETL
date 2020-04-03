@@ -31,6 +31,8 @@ namespace ETL.Core
 
         public bool FetchSourceData()
         {
+            Global.progressForm.SetActionLabel("Fetching source data...");
+
             Database sourceDb = this.srcDb;
             TableOrQuery sourceTableOrQuery = this.sourceTable;
 
@@ -43,6 +45,8 @@ namespace ETL.Core
 
         public bool CreateDestinationDataTable()
         {
+            Global.progressForm.SetActionLabel("Creating destination table...");
+
             Database sourceDb = this.srcDb;
             TableOrQuery sourceTableOrQuery = this.sourceTable;
 
@@ -59,6 +63,8 @@ namespace ETL.Core
 
         public bool InsertDataToDestination()
         {
+            Global.progressForm.SetActionLabel("Inserting data into destination table...");
+
             Database destinationDb = this.destDb;
             Table destinationTable = this.destTable;
 
