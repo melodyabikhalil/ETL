@@ -1,4 +1,5 @@
 ﻿using ETL.Core;
+using ETL.UI;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,6 +20,8 @@ namespace ETL.Utility
         public static List<SingleETL> etls = new List<SingleETL>();
         public static List<JobETL> jobETLs = new List<JobETL>();
         public static DataTable mapDt = expression.mapDt;
+
+        public static ProgressForm progressForm = new ProgressForm();
         
         public static List<Database> Databases
         {
@@ -30,6 +33,19 @@ namespace ETL.Utility
         {
             get { return expression; }
             set { expression = value; }
+        }
+
+        public static ProgressForm ProgressForm
+        {
+            get
+            {
+                if (progressForm.IsDead)
+                {
+                    progressForm = new ProgressForm();
+                }
+                return progressForm;
+            }
+            set { progressForm = value; }
         }
 
         public static Database GetDatabaseByName(string databaseName)

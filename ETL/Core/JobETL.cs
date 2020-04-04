@@ -1,4 +1,5 @@
-﻿using ETL.Utility;
+﻿using ETL.UI;
+using ETL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,36 +24,30 @@ namespace ETL.Core
         {
             foreach (SingleETL etl in etls)
             {
-                Database sourceDb = etl.srcDb;
-                TableOrQuery sourceTableOrQuery = etl.sourceTable;
-
-                Database destinationDb = etl.destDb;
-                Table destinationTable = etl.destTable;
-
-                sourceDb.Close();
-                sourceDb.Connect();
-                bool selectDataSuccess = sourceDb.Select(sourceTableOrQuery.GetName(), sourceTableOrQuery.type);
-                sourceDb.Close();
+                Global.progressForm.UpdateForm(ProgressForm.LABEL_ETL, etl.name);
+                bool selectDataSuccess = etl.FetchSourceData();
                 if (selectDataSuccess)
                 {
-                    sourceTableOrQuery = sourceDb.GetTableOrQueryByName(sourceTableOrQuery.GetName());
-                    destinationTable = destinationDb.GetTable(destinationTable.GetName());
-                    sourceTableOrQuery.dataTable.TableName = sourceTableOrQuery.GetName();
-                    destinationTable.dataTable.TableName = destinationTable.GetName();
-                    bool createDestinationDatatableSucess = Expression.AddValuesToDatatableDestination(sourceTableOrQuery.dataTable, destinationTable.dataTable, etl.expressionDt, Global.mapDt);
+                    bool createDestinationDatatableSucess = etl.CreateDestinationDataTable();
                     if (createDestinationDatatableSucess)
                     {
-                        destinationDb.Close();
-                        destinationDb.Connect();
-                        bool insertInDestinationSuccess = destinationDb.Insert(destinationTable.GetName());
-                        destinationDb.Close();
-                        if (insertInDestinationSuccess)
+                        bool insertInDestinationSuccess = etl.InsertDataToDestination();
+                        if (!insertInDestinationSuccess)
                         {
-                            LogError(etl);
+                            Helper.ShowDatabaseErrorInProgressForm();
                         }
+                    } 
+                    else
+                    {
+                        Helper.ShowDatabaseErrorInProgressForm();
                     }
                 }
+                else
+                {
+                    Helper.ShowDatabaseErrorInProgressForm();
+                }
             }
+            Helper.ShowJobDone();
         }
 
         public void ReplaceEtlInJob(SingleETL etl)
@@ -65,12 +60,6 @@ namespace ETL.Core
                     return;
                 }
             }
-        }
-
-        public void LogError(SingleETL etl)
-        {
-            this.errorEtls.Add(etl);
-            Console.WriteLine("Error in etl named: " + etl.name + " has failed");
         }
 
         public override bool Equals(Object obj)

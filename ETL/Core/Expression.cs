@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ETL.UI;
+using ETL.Utility;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -60,7 +62,6 @@ namespace ETL.Core
             if (type == "Reg")
             {
                 string replacedText = Replace(expRow["Expression"].ToString(), row);
-                Console.WriteLine("replaced text "+replacedText);
                 value = Regexp(expRow["RegularExpression"].ToString(), row, replacedText);
             }
             if (type == "Map")
@@ -79,8 +80,13 @@ namespace ETL.Core
         {
             try
             {
+                Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, source.Rows.Count.ToString());
+                int rowIndex = 0;
                 foreach (DataRow row in source.Rows)
                 {
+                    ++rowIndex;
+                    Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, rowIndex.ToString());
+
                     DataRow newRow = dest.NewRow();
                     foreach (DataColumn col in dest.Columns)
                     {
@@ -154,6 +160,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "CreateDestinationTable");
                 return false;
             }
         }

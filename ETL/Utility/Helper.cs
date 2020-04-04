@@ -1,4 +1,5 @@
 ﻿using ETL.Core;
+using ETL.UI;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ namespace ETL.Utility
 {
     static class Helper
     {
+        public const string PATH_LOG_FOLDER = ".\\logs";
+        public const string PATH_LOG_FILE = PATH_LOG_FOLDER + "\\logs.txt";
+
         public static DataTable ConvertListToDataTable(List<string> list)
         {
             DataTable table = new DataTable();
@@ -123,6 +127,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "ConvertDataColumnsToList");
                 return new List<string>();
             }
         }
@@ -139,6 +144,74 @@ namespace ETL.Utility
                 columnsNames.Add(column.ColumnName);
             }
             return columnsNames;
+        }
+
+        public static void ShowDatabaseErrorInProgressForm()
+        {
+            Global.progressForm.UpdateForm(ProgressForm.ERROR, "");
+        }
+
+        public static void ShowJobDone()
+        {
+            Global.progressForm.UpdateForm(ProgressForm.DONE, "");
+        }
+
+        public static void Log(string message, string source)
+        {
+            string folderPath = PATH_LOG_FOLDER;
+            string filePath = PATH_LOG_FILE;
+            bool folderExists = true;
+            bool fileExists = true;
+            if (!Directory.Exists(folderPath))
+            {
+                try
+                {
+                    Directory.CreateDirectory(folderPath);
+                    if (!File.Exists(filePath))
+                    {
+                        try
+                        {
+                            File.Create(filePath);
+                        }
+                        catch
+                        {
+                            fileExists = false;
+                        }
+                    }
+                }
+                catch
+                {
+                    folderExists = false;
+                }
+            }
+            if (!File.Exists(filePath))
+            {
+                try
+                {
+                    File.Create(filePath);
+                }
+                catch
+                {
+                    fileExists = false;
+                }
+            }
+
+            if (folderExists && fileExists)
+            {
+                try
+                {
+                    using (StreamWriter file = new StreamWriter(filePath, true))
+                    {
+                        string date = DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss");
+                        string toWrite = date + " : [" + source + "] " + message;
+                        file.WriteLine(toWrite);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
         }
     }
 }

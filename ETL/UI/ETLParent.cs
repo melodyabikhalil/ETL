@@ -22,6 +22,9 @@ namespace ETL.UI
         string databaseToClose = "";
         JoinQuery joinQuery;
 
+        private ProgressForm progressForm;
+        private JobETL job;
+
         public ETLParent()
         {
             InitializeComponent();
@@ -30,7 +33,7 @@ namespace ETL.UI
             this.mainSplitContainer.Visible = false;
             this.AddMenuItems();
             JsonHelper.CreateJsonFolder();
-           this.LoadSavedDataFromJsonFiles();
+            this.LoadSavedDataFromJsonFiles();
         }
 
         private void AddMenuItems()
@@ -248,15 +251,23 @@ namespace ETL.UI
         {
             string jobName = sender.ToString();
             JobETL job = Global.GetJobByName(jobName);
+            this.job = job;
             if (job != null)
             {
                 var pressed = MessageBox.Show("Are you sure you want to run this job?", "Run job", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (pressed == DialogResult.Yes)
                 {
-                    job.Run();
-                    // TODO : log result + show progress in window
+                    progressForm = Global.ProgressForm;
+                    progressForm.Show();
+                    Task task = new Task(RunJob);
+                    task.Start();
                 }
             }
+        }
+
+        public void RunJob()
+        {
+            this.job.Run();
         }
 
         void ViewEtlMenuItem_Click(object sender, EventArgs e)
