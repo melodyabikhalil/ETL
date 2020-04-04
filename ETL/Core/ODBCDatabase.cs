@@ -35,7 +35,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "ODBC-Connect");
                 return false;
             }
         }
@@ -50,7 +50,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "ODBC-Close");
                 return false;
             }
         }
@@ -72,7 +72,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "ODBC-GetTables");
                 return tablesNames;
             }
         }
@@ -110,7 +110,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "ODBC-SelectData");
                 return false;
             }
         }
@@ -129,7 +129,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "ODBC-TrySelectData");
                 return null;
             }
         }
@@ -166,7 +166,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "ODBC-Insert");
                 return false;
             }
         }
@@ -192,7 +192,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "ODBC-SetDatatableSchema"+tableName);
                 return false;
             }
         }
@@ -229,7 +229,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "ODBC-SelectRowCount"+tableOrQueryName);
                 return 0;
             }
         }

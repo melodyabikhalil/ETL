@@ -50,7 +50,7 @@ namespace ETL.Core
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Helper.Log(e.Message);
+                    Helper.Log(e.Message, "Dspace-CreateMetadataList");
                 }
                 dSpaceMetadataField = new DSpaceMetadataField(element, qualifier);
                 dSpaceMetadataFields.Add(dSpaceMetadataField);

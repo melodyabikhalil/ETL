@@ -155,7 +155,7 @@ namespace ETL.UI
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Helper.Log(ex.Message);
+                    Helper.Log(ex.Message, "UI-CreateQuery");
                 }
             }
         }

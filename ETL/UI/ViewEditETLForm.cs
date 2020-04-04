@@ -75,7 +75,7 @@ namespace ETL.UI
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "UI-ViewEditETL-SetExpressionTable");
             }
         }
 

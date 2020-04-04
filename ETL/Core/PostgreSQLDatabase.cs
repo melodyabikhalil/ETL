@@ -42,7 +42,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Postgres-Connect");
                 return false;
             }
         }
@@ -56,7 +56,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Postgres-Close");
                 return false;
             }
         }
@@ -82,7 +82,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Postgres-GetTables");
                 return tablesNames;
             }
         }
@@ -124,7 +124,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Postgres-SelectData");
                 return false;
             }
         }
@@ -143,7 +143,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Postgres-TrySelectData");
                 return null;
             }
         }
@@ -189,7 +189,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Postgres-Insert");
                 return false;
             }
         }
@@ -220,7 +220,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Postgres-SetDatatableSchema-"+tableName);
                 return false;
             }
         }
@@ -262,7 +262,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Postgres-SelectRowCount-"+tableOrQueryName);
                 return 0;
             }
         }

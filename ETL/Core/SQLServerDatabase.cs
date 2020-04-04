@@ -38,7 +38,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "SQLServer-Connect");
                 return false;
             }
         }
@@ -52,7 +52,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "SQLServer-Close");
                 return false;
             }
         }
@@ -78,7 +78,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "SQLServer-GetTables");
                 return tablesNames;
             }
         }
@@ -101,7 +101,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "SQLServer-GetViews");
                 return viewsNames;
             }
         }
@@ -142,7 +142,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "SQLServer-Select");
                 return false;
             }
         }
@@ -161,7 +161,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "SQLServer-TrySelect");
                 return null;
             }
         }
@@ -206,7 +206,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "SQLServer-Insert");
                 return false;
             }
         }
@@ -232,7 +232,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "SQLServer-SetDatatableSchema-"+tableName);
                 return false;
             }
         }
@@ -269,7 +269,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "SQLServer-SelectRowCount-"+tableOrQueryName);
                 return 0;
             }
         }

@@ -127,7 +127,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "ConvertDataColumnsToList");
                 return new List<string>();
             }
         }
@@ -156,7 +156,7 @@ namespace ETL.Utility
             Global.progressForm.UpdateForm(ProgressForm.DONE, "");
         }
 
-        public static void Log(string message)
+        public static void Log(string message, string source)
         {
             string folderPath = PATH_LOG_FOLDER;
             string filePath = PATH_LOG_FILE;
@@ -203,7 +203,7 @@ namespace ETL.Utility
                     using (StreamWriter file = new StreamWriter(filePath, true))
                     {
                         string date = DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss");
-                        string toWrite = date + " : " + message;
+                        string toWrite = date + " : [" + source + "] " + message;
                         file.WriteLine(toWrite);
                     }
                 }

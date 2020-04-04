@@ -38,7 +38,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "MySQL-Connect");
                 return false;
             }
         }
@@ -53,7 +53,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "MySQL-Close");
                 return false;
             }
         }
@@ -76,7 +76,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "MySQL-GetTables");
                 return tablesNames;
             }
         }
@@ -113,7 +113,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "MySQL-SelectData");
                 return false;
             }
         }
@@ -132,7 +132,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "MySQL-TrySelectData");
                 return null;
             }
         }
@@ -169,7 +169,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "MySQL-Insert");
                 return false;
             }
         }
@@ -217,7 +217,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "MySQL-SelectRowCount" + tableOrQueryName);
                 return 0;
             }
         }

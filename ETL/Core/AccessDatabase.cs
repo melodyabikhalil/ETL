@@ -44,7 +44,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Access-Connect");
                 return false;
             }
         }
@@ -58,7 +58,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Access-Close");
                 return false;
             }
         }
@@ -81,7 +81,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Access-GetTables");
                 return tablesNames;
             }
         }
@@ -117,7 +117,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Access-SelectData");
                 return false;
             }
         }
@@ -137,7 +137,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Access-TrySelectData");
                 return null;
             }
         }
@@ -174,7 +174,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Access-Insert");
                 return false;
             }
         }
@@ -195,7 +195,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Access-SetTableSchema-" + tableName);
                 return false;
             }
         }
@@ -232,7 +232,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "Access-SelectRowCount-" + tableOrQueryName);
                 return 0;
             }
         }

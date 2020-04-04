@@ -160,7 +160,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                Helper.Log(e.Message);
+                Helper.Log(e.Message, "CreateDestinationTable");
                 return false;
             }
         }
