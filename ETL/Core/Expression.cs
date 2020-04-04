@@ -80,6 +80,7 @@ namespace ETL.Core
         {
             try
             {
+                dest.Clear();
                 Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, source.Rows.Count.ToString());
                 int rowIndex = 0;
                 foreach (DataRow row in source.Rows)

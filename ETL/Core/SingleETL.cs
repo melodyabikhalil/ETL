@@ -40,6 +40,7 @@ namespace ETL.Core
             sourceDb.Close();
             sourceDb.Connect();
             int count = sourceDb.SelectRowCount(sourceTableOrQuery.GetName(), sourceTableOrQuery.type);
+            Global.ProgressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, "0");
             Global.ProgressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, count.ToString());
             bool selectDataSuccess = sourceDb.Select(sourceTableOrQuery.GetName(), sourceTableOrQuery.type);
             sourceDb.Close();
@@ -49,6 +50,7 @@ namespace ETL.Core
         public bool CreateDestinationDataTable()
         {
             Global.progressForm.UpdateForm(ProgressForm.LABEL_ACTION, "Creating destination table...");
+            Global.ProgressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, "0");
 
             Database sourceDb = this.srcDb;
             TableOrQuery sourceTableOrQuery = this.sourceTable;
