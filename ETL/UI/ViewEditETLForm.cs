@@ -187,7 +187,7 @@ namespace ETL.UI
                     AutoCompleteStringCollection DataCollection = new AutoCompleteStringCollection();
                     foreach (string col in this.etl.sourceTable.GetColumnsNames())
                     {
-                        DataCollection.Add(col);
+                        DataCollection.Add("[" + col + "]");
                     }
                     autoText.AutoCompleteCustomSource = DataCollection;
                 }
