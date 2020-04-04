@@ -181,8 +181,8 @@ namespace ETL.Core
                 dataAdapter.InsertCommand = new NpgsqlCommand(insertQuery, connection);
                 PostgreSQLHelper.SetParametersForInsertQuery(columnsWithTypes, dataAdapter);
 
-                dataTable.RowChanged += new DataRowChangeEventHandler(Row_Changed);
                 dataAdapter.Update(dataTable);
+                dataTable.RowChanged += new DataRowChangeEventHandler(Row_Changed);
                 dataTable.AcceptChanges();
                 return true;
             }

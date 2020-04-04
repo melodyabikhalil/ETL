@@ -158,8 +158,8 @@ namespace ETL.Core
             try
             {
                 ODBCHelper.SetParametersForInsertQuery(columnsWithTypes, da);
-                dataTable.RowChanged += new DataRowChangeEventHandler(Row_Changed);
                 da.Update(dataTable);
+                dataTable.RowChanged += new DataRowChangeEventHandler(Row_Changed);
                 dataTable.AcceptChanges();
                 return true;
             }

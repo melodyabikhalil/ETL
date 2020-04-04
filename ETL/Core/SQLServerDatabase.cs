@@ -198,8 +198,8 @@ namespace ETL.Core
                 SQLServerHelper.SetParametersForInsertQuery(columnsWithTypes, command, table);
                 dataAdapter.InsertCommand = command;
 
-                dataTable.RowChanged += new DataRowChangeEventHandler(Row_Changed);
                 dataAdapter.Update(dataTable);
+                dataTable.RowChanged += new DataRowChangeEventHandler(Row_Changed);
                 dataTable.AcceptChanges();
                 return true;
             }
