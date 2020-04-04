@@ -73,7 +73,6 @@ namespace ETL.Core
             }
             sb.Length--;
             sb.Append(")");
-            Console.WriteLine(sb.ToString());
             return sb.ToString();
 
         }

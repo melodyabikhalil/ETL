@@ -35,6 +35,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return false;
             }
         }
@@ -49,6 +50,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return false;
             }
         }
@@ -70,6 +72,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return tablesNames;
             }
         }
@@ -107,6 +110,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return false;
             }
         }
@@ -125,6 +129,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return null;
             }
         }
@@ -161,6 +166,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return false;
             }
         }
@@ -186,6 +192,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return false;
             }
         }
@@ -222,6 +229,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return 0;
             }
         }

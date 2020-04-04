@@ -62,12 +62,6 @@ namespace ETL.Core
             }
         }
 
-        public void LogError(SingleETL etl)
-        {
-            this.errorEtls.Add(etl);
-            Console.WriteLine("Error in etl named: " + etl.name + " has failed");
-        }
-
         public override bool Equals(Object obj)
         {
             return (obj is JobETL)

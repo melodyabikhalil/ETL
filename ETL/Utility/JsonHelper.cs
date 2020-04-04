@@ -58,6 +58,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
             }
             return text;
         }
@@ -99,6 +100,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return new List<Database>();
             }
         }
@@ -115,6 +117,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return new List<SingleETL>();
             }
         }
@@ -137,6 +140,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return new DataTable();
             }
         }
@@ -229,6 +233,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return new List<JobETL>();
             }
         }

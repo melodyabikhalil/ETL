@@ -62,7 +62,6 @@ namespace ETL.Core
             if (type == "Reg")
             {
                 string replacedText = Replace(expRow["Expression"].ToString(), row);
-                Console.WriteLine("replaced text "+replacedText);
                 value = Regexp(expRow["RegularExpression"].ToString(), row, replacedText);
             }
             if (type == "Map")
@@ -161,6 +160,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message);
                 return false;
             }
         }
