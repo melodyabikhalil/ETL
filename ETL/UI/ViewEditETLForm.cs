@@ -164,6 +164,8 @@ namespace ETL.UI
             {
                 job.ReplaceEtlInJob(oldEtl);
                 JsonHelper.SaveEtlJob(job, true);
+                Global.jobETLs.Remove(job);
+                Global.jobETLs.Add(job);
 
             }
             JsonHelper.SaveETL(oldEtl, true);

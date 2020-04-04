@@ -18,6 +18,7 @@ namespace ETL.Core
             base(serverName, username, password, databaseName, schema)
         {
             this.type = Database.DATABASE_TYPE_MYSQL;
+            this.schema = schema;
         }
 
         public override bool Connect()
@@ -176,14 +177,32 @@ namespace ETL.Core
 
         public override bool SetDatatableSchema(string tableName)
         {
-            string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
-            bool result = this.Select(tableName, TableOrQuery.TYPE_TABLE);
-            if (result)
+            Table table = GetTable(tableName);
+            string tableInQuery = tableName;
+            if (this.schema != "" && this.schema != null)
             {
-                this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();
+                tableInQuery = this.schema + ".\"" + tableName + "\"";
             }
-            return result;
+            string query = "SELECT * FROM " + tableInQuery + " WHERE 1=0;";
+            MySqlCommand command = new MySqlCommand(query, this.connection);
+            try
+            {
+                command.Prepare();
+                MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command);
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet);
+                table.dataTable = dataSet.Tables[0];
+                this.GetTable(tableName).columns = table.dataTable.Columns.Cast<DataColumn>().ToList();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "MySQL-SetDatatableSchema-" + tableName);
+                return false;
+            }
         }
+
 
         public override int SelectRowCount(string tableOrQueryName, string type)
         {
