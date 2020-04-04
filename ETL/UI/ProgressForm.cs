@@ -34,6 +34,7 @@ namespace ETL.UI
             UpdateProgressLabel();
             IsDead = false;
             CenterToScreen();
+            this.ControlBox = false;
         }
 
         public void SetEtlLabel(string etlName)
