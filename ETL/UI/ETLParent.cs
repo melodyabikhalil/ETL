@@ -22,8 +22,8 @@ namespace ETL.UI
         string databaseToClose = "";
         JoinQuery joinQuery;
 
-        private BackgroundWorker backgroundWorker;
         private ProgressForm progressForm;
+        private JobETL job;
 
         public ETLParent()
         {
@@ -33,41 +33,7 @@ namespace ETL.UI
             this.mainSplitContainer.Visible = false;
             this.AddMenuItems();
             JsonHelper.CreateJsonFolder();
-           this.LoadSavedDataFromJsonFiles();
-
-            InitializeBackgroundWorker();
-        }
-
-        // Set up the BackgroundWorker object by 
-        // attaching event handlers. 
-        private void InitializeBackgroundWorker()
-        {
-            backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
-            backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
-        }
-
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-            JobETL job = (JobETL)e.Argument;
-            Global.progressForm = this.progressForm;
-            job.Run();
-        }
-
-        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error != null)
-            {
-                MessageBox.Show(e.Error.Message);
-            }
-            else if (e.Cancelled)
-            {
-                MessageBox.Show("ETL was cancelled");
-            }
-            else
-            {
-                progressForm.SetActionLabel("Done.");
-            }
+            this.LoadSavedDataFromJsonFiles();
         }
 
         private void AddMenuItems()
@@ -285,15 +251,23 @@ namespace ETL.UI
         {
             string jobName = sender.ToString();
             JobETL job = Global.GetJobByName(jobName);
+            this.job = job;
             if (job != null)
             {
                 var pressed = MessageBox.Show("Are you sure you want to run this job?", "Run job", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (pressed == DialogResult.Yes)
                 {
-                    progressForm = new ProgressForm();
-                    backgroundWorker.RunWorkerAsync(job);
+                    progressForm = Global.ProgressForm;
+                    progressForm.Show();
+                    Task task = new Task(RunJob);
+                    task.Start();
                 }
             }
+        }
+
+        public void RunJob()
+        {
+            this.job.Run();
         }
 
         void ViewEtlMenuItem_Click(object sender, EventArgs e)

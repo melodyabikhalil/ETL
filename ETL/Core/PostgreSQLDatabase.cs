@@ -1,4 +1,6 @@
-﻿using Npgsql;
+﻿using ETL.UI;
+using ETL.Utility;
+using Npgsql;
 using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
@@ -111,11 +113,9 @@ namespace ETL.Core
                 command.Prepare();
                 NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(command);
 
-                DataSet dataSet = new DataSet();
-
-                dataAdapter.Fill(dataSet);
                 tableOrQuery.dataTable.Clear();
-                tableOrQuery.dataTable = dataSet.Tables[0];
+                tableOrQuery.dataTable.RowChanged += new DataRowChangeEventHandler(Row_Added);
+                dataAdapter.Fill(tableOrQuery.dataTable);
                 return true;
             }
             catch (Exception e)
@@ -176,6 +176,7 @@ namespace ETL.Core
                 dataAdapter.InsertCommand = new NpgsqlCommand(insertQuery, connection);
                 PostgreSQLHelper.SetParametersForInsertQuery(columnsWithTypes, dataAdapter);
 
+                dataTable.RowChanged += new DataRowChangeEventHandler(Row_Changed);
                 dataAdapter.Update(dataTable);
                 dataTable.AcceptChanges();
                 return true;
@@ -215,6 +216,64 @@ namespace ETL.Core
                 Console.WriteLine(e.Message);
                 return false;
             }
+        }
+
+        public override int SelectRowCount(string tableOrQueryName, string type)
+        {
+            TableOrQuery tableOrQuery;
+            if (type == TableOrQuery.TYPE_TABLE)
+            {
+                tableOrQuery = this.tables[this.GetTableIndexByName(tableOrQueryName)];
+            }
+            else
+            {
+                tableOrQuery = this.queries[this.GetQueryIndexByName(tableOrQueryName)];
+            }
+
+            if (tableOrQuery == null)
+            {
+                return 0;
+            }
+            string query = tableOrQuery.query;
+            int startIndex = query.IndexOf("SELECT") + 7;
+            int endIndex = query.IndexOf("FROM") -1;
+
+            query = query.Remove(startIndex, endIndex - startIndex);
+            query = query.Insert(startIndex, "count(1)");
+
+            if (type == TableOrQuery.TYPE_TABLE && this.schema != "" && this.schema != null)
+            {
+                query = "SELECT count(1) FROM " + this.schema + ".\"" + tableOrQueryName + "\";";
+            }
+            NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
+
+            try
+            {
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+        }
+        protected void Row_Changed(object sender, DataRowChangeEventArgs e)
+        {
+            if (e.Action != DataRowAction.Commit)
+            {
+                Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, e.Row.Table.Rows.Count.ToString());
+                int RowIndex = e.Row.Table.Rows.IndexOf(e.Row);
+                RowIndex++;
+                Global.ProgressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, RowIndex.ToString());
+            }
+        }
+
+        protected void Row_Added(object sender, DataRowChangeEventArgs e)
+        {
+            int RowIndex = e.Row.Table.Rows.IndexOf(e.Row);
+            RowIndex++;
+            Global.ProgressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, RowIndex.ToString());
         }
 
         public override bool Equals(Object obj)

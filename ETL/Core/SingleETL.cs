@@ -1,4 +1,5 @@
-﻿using ETL.Utility;
+﻿using ETL.UI;
+using ETL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -31,13 +32,15 @@ namespace ETL.Core
 
         public bool FetchSourceData()
         {
-            Global.progressForm.SetActionLabel("Fetching source data...");
+            Global.progressForm.UpdateForm(ProgressForm.LABEL_ACTION, "Fetching source data...");
 
             Database sourceDb = this.srcDb;
             TableOrQuery sourceTableOrQuery = this.sourceTable;
 
             sourceDb.Close();
             sourceDb.Connect();
+            int count = sourceDb.SelectRowCount(sourceTableOrQuery.GetName(), sourceTableOrQuery.type);
+            Global.ProgressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, count.ToString());
             bool selectDataSuccess = sourceDb.Select(sourceTableOrQuery.GetName(), sourceTableOrQuery.type);
             sourceDb.Close();
             return selectDataSuccess;
@@ -45,7 +48,7 @@ namespace ETL.Core
 
         public bool CreateDestinationDataTable()
         {
-            Global.progressForm.SetActionLabel("Creating destination table...");
+            Global.progressForm.UpdateForm(ProgressForm.LABEL_ACTION, "Creating destination table...");
 
             Database sourceDb = this.srcDb;
             TableOrQuery sourceTableOrQuery = this.sourceTable;
@@ -63,11 +66,12 @@ namespace ETL.Core
 
         public bool InsertDataToDestination()
         {
-            Global.progressForm.SetActionLabel("Inserting data into destination table...");
-
+            Global.progressForm.UpdateForm(ProgressForm.LABEL_ACTION, "Inserting data into destination table...");
             Database destinationDb = this.destDb;
             Table destinationTable = this.destTable;
 
+            Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, "0");
+            Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, destinationTable.dataTable.Rows.Count.ToString());
             destinationDb.Close();
             destinationDb.Connect();
             bool insertInDestinationSuccess = destinationDb.Insert(destinationTable.GetName());

@@ -1,4 +1,5 @@
 ﻿using ETL.Core;
+using ETL.UI;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -139,6 +140,16 @@ namespace ETL.Utility
                 columnsNames.Add(column.ColumnName);
             }
             return columnsNames;
+        }
+
+        public static void ShowDatabaseErrorInProgressForm()
+        {
+            Global.progressForm.UpdateForm(ProgressForm.ERROR, "");
+        }
+
+        public static void ShowJobDone()
+        {
+            Global.progressForm.UpdateForm(ProgressForm.DONE, "");
         }
     }
 }

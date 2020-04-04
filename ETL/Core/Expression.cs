@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ETL.UI;
+using ETL.Utility;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -79,8 +81,13 @@ namespace ETL.Core
         {
             try
             {
+                Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, source.Rows.Count.ToString());
+                int rowIndex = 0;
                 foreach (DataRow row in source.Rows)
                 {
+                    ++rowIndex;
+                    Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, rowIndex.ToString());
+
                     DataRow newRow = dest.NewRow();
                     foreach (DataColumn col in dest.Columns)
                     {

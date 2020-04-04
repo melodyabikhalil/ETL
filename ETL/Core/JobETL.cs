@@ -24,7 +24,7 @@ namespace ETL.Core
         {
             foreach (SingleETL etl in etls)
             {
-                Global.progressForm.SetEtlLabel(etl.name);
+                Global.progressForm.UpdateForm(ProgressForm.LABEL_ETL, etl.name);
                 bool selectDataSuccess = etl.FetchSourceData();
                 if (selectDataSuccess)
                 {
@@ -32,9 +32,22 @@ namespace ETL.Core
                     if (createDestinationDatatableSucess)
                     {
                         bool insertInDestinationSuccess = etl.InsertDataToDestination();
+                        if (!insertInDestinationSuccess)
+                        {
+                            Helper.ShowDatabaseErrorInProgressForm();
+                        }
+                    } 
+                    else
+                    {
+                        Helper.ShowDatabaseErrorInProgressForm();
                     }
                 }
+                else
+                {
+                    Helper.ShowDatabaseErrorInProgressForm();
+                }
             }
+            Helper.ShowJobDone();
         }
 
         public void ReplaceEtlInJob(SingleETL etl)

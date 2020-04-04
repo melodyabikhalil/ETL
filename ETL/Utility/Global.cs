@@ -37,7 +37,14 @@ namespace ETL.Utility
 
         public static ProgressForm ProgressForm
         {
-            get { return progressForm; }
+            get
+            {
+                if (progressForm.IsDead)
+                {
+                    progressForm = new ProgressForm();
+                }
+                return progressForm;
+            }
             set { progressForm = value; }
         }
 
