@@ -68,8 +68,9 @@ namespace ETL.Core
             sb.Append("(");
             foreach (string field in fieldsList)
             {
+                sb.Append("[");
                 sb.Append(field);
-                sb.Append(",");
+                sb.Append("],");
             }
             sb.Length--;
             sb.Append(")");
@@ -84,8 +85,8 @@ namespace ETL.Core
             sb.Append("(");
             foreach (string field in fieldsList)
             {
-
-                sb.Append("?");
+                sb.Append("@");
+                sb.Append(field);
                 sb.Append(",");
             }
             sb.Length--;
