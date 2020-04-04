@@ -255,14 +255,14 @@ namespace ETL.Core
             }
 
             string query = tableOrQuery.query;
-            int startIndex = query.IndexOf("SELECT") + 7;
-            int endIndex = query.IndexOf(" FROM");
-
-            query = query.Remove(startIndex, endIndex - startIndex);
-            query = query.Insert(startIndex, "count(1)");
-            SqlCommand command = new SqlCommand(query, this.connection);
             try
             {
+                int startIndex = query.IndexOf("SELECT") + 7;
+                int endIndex = query.IndexOf("FROM") - 1;
+
+                query = query.Remove(startIndex, endIndex - startIndex);
+                query = query.Insert(startIndex, "count(1)");
+                SqlCommand command = new SqlCommand(query, this.connection);
                 int count = Convert.ToInt32(command.ExecuteScalar());
                 return count;
             }

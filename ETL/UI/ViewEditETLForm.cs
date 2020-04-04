@@ -29,9 +29,15 @@ namespace ETL.UI
             string srcColumnsList = "";
             foreach (string col in singleETL.srcDb.GetTableOrQueryByName(singleETL.sourceTable.GetName()).GetColumnsNames())
             {
-                srcColumnsList += col +", ";
+                if (srcColumnsList == "")
+                {
+                    srcColumnsList += col;
+                }
+                else
+                {
+                    srcColumnsList += ", " + col;
+                }
             }
-            srcColumnsList = srcColumnsList.Remove(srcColumnsList.Length - 2);
             this.srcColumnLabel.Text = this.srcColumnLabel.Text + " " + srcColumnsList;
             SetExpressionDataGridView();
             CenterToParent();

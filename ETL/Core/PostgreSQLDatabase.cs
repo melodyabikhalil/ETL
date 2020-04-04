@@ -242,20 +242,19 @@ namespace ETL.Core
                 return 0;
             }
             string query = tableOrQuery.query;
-            int startIndex = query.IndexOf("SELECT") + 7;
-            int endIndex = query.IndexOf("FROM") -1;
-
-            query = query.Remove(startIndex, endIndex - startIndex);
-            query = query.Insert(startIndex, "count(1)");
-
-            if (type == TableOrQuery.TYPE_TABLE && this.schema != "" && this.schema != null)
-            {
-                query = "SELECT count(1) FROM " + this.schema + ".\"" + tableOrQueryName + "\";";
-            }
-            NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
-
             try
             {
+                int startIndex = query.IndexOf("SELECT") + 7;
+                int endIndex = query.IndexOf("FROM") - 1;
+
+                query = query.Remove(startIndex, endIndex - startIndex);
+                query = query.Insert(startIndex, "count(1)");
+
+                if (type == TableOrQuery.TYPE_TABLE && this.schema != "" && this.schema != null)
+                {
+                    query = "SELECT count(1) FROM " + this.schema + ".\"" + tableOrQueryName + "\";";
+                }
+                NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
                 int count = Convert.ToInt32(command.ExecuteScalar());
                 return count;
             }
