@@ -204,14 +204,14 @@ namespace ETL.Utility
             if (!etl.isDspaceDestination)
             {
                 etl.destTable = MapFromJsonTableToTable(jsonEtl.destTable);
+                etl.destDb.Close();
+                etl.destDb.Connect();
+                etl.destDb.SetDatatableSchema(etl.destTable.GetName());
+                etl.destDb.Close();
             }
             etl.sourceTable = MapFromJsonTableOrQueryToTableOrQuery(jsonEtl.sourceTable);
             etl.expressionDt = jsonEtl.expressionDt;
 
-            etl.destDb.Close();
-            etl.destDb.Connect();
-            etl.destDb.SetDatatableSchema(etl.destTable.GetName());
-            etl.destDb.Close();
             List<string> sourceDatabaseTablesNames = etl.srcDb.tablesNames;
             if (sourceDatabaseTablesNames.Contains(etl.sourceTable.GetName()))
             {
