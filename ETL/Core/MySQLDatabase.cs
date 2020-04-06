@@ -27,7 +27,8 @@ namespace ETL.Core
                 "server={0};" +
                 "userid={1};" +
                 "password={2};" +
-                "database={3};",
+                "database={3};" +
+                "convert zero datetime=True",
                 this.serverName, this.username, this.password, this.databaseName);
             try
             {
