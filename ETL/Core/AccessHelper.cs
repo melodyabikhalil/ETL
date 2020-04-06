@@ -12,7 +12,6 @@ namespace ETL.Core
     {
         public static OleDbType MapCsharpTypeToAccessType(Type dataType)
         {
-            //by default hatayta bigint
             OleDbType olelDbType = OleDbType.BigInt;
 
             if (dataType == Type.GetType("System.Int32"))
@@ -46,6 +45,14 @@ namespace ETL.Core
             else if (dataType == Type.GetType("System.DateTime"))
             {
                 olelDbType = OleDbType.DBTimeStamp;
+            }
+            else if (dataType == Type.GetType("System.Decimal"))
+            {
+                olelDbType = OleDbType.Decimal;
+            }
+            else if (dataType == Type.GetType("System.Byte[]"))
+            {
+                olelDbType = OleDbType.VarBinary;
             }
             return olelDbType;
         }

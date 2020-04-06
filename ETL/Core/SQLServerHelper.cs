@@ -46,6 +46,14 @@ namespace ETL.Core
             {
                 sqlDbType = SqlDbType.DateTime;
             }
+            else if (dataType == Type.GetType("System.Decimal"))
+            {
+                sqlDbType = SqlDbType.Decimal;
+            }
+            else if (dataType == Type.GetType("System.Byte[]"))
+            {
+                sqlDbType = SqlDbType.VarBinary;
+            }
             return sqlDbType;
         }
 

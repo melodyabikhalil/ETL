@@ -13,7 +13,6 @@ namespace ETL.Core
     {
         public static NpgsqlDbType MapCsharpTypeToNpsglType(Type dataType)
         {
-            //by default hatayta bigint
             NpgsqlDbType npgsqlDbType = NpgsqlDbType.Bigint;
 
             if (dataType == Type.GetType("System.Int32"))
@@ -46,7 +45,15 @@ namespace ETL.Core
             }
             else if (dataType == Type.GetType("System.DateTime"))
             {
-                npgsqlDbType = NpgsqlDbType.Timestamp;
+                npgsqlDbType = NpgsqlDbType.Date;
+            }
+            else if (dataType == Type.GetType("System.Decimal"))
+            {
+                npgsqlDbType = NpgsqlDbType.Double;
+            }
+            else if (dataType == Type.GetType("System.Byte[]"))
+            {
+                npgsqlDbType = NpgsqlDbType.Bytea;
             }
             return npgsqlDbType;
         }

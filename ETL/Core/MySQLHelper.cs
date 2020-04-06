@@ -12,7 +12,6 @@ namespace ETL.Core
     {
         public static MySqlDbType MapCsharpTypeToMySQLType(Type dataType)
         {
-            //by default hatayta bigint
             MySqlDbType mysqlDbType = MySqlDbType.Int32;
 
             if (dataType == Type.GetType("System.Int32"))
@@ -46,6 +45,14 @@ namespace ETL.Core
             else if (dataType == Type.GetType("System.DateTime"))
             {
                 mysqlDbType = MySqlDbType.Timestamp;
+            }
+            else if (dataType == Type.GetType("System.Decimal"))
+            {
+                mysqlDbType = MySqlDbType.Decimal;
+            }
+            else if (dataType == Type.GetType("System.Byte[]"))
+            {
+                mysqlDbType = MySqlDbType.VarBinary;
             }
             return mysqlDbType;
         }
