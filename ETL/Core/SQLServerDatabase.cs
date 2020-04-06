@@ -184,6 +184,11 @@ namespace ETL.Core
             Dictionary<string, SqlDbType> columnsWithTypes = SQLServerHelper.GetsColumnsWithTypes(dataTable.Columns);
             string values = SQLServerHelper.GetValuesStringForInsertQuery(dataTable.Columns);
 
+            if (columnsWithTypes.ContainsValue(SqlDbType.DateTime))
+            {
+                table.dataTable = this.ReplaceNullDatetime(table.dataTable);
+            }
+
             string tableNameInQuery = tableName;
             if (this.schema != "")
             {
@@ -272,6 +277,21 @@ namespace ETL.Core
                 Helper.Log(e.Message, "SQLServer-SelectRowCount-"+tableOrQueryName);
                 return 0;
             }
+        }
+
+        private DataTable ReplaceNullDatetime(DataTable dataTable)
+        {
+            foreach (DataRow row in dataTable.Rows)
+            {
+                foreach (DataColumn column in dataTable.Columns)
+                {
+                    if (column.DataType == Type.GetType("System.DateTime") && row[column].ToString() == "1/1/0001 12:00:00 AM")
+                    {
+                        row[column] = DBNull.Value;
+                    }
+                }
+            }
+            return dataTable;
         }
 
         protected void Row_Changed(object sender, DataRowChangeEventArgs e)
