@@ -137,11 +137,12 @@ namespace ETL.UI
 
         private void BuildQueryDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 1 || e.ColumnIndex == 3)
+            int index = e.ColumnIndex;
+            if (index == 1 || index == 3)
             {
                 try
                 {
-                    int index = e.ColumnIndex;
+                    
                     DataGridViewRow row = this.buildQueryDataGridView.Rows[e.RowIndex];
                     string tableName = row.Cells[index].Value.ToString();
                     Database database = joinQuery.database;
@@ -151,6 +152,7 @@ namespace ETL.UI
                         DataGridViewComboBoxCell column1Cell = (DataGridViewComboBoxCell)row.Cells[index + 1];
                         column1Cell.DataSource = columns;
                     }
+                    row.Cells[index + 1].Value = "";
                 }
                 catch (Exception ex)
                 {
