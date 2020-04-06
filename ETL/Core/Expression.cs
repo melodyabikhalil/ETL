@@ -146,6 +146,12 @@ namespace ETL.Core
                                 Char.TryParse(GetValue(expRow, row, mapDt), out value);
                                 newRow[col] = value;
                             }
+                            else if (col.DataType == System.Type.GetType("System.Byte[]"))
+                            {
+                                byte[] value;
+                                value = Encoding.Default.GetBytes(GetValue(expRow, row, mapDt)).ToArray();
+                                newRow[col] = value;
+                            }
                             else
                             {
                                 string value = GetValue(expRow, row, mapDt).ToString();
