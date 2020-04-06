@@ -80,7 +80,7 @@ namespace ETL.Core
 
         public bool InsertDataToDestination()
         {
-            Global.progressForm.UpdateForm(ProgressForm.LABEL_ACTION, "Inserting data into destination table...");
+            string progressActionLabel = "Creating DSpace folder...";
             Database destinationDb = this.destDb;
             Table destinationTable = new Table();
             string destinationTableName = "";
@@ -91,7 +91,8 @@ namespace ETL.Core
                 destinationTable.dataTable.TableName = destinationTable.GetName();
                 destinationTableName = destinationTable.GetName();
             }
-            
+
+            Global.progressForm.UpdateForm(ProgressForm.LABEL_ACTION, progressActionLabel);
             Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, "0");
             Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, destinationTable.dataTable.Rows.Count.ToString());
             destinationDb.Close();

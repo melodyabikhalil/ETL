@@ -8,13 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ETL.Core
 {
     class DSpaceHelper
     {
-        public static List<DSpaceMetadataField> dSpaceMetadataFields = new List<DSpaceMetadataField>();
-
         public static DataTable ConvertCSVtoDataTable(string strFilePath)
         {
             StreamReader sr = new StreamReader(strFilePath);
@@ -37,9 +36,10 @@ namespace ETL.Core
             return dt;
         }
 
-        public static void CreateMetadataFieldsList(DataTable dataTable)
+        public static List<DSpaceMetadataField> CreateMetadataFieldsList(DataTable dataTable)
         {
             DSpaceMetadataField dSpaceMetadataField;
+            List<DSpaceMetadataField> dSpaceMetadataFields = new List<DSpaceMetadataField>();
             foreach (DataRow row in dataTable.Rows)
             {
                 string element = row.Field<string>("element");
@@ -56,23 +56,18 @@ namespace ETL.Core
                 dSpaceMetadataField = new DSpaceMetadataField(element, qualifier);
                 dSpaceMetadataFields.Add(dSpaceMetadataField);
             }
+            return dSpaceMetadataFields;
         }
 
-        public static void SetMetadaFieldList()
+        public static List<DSpaceMetadataField> GetMetadataFields()
         {
-            string path = "../../DSpaceMetadatafield.csv";
+            string applicationLocation = System.Reflection.Assembly.GetEntryAssembly().Location;
+            string applicationDirectory = Path.GetDirectoryName(applicationLocation);
+
+            string path = @"" + applicationDirectory + "\\Utility\\dspace_metadata.csv";
             DataTable dt = ConvertCSVtoDataTable(path);
-            CreateMetadataFieldsList(dt);
-        }
-
-        public static List<string> GetMetadataFieldsNames()
-        {
-            List<string> fieldNames = new List<string>();
-            foreach (DSpaceMetadataField dSpaceMetadataField in dSpaceMetadataFields)
-            {
-                fieldNames.Add(dSpaceMetadataField.name);
-            }
-            return fieldNames;
+            List<DSpaceMetadataField> fields = CreateMetadataFieldsList(dt);
+            return fields;
         }
 
         public static void CreateXml(List<KeyValuePair<DSpaceMetadataField, string>> metadatasWithValues, string path)
@@ -118,7 +113,6 @@ namespace ETL.Core
                 List<KeyValuePair<DSpaceMetadataField, string>> metadataWithValues = new List<KeyValuePair<DSpaceMetadataField, string>>();
                 string itemRepository = "item" + itemNumber.ToString();
                 itemNumber++;
-                Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, itemNumber.ToString());
                 DSpaceMetadataField metadataField;
                 string itemCompletePath = repositoryPath + "\\" + itemRepository;
                 Directory.CreateDirectory(itemCompletePath);
@@ -146,6 +140,7 @@ namespace ETL.Core
                     }
                 }
                 CreateXml(metadataWithValues, itemCompletePath);
+                Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, itemNumber.ToString());
             }
         }
 

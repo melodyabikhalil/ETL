@@ -24,18 +24,11 @@ namespace ETL.Core
 
         public void SetColumns()
         {
-            DSpaceMetadataField metadataField = new DSpaceMetadataField("contributor", "author");
-            columns.Add(metadataField.name);
-            metadataField = new DSpaceMetadataField("title");
-            columns.Add(metadataField.name);
-            metadataField = new DSpaceMetadataField("publisher");
-            columns.Add(metadataField.name);
-            metadataField = new DSpaceMetadataField("date", "issued");
-            columns.Add(metadataField.name);
-            metadataField = new DSpaceMetadataField("identifier", "issn");
-            columns.Add(metadataField.name);
-            metadataField = new DSpaceMetadataField("identifier", "isbn");
-            columns.Add(metadataField.name);
+            List<DSpaceMetadataField> dSpaceMetadataFields = DSpaceHelper.GetMetadataFields();
+            foreach (DSpaceMetadataField dSpaceMetadataField in dSpaceMetadataFields)
+            {
+                columns.Add(dSpaceMetadataField.name);
+            }
             columns.Add("path");
 
             dspaceData = new DataTable();
