@@ -157,7 +157,6 @@ namespace ETL.Core
                                 string value = GetValue(expRow, row, mapDt).ToString();
                                 newRow[col] = value;
                             }
-
                         }
                     }
                     dest.Rows.Add(newRow);

@@ -44,7 +44,7 @@ namespace ETL.Core
             }
             else if (dataType == Type.GetType("System.DateTime"))
             {
-                sqlDbType = SqlDbType.Timestamp;
+                sqlDbType = SqlDbType.DateTime;
             }
             return sqlDbType;
         }
