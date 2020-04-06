@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ETL.Utility;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -82,6 +83,21 @@ namespace ETL.Core
         public override DataTable TrySelect(string query)
         {
             return new DataTable();
+        }
+
+        public override int SelectRowCount(string tableOrQueryName, string type)
+        {
+            try
+            {
+                int rows = this.dspaceData.Rows.Count;
+                return rows;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "DSpace-SelectRowCount");
+                return 0;
+            }
         }
     }
 }
