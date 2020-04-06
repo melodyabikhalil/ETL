@@ -49,7 +49,7 @@ namespace ETL.Core
             }
             else if (dataType == Type.GetType("System.Decimal"))
             {
-                npgsqlDbType = NpgsqlDbType.Double;
+                npgsqlDbType = NpgsqlDbType.Numeric;
             }
             else if (dataType == Type.GetType("System.Byte[]"))
             {
