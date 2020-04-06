@@ -12,7 +12,6 @@ namespace ETL.Core
     {
         public static OleDbType MapCsharpTypeToAccessType(Type dataType)
         {
-            //by default hatayta bigint
             OleDbType olelDbType = OleDbType.BigInt;
 
             if (dataType == Type.GetType("System.Int32"))
@@ -47,6 +46,14 @@ namespace ETL.Core
             {
                 olelDbType = OleDbType.DBTimeStamp;
             }
+            else if (dataType == Type.GetType("System.Decimal"))
+            {
+                olelDbType = OleDbType.Decimal;
+            }
+            else if (dataType == Type.GetType("System.Byte[]"))
+            {
+                olelDbType = OleDbType.VarBinary;
+            }
             return olelDbType;
         }
 
@@ -68,8 +75,9 @@ namespace ETL.Core
             sb.Append("(");
             foreach (string field in fieldsList)
             {
+                sb.Append("[");
                 sb.Append(field);
-                sb.Append(",");
+                sb.Append("],");
             }
             sb.Length--;
             sb.Append(")");
@@ -84,8 +92,8 @@ namespace ETL.Core
             sb.Append("(");
             foreach (string field in fieldsList)
             {
-
-                sb.Append("?");
+                sb.Append("@");
+                sb.Append(field);
                 sb.Append(",");
             }
             sb.Length--;

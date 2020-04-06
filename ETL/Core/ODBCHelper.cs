@@ -12,7 +12,6 @@ namespace ETL.Core
     {
         public static OdbcType MapCsharpTypeToODBCType(Type dataType)
         {
-            //by default hatayta bigint
             OdbcType OdbcDbType = OdbcType.BigInt;
 
             if (dataType == Type.GetType("System.Int32"))
@@ -45,7 +44,15 @@ namespace ETL.Core
             }
             else if (dataType == Type.GetType("System.DateTime"))
             {
-                OdbcDbType = OdbcType.Timestamp;
+                OdbcDbType = OdbcType.DateTime;
+            }
+            else if (dataType == Type.GetType("System.Decimal"))
+            {
+                OdbcDbType = OdbcType.Decimal;
+            }
+            else if (dataType == Type.GetType("System.Byte[]"))
+            {
+                OdbcDbType = OdbcType.VarBinary;
             }
             return OdbcDbType;
         }

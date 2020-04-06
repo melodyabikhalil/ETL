@@ -49,14 +49,20 @@ namespace ETL.UI
 
         public void SetProgressBarValue(int value)
         {
-            progressBar.Value = value;
-            UpdateProgressLabel();
+            if (value <= progressBar.Maximum)
+            {
+                progressBar.Value = value;
+                UpdateProgressLabel();
+            }
         }
 
         public void SetProgressBarMaximum(int max)
         {
-            progressBar.Maximum = max;
-            UpdateProgressLabel();
+            if (progressBar.Value <= max)
+            {
+                progressBar.Maximum = max;
+                UpdateProgressLabel();
+            }
         }
 
         public void UpdateProgressLabel()

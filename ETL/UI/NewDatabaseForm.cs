@@ -66,19 +66,22 @@ namespace ETL.UI
 
                 if (Global.DatabaseAlreadyConnected(database))
                 {
-                    this.ShowErrorDialogAndClose();
+                    MessageBox.Show("Already connected to this database", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                Global.Databases.Add(database);
-                AddNodesToTreeView(database);
-
-                bool rememberDatabase = rememberDatabaseCheckbox.Checked;
-                if (rememberDatabase)
+                else
                 {
-                    JsonHelper.SaveDatabase(database, true);
-                }
+                    Global.Databases.Add(database);
+                    AddNodesToTreeView(database);
 
-                ETLParent.ShowMainContainer();
-                this.Close();
+                    bool rememberDatabase = rememberDatabaseCheckbox.Checked;
+                    if (rememberDatabase)
+                    {
+                        JsonHelper.SaveDatabase(database, true);
+                    }
+
+                    ETLParent.ShowMainContainer();
+                    this.Close();
+                }
             }
             else
             {
@@ -135,15 +138,6 @@ namespace ETL.UI
             string connectionString = dbNameTextBox.Text;
             ODBCDatabase odbcDatabase = new ODBCDatabase(connectionString);
             return odbcDatabase;
-        }
-
-        private void ShowErrorDialogAndClose()
-        {
-            var okPressed = MessageBox.Show("Already connected to this database", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            if (okPressed == DialogResult.OK)
-            {
-                this.Close();
-            }
         }
 
         public static void AddNodesToTreeView(Database database)

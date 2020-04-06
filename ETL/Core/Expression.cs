@@ -80,6 +80,7 @@ namespace ETL.Core
         {
             try
             {
+                dest.Clear();
                 Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, source.Rows.Count.ToString());
                 int rowIndex = 0;
                 foreach (DataRow row in source.Rows)
@@ -98,51 +99,55 @@ namespace ETL.Core
                             {
                                 continue;
                             }
-                            if (col.DataType == System.Type.GetType("System.Int32"))
+                            if (col.DataType == Type.GetType("System.Int32"))
                             {
-                                int value;
-                                Int32.TryParse(GetValue(expRow, row, mapDt), out value);
+                                Int32.TryParse(GetValue(expRow, row, mapDt), out int value);
                                 newRow[col] = value;
                             }
-                            else if (col.DataType == System.Type.GetType("System.DateTime"))
+                            else if (col.DataType == Type.GetType("System.DateTime"))
                             {
-                                DateTime value;
-                                DateTime.TryParse(GetValue(expRow, row, mapDt), out value);
+                                DateTime.TryParse(GetValue(expRow, row, mapDt), out DateTime value);
                                 newRow[col] = value;
                             }
-                            else if (col.DataType == System.Type.GetType("System.String"))
+                            else if (col.DataType == Type.GetType("System.String"))
                             {
                                 string value = GetValue(expRow, row, mapDt).ToString() ;
                                 newRow[col] = value;
                             }
-                            else if (col.DataType == System.Type.GetType("System.Int16"))
+                            else if (col.DataType == Type.GetType("System.Int16"))
                             {
-                                short value;
-                                Int16.TryParse(GetValue(expRow, row, mapDt), out value);
+                                Int16.TryParse(GetValue(expRow, row, mapDt), out short value);
                                 newRow[col] = value;
                             }
-                            else if (col.DataType == System.Type.GetType("System.Boolean"))
+                            else if (col.DataType == Type.GetType("System.Boolean"))
                             {
-                                bool value;
-                                Boolean.TryParse(GetValue(expRow, row, mapDt), out value);
+                                Boolean.TryParse(GetValue(expRow, row, mapDt), out bool value);
                                 newRow[col] = value;
                             }
-                            else if (col.DataType == System.Type.GetType("System.TimeSpan"))
+                            else if (col.DataType == Type.GetType("System.TimeSpan"))
                             {
-                                TimeSpan value;
-                                TimeSpan.TryParse(GetValue(expRow, row, mapDt), out value);
+                                TimeSpan.TryParse(GetValue(expRow, row, mapDt), out TimeSpan value);
                                 newRow[col] = value;
                             }
-                            else if (col.DataType == System.Type.GetType("System.Double"))
+                            else if (col.DataType == Type.GetType("System.Double"))
                             {
-                                double value;
-                                Double.TryParse(GetValue(expRow, row, mapDt), out value);
+                                Double.TryParse(GetValue(expRow, row, mapDt), out double value);
                                 newRow[col] = value;
                             }
-                            else if (col.DataType == System.Type.GetType("System.Char"))
+                            else if (col.DataType == Type.GetType("System.Decimal"))
                             {
-                                char value;
-                                Char.TryParse(GetValue(expRow, row, mapDt), out value);
+                                Decimal.TryParse(GetValue(expRow, row, mapDt), out decimal value);
+                                newRow[col] = value;
+                            }
+                            else if (col.DataType == Type.GetType("System.Char"))
+                            {
+                                Char.TryParse(GetValue(expRow, row, mapDt), out char value);
+                                newRow[col] = value;
+                            }
+                            else if (col.DataType == Type.GetType("System.Byte[]"))
+                            {
+                                byte[] value;
+                                value = Encoding.Default.GetBytes(GetValue(expRow, row, mapDt)).ToArray();
                                 newRow[col] = value;
                             }
                             else
@@ -150,7 +155,6 @@ namespace ETL.Core
                                 string value = GetValue(expRow, row, mapDt).ToString();
                                 newRow[col] = value;
                             }
-
                         }
                     }
                     dest.Rows.Add(newRow);

@@ -172,7 +172,7 @@ namespace ETL.UI
 
         private void DatabasesTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Node.Parent.Text == "Queries")
+            if (e.Node.Level > 0 && e.Node.Parent.Text == "Queries")
             {
                 string databaseName = e.Node.Parent.Parent.Text;
                 Database database = Global.GetDatabaseByName(databaseName);
