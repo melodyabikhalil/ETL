@@ -22,18 +22,26 @@ namespace ETL.UI
         string databaseToClose = "";
         JoinQuery joinQuery;
 
+        private ProgressForm progressForm;
+        private JobETL job;
+
         public ETLParent()
         {
             InitializeComponent();
             CenterToScreen();
             _instance = this;
             this.mainSplitContainer.Visible = false;
+            this.AddMenuItems();
+            JsonHelper.CreateJsonFolder();
+            this.LoadSavedDataFromJsonFiles();
+        }
+
+        private void AddMenuItems()
+        {
             newQueryMenu.MenuItems.Add(newQueryMenuItem);
             newQueryMenuItem.Click += new EventHandler(newQueryMenuItem_Click);
             closeDatabaseMenu.MenuItems.Add(closeDatabaseMenuItem);
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
-            JsonHelper.CreateJsonFolder();
-           this.LoadSavedDataFromJsonFiles();
         }
 
         private void LoadSavedDataFromJsonFiles()
@@ -164,7 +172,7 @@ namespace ETL.UI
 
         private void DatabasesTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Node.Parent.Text == "Queries")
+            if (e.Node.Level > 0 && e.Node.Parent.Text == "Queries")
             {
                 string databaseName = e.Node.Parent.Parent.Text;
                 Database database = Global.GetDatabaseByName(databaseName);
@@ -243,15 +251,23 @@ namespace ETL.UI
         {
             string jobName = sender.ToString();
             JobETL job = Global.GetJobByName(jobName);
+            this.job = job;
             if (job != null)
             {
                 var pressed = MessageBox.Show("Are you sure you want to run this job?", "Run job", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (pressed == DialogResult.Yes)
                 {
-                    job.Run();
-                    // TODO : log result + show progress in window
+                    progressForm = Global.ProgressForm;
+                    progressForm.Show();
+                    Task task = new Task(RunJob);
+                    task.Start();
                 }
             }
+        }
+
+        public void RunJob()
+        {
+            this.job.Run();
         }
 
         void ViewEtlMenuItem_Click(object sender, EventArgs e)

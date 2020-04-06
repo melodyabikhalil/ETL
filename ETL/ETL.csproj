@@ -194,6 +194,12 @@
     <Compile Include="UI\NewETLForm.Designer.cs">
       <DependentUpon>NewETLForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\UIHelper.cs" />
     <Compile Include="UI\ViewEditETLForm.cs">
       <SubType>Form</SubType>
@@ -240,6 +246,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\NewETLForm.resx">
       <DependentUpon>NewETLForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ProgressForm.resx">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ViewEditETLForm.resx">
       <DependentUpon>ViewEditETLForm.cs</DependentUpon>

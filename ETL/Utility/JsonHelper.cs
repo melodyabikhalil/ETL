@@ -58,6 +58,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "ReadFile-"+path);
             }
             return text;
         }
@@ -99,6 +100,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "JSON-GetDatabases");
                 return new List<Database>();
             }
         }
@@ -115,6 +117,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "JSON-GetETLs");
                 return new List<SingleETL>();
             }
         }
@@ -137,6 +140,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "JSON-GetMapTable");
                 return new DataTable();
             }
         }
@@ -155,6 +159,7 @@ namespace ETL.Utility
             File.WriteAllText(PATH_ETLS, json);
 
         }
+
         public static void SaveETL(SingleETL etl, bool addIfNotExists)
         {
             List<SingleETL> savedEtls = GetETLsFromJsonFile();
@@ -229,6 +234,7 @@ namespace ETL.Utility
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "JSON-GetETLJobs");
                 return new List<JobETL>();
             }
         }

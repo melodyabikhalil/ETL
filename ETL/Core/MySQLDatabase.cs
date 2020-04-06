@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using ETL.UI;
+using ETL.Utility;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,6 +18,7 @@ namespace ETL.Core
             base(serverName, username, password, databaseName, schema)
         {
             this.type = Database.DATABASE_TYPE_MYSQL;
+            this.schema = schema;
         }
 
         public override bool Connect()
@@ -24,7 +27,8 @@ namespace ETL.Core
                 "server={0};" +
                 "userid={1};" +
                 "password={2};" +
-                "database={3};",
+                "database={3};" +
+                "convert zero datetime=True",
                 this.serverName, this.username, this.password, this.databaseName);
             try
             {
@@ -36,6 +40,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "MySQL-Connect");
                 return false;
             }
         }
@@ -50,6 +55,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "MySQL-Close");
                 return false;
             }
         }
@@ -72,6 +78,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "MySQL-GetTables");
                 return tablesNames;
             }
         }
@@ -101,12 +108,14 @@ namespace ETL.Core
             try
             {
                 tableOrQuery.dataTable.Clear();
+                tableOrQuery.dataTable.RowChanged += new DataRowChangeEventHandler(Row_Added);
                 da.Fill(tableOrQuery.dataTable);
                 return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "MySQL-SelectData");
                 return false;
             }
         }
@@ -125,6 +134,7 @@ namespace ETL.Core
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "MySQL-TrySelectData");
                 return null;
             }
         }
@@ -154,26 +164,98 @@ namespace ETL.Core
             {
                 MySQLHelper.SetParametersForInsertQuery(columnsWithTypes, da);
                 da.Update(dataTable);
+                dataTable.RowChanged += new DataRowChangeEventHandler(Row_Changed);
                 dataTable.AcceptChanges();
                 return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "MySQL-Insert");
                 return false;
             }
         }
 
         public override bool SetDatatableSchema(string tableName)
         {
-            string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
-            bool result = this.Select(tableName, TableOrQuery.TYPE_TABLE);
-            if (result)
+            Table table = GetTable(tableName);
+            string tableInQuery = tableName;
+            if (this.schema != "" && this.schema != null)
             {
-                this.GetTable(tableName).columns = this.GetTable(tableName).dataTable.Columns.Cast<DataColumn>().ToList();
+                tableInQuery = this.schema + ".\"" + tableName + "\"";
             }
-            return result;
+            string query = "SELECT * FROM " + tableInQuery + " WHERE 1=0;";
+            MySqlCommand command = new MySqlCommand(query, this.connection);
+            try
+            {
+                command.Prepare();
+                MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command);
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet);
+                table.dataTable = dataSet.Tables[0];
+                this.GetTable(tableName).columns = table.dataTable.Columns.Cast<DataColumn>().ToList();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "MySQL-SetDatatableSchema-" + tableName);
+                return false;
+            }
         }
+
+
+        public override int SelectRowCount(string tableOrQueryName, string type)
+        {
+            TableOrQuery tableOrQuery;
+            if (type == TableOrQuery.TYPE_TABLE)
+            {
+                tableOrQuery = this.tables[this.GetTableIndexByName(tableOrQueryName)];
+            }
+            else
+            {
+                tableOrQuery = this.queries[this.GetQueryIndexByName(tableOrQueryName)];
+            }
+
+            if (tableOrQuery == null)
+            {
+                return 0;
+            }
+
+            string query = tableOrQuery.query;
+            try
+            {
+                int startIndex = query.IndexOf("SELECT") + 7;
+                int endIndex = query.IndexOf("FROM") - 1;
+
+                query = query.Remove(startIndex, endIndex - startIndex);
+                query = query.Insert(startIndex, "count(1)");
+                MySqlCommand command = new MySqlCommand(query, this.connection);
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "MySQL-SelectRowCount" + tableOrQueryName);
+                return 0;
+            }
+        }
+        protected void Row_Changed(object sender, DataRowChangeEventArgs e)
+        {
+            Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, e.Row.Table.Rows.Count.ToString());
+            int RowIndex = e.Row.Table.Rows.IndexOf(e.Row);
+            RowIndex++;
+            Global.ProgressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, RowIndex.ToString());
+        }
+
+        protected void Row_Added(object sender, DataRowChangeEventArgs e)
+        {
+            int RowIndex = e.Row.Table.Rows.IndexOf(e.Row);
+            RowIndex++;
+            Global.ProgressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, RowIndex.ToString());
+        }
+
         public override bool Equals(Object obj)
         {
             return (obj is MySQLDatabase)

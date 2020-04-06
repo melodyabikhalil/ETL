@@ -37,9 +37,15 @@ namespace ETL.UI
             string srcColumnsList = "";
             foreach (string col in singleETL.srcDb.GetTableOrQueryByName(singleETL.sourceTable.GetName()).GetColumnsNames())
             {
-                srcColumnsList += col +", ";
+                if (srcColumnsList == "")
+                {
+                    srcColumnsList += col;
+                }
+                else
+                {
+                    srcColumnsList += ", " + col;
+                }
             }
-            srcColumnsList = srcColumnsList.Remove(srcColumnsList.Length - 2);
             this.srcColumnLabel.Text = this.srcColumnLabel.Text + " " + srcColumnsList;
             SetExpressionDataGridView();
             CenterToParent();
@@ -98,7 +104,8 @@ namespace ETL.UI
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "UI-ViewEditETL-SetExpressionTable");
             }
         }
 
@@ -181,6 +188,8 @@ namespace ETL.UI
             {
                 job.ReplaceEtlInJob(oldEtl);
                 JsonHelper.SaveEtlJob(job, true);
+                Global.jobETLs.Remove(job);
+                Global.jobETLs.Add(job);
 
             }
             JsonHelper.SaveETL(oldEtl, true);
@@ -202,7 +211,7 @@ namespace ETL.UI
                     AutoCompleteStringCollection DataCollection = new AutoCompleteStringCollection();
                     foreach (string col in this.etl.sourceTable.GetColumnsNames())
                     {
-                        DataCollection.Add(col);
+                        DataCollection.Add("[" + col + "]");
                     }
                     autoText.AutoCompleteCustomSource = DataCollection;
                 }

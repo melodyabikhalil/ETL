@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ETL.UI;
+using ETL.Utility;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -35,6 +37,44 @@ namespace ETL.Core
             return dt;
         }
 
+        public static void CreateMetadataFieldsList(DataTable dataTable)
+        {
+            DSpaceMetadataField dSpaceMetadataField;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                string element = row.Field<string>("element");
+                string qualifier = "";
+                try
+                {
+                    qualifier = row.Field<string>("qualifier");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    Helper.Log(e.Message, "Dspace-CreateMetadataList");
+                }
+                dSpaceMetadataField = new DSpaceMetadataField(element, qualifier);
+                dSpaceMetadataFields.Add(dSpaceMetadataField);
+            }
+        }
+
+        public static void SetMetadaFieldList()
+        {
+            string path = "../../DSpaceMetadatafield.csv";
+            DataTable dt = ConvertCSVtoDataTable(path);
+            CreateMetadataFieldsList(dt);
+        }
+
+        public static List<string> GetMetadataFieldsNames()
+        {
+            List<string> fieldNames = new List<string>();
+            foreach (DSpaceMetadataField dSpaceMetadataField in dSpaceMetadataFields)
+            {
+                fieldNames.Add(dSpaceMetadataField.name);
+            }
+            return fieldNames;
+        }
+
         public static void CreateXml(List<KeyValuePair<DSpaceMetadataField, string>> metadatasWithValues, string path)
         {
             XmlDocument xmlDoc = new XmlDocument();
@@ -57,7 +97,6 @@ namespace ETL.Core
                 node.InnerText = value;
                 rootNode.AppendChild(node);
             }
-
             xmlDoc.Save(path + "\\dublin_core.xml");
         }
 
@@ -73,11 +112,13 @@ namespace ETL.Core
             Directory.CreateDirectory(repositoryPath);
             int itemNumber = 0;
 
+            Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, dspaceData.Rows.Count.ToString());
             foreach (DataRow dataRow in dspaceData.Rows)
             {
                 List<KeyValuePair<DSpaceMetadataField, string>> metadataWithValues = new List<KeyValuePair<DSpaceMetadataField, string>>();
                 string itemRepository = "item" + itemNumber.ToString();
                 itemNumber++;
+                Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, itemNumber.ToString());
                 DSpaceMetadataField metadataField;
                 string itemCompletePath = repositoryPath + "\\" + itemRepository;
                 Directory.CreateDirectory(itemCompletePath);
@@ -110,20 +151,19 @@ namespace ETL.Core
 
         public static void DownloadResource(string resourcePath, string downloadPath)
         {
-            // TODO : uncomment & test
-
-            //Path.GetFullPath(resourcePath).Replace(@"\", @"\\");
-            //Path.GetFullPath(downloadPath).Replace(@"\", @"\\");
-            //string resourceName = Path.GetFileName(resourcePath).Trim();
-            //try
-            //{
-            //    System.IO.File.Copy(resourcePath, downloadPath + @"\" + resourceName, true);
-            //    CreateContentsFile(downloadPath, resourceName);
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.Message);
-            //}
+            Path.GetFullPath(resourcePath).Replace(@"\", @"\\");
+            Path.GetFullPath(downloadPath).Replace(@"\", @"\\");
+            string resourceName = Path.GetFileName(resourcePath).Trim();
+            try
+            {
+                System.IO.File.Copy(resourcePath, downloadPath + @"\" + resourceName, true);
+                CreateContentsFile(downloadPath, resourceName);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "DSpace-DownloadResource");
+            }
         }
 
         private static void CreateContentsFile(string path, string resourceName)

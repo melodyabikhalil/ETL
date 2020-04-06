@@ -207,6 +207,25 @@ namespace ETL.Utility
             }
             etl.sourceTable = MapFromJsonTableOrQueryToTableOrQuery(jsonEtl.sourceTable);
             etl.expressionDt = jsonEtl.expressionDt;
+
+            etl.destDb.Close();
+            etl.destDb.Connect();
+            etl.destDb.SetDatatableSchema(etl.destTable.GetName());
+            etl.destDb.Close();
+            List<string> sourceDatabaseTablesNames = etl.srcDb.tablesNames;
+            if (sourceDatabaseTablesNames.Contains(etl.sourceTable.GetName()))
+            {
+                etl.srcDb.Close();
+                etl.srcDb.Connect();
+                etl.srcDb.SetDatatableSchema(etl.sourceTable.GetName());
+                etl.srcDb.Close();
+                etl.sourceTable = etl.srcDb.GetTable(etl.sourceTable.GetName());
+            }
+            else 
+            {
+                etl.sourceTable = etl.srcDb.GetQuery(etl.sourceTable.GetName());
+            }
+
             return etl;
         }
 

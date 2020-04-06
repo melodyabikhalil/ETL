@@ -164,6 +164,7 @@ namespace ETL.Core
         abstract public bool Select(string tableOrQueryName, string type);
         abstract public bool SetDatatableSchema(string tableName);
         abstract public DataTable TrySelect(string query);
+        abstract public int SelectRowCount(string tableOrQueryName, string type);
 
         //for later
         //abstract public void Update(DataTable dataTable);

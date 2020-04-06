@@ -1,4 +1,5 @@
-﻿using ETL.Utility;
+﻿using ETL.UI;
+using ETL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,53 +25,30 @@ namespace ETL.Core
         {
             foreach (SingleETL etl in etls)
             {
-                Database sourceDb = etl.srcDb;
-                TableOrQuery sourceTableOrQuery = etl.sourceTable;
-
-                Table destinationTable = new Table();
-                Database destinationDb = etl.destDb;
-                if (!etl.isDspaceDestination)
-                {
-                    destinationTable = etl.destTable;
-                }
-
-                sourceDb.Close();
-                sourceDb.Connect();
-                bool selectDataSuccess = sourceDb.Select(sourceTableOrQuery.GetName(), sourceTableOrQuery.type);
-                sourceDb.Close();
+                Global.progressForm.UpdateForm(ProgressForm.LABEL_ETL, etl.name);
+                bool selectDataSuccess = etl.FetchSourceData();
                 if (selectDataSuccess)
                 {
-                    sourceTableOrQuery = sourceDb.GetTableOrQueryByName(sourceTableOrQuery.GetName());
-                    DataTable destinationDt;
-                    string destinationTableName;
-                    if (!etl.isDspaceDestination)
-                    {
-                        destinationTable = destinationDb.GetTable(destinationTable.GetName());
-                        destinationTable.dataTable.TableName = destinationTable.GetName();
-                        destinationDt = destinationTable.dataTable;
-                        destinationTableName = destinationTable.GetName();
-                    }
-                    else
-                    {
-                        destinationDt = ((DSpaceDatabase)destinationDb).dspaceData;
-                        destinationTableName = "";
-                    }
-
-                    sourceTableOrQuery.dataTable.TableName = sourceTableOrQuery.GetName();
-                    bool createDestinationDatatableSucess = Expression.AddValuesToDatatableDestination(sourceTableOrQuery.dataTable, destinationDt, etl.expressionDt, Global.mapDt);
+                    bool createDestinationDatatableSucess = etl.CreateDestinationDataTable();
                     if (createDestinationDatatableSucess)
                     {
-                        destinationDb.Close();
-                        destinationDb.Connect();
-                        bool insertInDestinationSuccess = destinationDb.Insert(destinationTableName);
-                        destinationDb.Close();
-                        if (insertInDestinationSuccess)
+                        bool insertInDestinationSuccess = etl.InsertDataToDestination();
+                        if (!insertInDestinationSuccess)
                         {
-                            LogError(etl);
+                            Helper.ShowDatabaseErrorInProgressForm();
                         }
+                    } 
+                    else
+                    {
+                        Helper.ShowDatabaseErrorInProgressForm();
                     }
                 }
+                else
+                {
+                    Helper.ShowDatabaseErrorInProgressForm();
+                }
             }
+            Helper.ShowJobDone();
         }
 
         public void ReplaceEtlInJob(SingleETL etl)
@@ -83,12 +61,6 @@ namespace ETL.Core
                     return;
                 }
             }
-        }
-
-        public void LogError(SingleETL etl)
-        {
-            this.errorEtls.Add(etl);
-            Console.WriteLine("Error in etl named: " + etl.name + " has failed");
         }
 
         public override bool Equals(Object obj)
