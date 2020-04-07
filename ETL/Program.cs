@@ -16,10 +16,18 @@ namespace ETL
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             SplashForm splashForm = new SplashForm();
-            Global.SplashForm = splashForm;
-            splashForm.Show();
-            UIHelper.LoadSavedDataFromJsonFiles();
-            splashForm.Close();
+            try
+            {
+                Global.SplashForm = splashForm;
+                splashForm.Show();
+                UIHelper.LoadSavedDataFromJsonFiles();
+                splashForm.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "LoadingSavedData");
+            }
             Application.Run(new ETLParent());
         }
     }
