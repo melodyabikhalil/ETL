@@ -218,7 +218,12 @@ namespace ETL.Core
 
         public override bool SetDatatableSchema(string tableName)
         {
-            string query = "SELECT * FROM " + tableName + " WHERE 1=0;";
+            string tableNameInQuery = tableName;
+            if (this.schema != "" || this.schema != null)
+            {
+                tableNameInQuery = "[" + this.schema + "].[" + tableName + "]";
+            }
+            string query = "SELECT * FROM " + tableNameInQuery + " WHERE 1=0;";
             Table table = GetTable(tableName);
             SqlCommand command = new SqlCommand(query, this.connection);
 

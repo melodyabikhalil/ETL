@@ -25,6 +25,7 @@ namespace ETL.Core
         public const string DATABASE_TYPE_SQLSERVER = "SQL Server";
         public const string DATABASE_TYPE_ACCESS = "MS Access";
         public const string DATABASE_TYPE_ODBC = "ODBC";
+        public const string DATABASE_TYPE_DSPACE = "DSpace";
 
         public Database(string serverName, string username, string password, string databaseName, string schema = "")
         {

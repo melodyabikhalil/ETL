@@ -20,8 +20,16 @@ namespace ETL.UI
             InitializeComponent();
             this.etl = singleETL;
             this.etlNameLabel.Text += " " + singleETL.name;
-            this.destinationDatabaseLabel.Text += " " + singleETL.destDb.databaseName;
-            this.destinationTableLabel.Text += " " + singleETL.destTable.GetName();
+            if (singleETL.isDspaceDestination)
+            {
+                this.destinationDatabaseLabel.Text = "DSpace";
+                this.destinationTableLabel.Text = "DSpace table, folder path: " + ((DSpaceDatabase)singleETL.destDb).folderPath;
+            }
+            else
+            {
+                this.destinationDatabaseLabel.Text += " " + singleETL.destDb.databaseName;
+                this.destinationTableLabel.Text += " " + singleETL.destTable.GetName();
+            }
             this.sourceDatabaseLabel.Text += " " + singleETL.srcDb.databaseName;
             this.sourceTableOrQueryLabel.Text += " " + singleETL.sourceTable.GetName();
 
@@ -58,12 +66,28 @@ namespace ETL.UI
             }
             CreateComboBoxColumn("Mapping Name", sectionNames, "MappingName");
             CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
-            CreateComboBoxColumn("Column Destination", etl.destDb.GetTable(etl.destTable.GetName()).GetColumnsNames(), "ColumnDest");
-           
+            if (etl.isDspaceDestination)
+            {
+                CreateComboBoxColumn("Column Destination", ((DSpaceDatabase)etl.destDb).columns, "ColumnDest");
+            }
+            else
+            {
+                CreateComboBoxColumn("Column Destination", etl.destDb.GetTable(etl.destTable.GetName()).GetColumnsNames(), "ColumnDest");
+            }
+
             ETLDataGridView.Rows.Add(etl.expressionDt.Rows.Count-1);
             foreach (DataGridViewRow Row in ETLDataGridView.Rows)
             {
-                Row.Cells[5].Value = etl.destTable.GetName();
+                string destinationTableName;
+                if (etl.isDspaceDestination)
+                {
+                    destinationTableName = "Dspace table";
+                }
+                else
+                {
+                    destinationTableName = etl.destTable.GetName();
+                }
+                Row.Cells[5].Value = destinationTableName;
             }
             try
             {

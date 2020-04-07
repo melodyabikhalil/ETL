@@ -19,7 +19,10 @@ namespace ETL.UI
         private Database dest;
         private TableOrQuery srcTable;
         private Table destTable;
-        string ETLName = "";
+        private string ETLName = "";
+        private bool isDspace;
+        private string dspaceFolderPath;
+        private string destTableName;
 
         public NewETLForm()
         {
@@ -35,6 +38,8 @@ namespace ETL.UI
                 sourceDbComboBox.Items.Insert(i, Global.Databases[i].databaseName);
                 destinationDbComboBox.Items.Insert(i, Global.Databases[i].databaseName);
             }
+            dspacePathLabel.Visible = false;
+            dspacePathTextBox.Visible = false;
         }
 
         private void FromETLNameToSrcDrstDbButton_Click(object sender, EventArgs e)
@@ -44,7 +49,11 @@ namespace ETL.UI
             string destDatabaseName = this.destinationDbComboBox.Text;
             string destTableName = this.destTableComboBox.Text;
             string srcTableName = this.srcTableOrQueriesComboBox.Text;
-            if (etlName == "" || etlName == null || srcDatabaseName == null || srcDatabaseName == "" || destDatabaseName == null || destDatabaseName == "" || destTableName == null || destTableName == "" || srcTableName == null || srcTableName == "")
+            string dspaceFolderPath = dspacePathTextBox.Text;
+            this.dspaceFolderPath = dspaceFolderPath;
+            bool isDspace = dspaceCheckBox.Checked;
+            this.isDspace = isDspace;
+            if ((isDspace && (dspaceFolderPath == null || dspaceFolderPath == "")) || (!isDspace && (etlName == "" || etlName == null || srcDatabaseName == null || srcDatabaseName == "" || destDatabaseName == null || destDatabaseName == "" || destTableName == null || destTableName == "" || srcTableName == null || srcTableName == "")))
             {
                 MessageBox.Show("Please fill all the fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -53,11 +62,21 @@ namespace ETL.UI
                 this.ETLName = etlName;
             
                 src = Global.GetDatabaseByName(srcDatabaseName);
-                dest = Global.GetDatabaseByName(destDatabaseName);
                 this.srcTableOrQueriesComboBox.Items.Clear();
                 this.destTableComboBox.Items.Clear();
                 this.srcTableOrQueriesComboBox.Items.AddRange(src.tablesNames.ToArray());
                 this.srcTableOrQueriesComboBox.Items.AddRange(src.queriesNames.ToArray());
+                if (!isDspace)
+                {
+                    dest = Global.GetDatabaseByName(destDatabaseName);
+                    this.destTableComboBox.Items.AddRange(dest.tablesNames.ToArray());
+                }
+                else
+                {
+                    dest = new DSpaceDatabase();
+                    ((DSpaceDatabase)dest).folderPath = dspaceFolderPath;
+                    this.destTableComboBox.Enabled = false;
+                }
                 this.destTableComboBox.Items.AddRange(dest.tablesNames.ToArray());
            
                 SetExpressionDataGridView();
@@ -70,11 +89,26 @@ namespace ETL.UI
         private void SetExpressionDataGridView()
         {
             this.srcColumnLabel.Text = "Source table columns: ";
-            string destTableName = this.destTableComboBox.Text;
-            dest.Close();
-            dest.Connect();
-            dest.SetDatatableSchema(destTableName);
-            dest.Close();
+            string destTableName;
+            List<string> columnsNames;
+            if (isDspace)
+            {
+                destTableName = "Dspace table";
+                this.destTableName = destTableName;
+                columnsNames = ((DSpaceDatabase)dest).columns;
+            }
+            else
+            {
+                destTableName = this.destTableComboBox.Text;
+                this.destTableName = destTableName;
+                dest.Close();
+                dest.Connect();
+                dest.SetDatatableSchema(destTableName);
+                dest.Close();
+                this.destTable = (Table)Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
+                columnsNames = destTable.GetColumnsNames();
+            }
+
             string srcTableName = this.srcTableOrQueriesComboBox.Text;
             List<string> sourceDatabaseTablesNames = this.src.tablesNames;
             if (sourceDatabaseTablesNames.Contains(srcTableName))
@@ -102,7 +136,6 @@ namespace ETL.UI
                 }
             }
             this.srcColumnLabel.Text = this.srcColumnLabel.Text + " " + srcColumnsList;
-            this.destTable = (Table) Global.GetTableByNameAndDbName(this.destinationDbComboBox.Text, destTableName);
             List<string> expressionTypes = new List<string>(new string[] { "Replace", "Reg", "Map" });
             CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
             CreateTexBoxColumn("Expression", false, "Expression");
@@ -122,23 +155,7 @@ namespace ETL.UI
             {
                 Row.Cells[5].Value = destTableName;
             }
-            CreateComboBoxColumn("Column Destination", destTable.GetColumnsNames(), "ColumnDest");
-        }
-
-        private void FromSrcDestTablesToExpression_Click(object sender, EventArgs e)
-        {
-            string destTableName = this.destTableComboBox.Text;
-            string srcTableName = this.srcTableOrQueriesComboBox.Text;
-                if (destTableName == null || destTableName == "" || srcTableName == null || srcTableName == "")
-            {
-                MessageBox.Show("Please choose source & destination tables (or queries) to proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                SetExpressionDataGridView();
-                this.ExpressionTab.Enabled = true;
-                this.ETLTabControl.SelectedTab = this.ExpressionTab;
-            }
+            CreateComboBoxColumn("Column Destination", columnsNames, "ColumnDest");
         }
 
         private void CreateComboBoxColumn(string header, List<string> values, string name)
@@ -208,6 +225,7 @@ namespace ETL.UI
         private void SaveButton_Click(object sender, EventArgs e)
         {
             SingleETL etl = new SingleETL(ETLName, src, dest, srcTable, destTable, this.CreateExpressionDatatable());
+            etl.isDspaceDestination = isDspace;
             Global.etls.Add(etl);
             JsonHelper.SaveETL(etl, true);
             MessageBox.Show("ETL successfully created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -222,7 +240,14 @@ namespace ETL.UI
                 DataGridViewRow row = ExpressionDataGridView.Rows[index];
                 //Adds default value for the destination table name
                 if (row.Cells.Count > 1) {
-                    row.Cells[5].Value = this.destTableComboBox.Text;
+                    if (isDspace)
+                    {
+                        row.Cells[5].Value = "Dspace table";
+                    }
+                    else
+                    {
+                        row.Cells[5].Value = this.destTableComboBox.Text;
+                    }
                 }
                 
             }
@@ -332,6 +357,25 @@ namespace ETL.UI
                     }
                     autoText.AutoCompleteCustomSource = DataCollection;
                 }
+            }
+        }
+
+        private void DspaceCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            bool isChecked = dspaceCheckBox.Checked;
+            if (isChecked)
+            {
+                dspacePathLabel.Visible = true;
+                dspacePathTextBox.Visible = true;
+                destinationDbComboBox.Enabled = false;
+                destTableComboBox.Enabled = false;
+            }
+            else
+            {
+                dspacePathLabel.Visible = false;
+                dspacePathTextBox.Visible = false;
+                destinationDbComboBox.Enabled = true;
+                destTableComboBox.Enabled = true;
             }
         }
 

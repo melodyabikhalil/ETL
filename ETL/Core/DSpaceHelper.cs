@@ -1,4 +1,5 @@
-﻿using ETL.Utility;
+﻿using ETL.UI;
+using ETL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,13 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ETL.Core
 {
     class DSpaceHelper
     {
-        public static List<DSpaceMetadataField> dSpaceMetadataFields = new List<DSpaceMetadataField>();
-
         public static DataTable ConvertCSVtoDataTable(string strFilePath)
         {
             StreamReader sr = new StreamReader(strFilePath);
@@ -36,9 +36,10 @@ namespace ETL.Core
             return dt;
         }
 
-        public static void CreateMetadataFieldsList(DataTable dataTable)
+        public static List<DSpaceMetadataField> CreateMetadataFieldsList(DataTable dataTable)
         {
             DSpaceMetadataField dSpaceMetadataField;
+            List<DSpaceMetadataField> dSpaceMetadataFields = new List<DSpaceMetadataField>();
             foreach (DataRow row in dataTable.Rows)
             {
                 string element = row.Field<string>("element");
@@ -55,26 +56,21 @@ namespace ETL.Core
                 dSpaceMetadataField = new DSpaceMetadataField(element, qualifier);
                 dSpaceMetadataFields.Add(dSpaceMetadataField);
             }
+            return dSpaceMetadataFields;
         }
 
-        public static void SetMetadaFieldList()
+        public static List<DSpaceMetadataField> GetMetadataFields()
         {
-            string path = "../../DSpaceMetadatafield.csv";
+            string applicationLocation = System.Reflection.Assembly.GetEntryAssembly().Location;
+            string applicationDirectory = Path.GetDirectoryName(applicationLocation);
+
+            string path = @"" + applicationDirectory + "\\Utility\\dspace_metadata.csv";
             DataTable dt = ConvertCSVtoDataTable(path);
-            CreateMetadataFieldsList(dt);
+            List<DSpaceMetadataField> fields = CreateMetadataFieldsList(dt);
+            return fields;
         }
 
-        public static List<string> GetMetadataFieldsNames()
-        {
-            List<string> fieldNames = new List<string>();
-            foreach (DSpaceMetadataField dSpaceMetadataField in dSpaceMetadataFields)
-            {
-                fieldNames.Add(dSpaceMetadataField.name);
-            }
-            return fieldNames;
-        }
-
-        public void CreateXml(List<KeyValuePair<DSpaceMetadataField, string>> metadatasWithValues, string path)
+        public static void CreateXml(List<KeyValuePair<DSpaceMetadataField, string>> metadatasWithValues, string path)
         {
             XmlDocument xmlDoc = new XmlDocument();
             XmlNode rootNode = xmlDoc.CreateElement("dublin_core");
@@ -86,32 +82,32 @@ namespace ETL.Core
 
                 DSpaceMetadataField field = metadataWithValue.Key;
                 string value = metadataWithValue.Value;
-                this.AddAttributeToNode("schema", node, xmlDoc, "dc");
-                this.AddAttributeToNode("element", node, xmlDoc, field.element);
+                AddAttributeToNode("schema", node, xmlDoc, "dc");
+                AddAttributeToNode("element", node, xmlDoc, field.element);
                 if (field.qualifier != null && field.qualifier != "")
                 {
-                    this.AddAttributeToNode("qualifier", node, xmlDoc, field.qualifier);
+                    AddAttributeToNode("qualifier", node, xmlDoc, field.qualifier);
                 }
 
                 node.InnerText = value;
                 rootNode.AppendChild(node);
             }
-
             xmlDoc.Save(path + "\\dublin_core.xml");
         }
 
-        private void AddAttributeToNode(string attributeName, XmlNode node, XmlDocument document, string value)
+        private static void AddAttributeToNode(string attributeName, XmlNode node, XmlDocument document, string value)
         {
             XmlAttribute attribute = document.CreateAttribute(attributeName);
             attribute.Value = value;
             node.Attributes.Append(attribute);
         }
 
-        public void CreateItemsRepository(DataTable dspaceData, string repositoryPath)
+        public static void CreateItemsRepository(DataTable dspaceData, string repositoryPath)
         {
             Directory.CreateDirectory(repositoryPath);
             int itemNumber = 0;
 
+            Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, dspaceData.Rows.Count.ToString());
             foreach (DataRow dataRow in dspaceData.Rows)
             {
                 List<KeyValuePair<DSpaceMetadataField, string>> metadataWithValues = new List<KeyValuePair<DSpaceMetadataField, string>>();
@@ -128,7 +124,7 @@ namespace ETL.Core
 
                     if (column == "path")
                     {
-                        this.DownloadResource(value, itemCompletePath);
+                        DownloadResource(value, itemCompletePath);
                     }
                     else
                     {
@@ -143,19 +139,29 @@ namespace ETL.Core
                         metadataWithValues.Add(new KeyValuePair<DSpaceMetadataField, string>(metadataField, value));
                     }
                 }
-                this.CreateXml(metadataWithValues, itemCompletePath);
+                CreateXml(metadataWithValues, itemCompletePath);
+                Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, itemNumber.ToString());
             }
         }
 
-        // TODO: Implement download feature
-        public void DownloadResource(string resourcePath, string downloadPath)
+        public static void DownloadResource(string resourcePath, string downloadPath)
         {
-            //download link and save it in downloadpath
-            string resourceName = "";
-            this.CreateContentsFile(downloadPath, resourceName);
+            Path.GetFullPath(resourcePath).Replace(@"\", @"\\");
+            Path.GetFullPath(downloadPath).Replace(@"\", @"\\");
+            string resourceName = Path.GetFileName(resourcePath).Trim();
+            try
+            {
+                System.IO.File.Copy(resourcePath, downloadPath + @"\" + resourceName, true);
+                CreateContentsFile(downloadPath, resourceName);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "DSpace-DownloadResource");
+            }
         }
 
-        private void CreateContentsFile(string path, string resourceName)
+        private static void CreateContentsFile(string path, string resourceName)
         {
             using (StreamWriter sw = File.CreateText(path + "\\contents."))
             {

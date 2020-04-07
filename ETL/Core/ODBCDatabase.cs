@@ -101,10 +101,11 @@ namespace ETL.Core
             {
                 command.Prepare();
                 OdbcDataAdapter dataAdapter = new OdbcDataAdapter(command);
-
+                
                 tableOrQuery.dataTable.Clear();
                 tableOrQuery.dataTable.RowChanged += new DataRowChangeEventHandler(Row_Added);
                 dataAdapter.Fill(tableOrQuery.dataTable);
+
                 return true;
             }
             catch (Exception e)

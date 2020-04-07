@@ -17,6 +17,7 @@ namespace ETL.Core
         public TableOrQuery sourceTable { set; get; }
         public Table destTable { set; get; }
         public DataTable expressionDt { set; get; }
+        public bool isDspaceDestination { get; set; }
 
         public SingleETL() { }
 
@@ -28,6 +29,7 @@ namespace ETL.Core
             this.sourceTable = sourceTable;
             this.destTable = destTable;
             this.expressionDt = expressionDt;
+            this.isDspaceDestination = false;
         }
 
         public bool FetchSourceData()
@@ -52,31 +54,50 @@ namespace ETL.Core
             Global.progressForm.UpdateForm(ProgressForm.LABEL_ACTION, "Creating destination table...");
             Global.ProgressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, "0");
 
+            //Source database & table setup
             Database sourceDb = this.srcDb;
             TableOrQuery sourceTableOrQuery = this.sourceTable;
-
-            Database destinationDb = this.destDb;
-            Table destinationTable = this.destTable;
-
             sourceTableOrQuery = sourceDb.GetTableOrQueryByName(sourceTableOrQuery.GetName());
-            destinationTable = destinationDb.GetTable(destinationTable.GetName());
             sourceTableOrQuery.dataTable.TableName = sourceTableOrQuery.GetName();
-            destinationTable.dataTable.TableName = destinationTable.GetName();
-            bool createDestinationDatatableSucess = Expression.AddValuesToDatatableDestination(sourceTableOrQuery.dataTable, destinationTable.dataTable, this.expressionDt, Global.mapDt);
+
+            //Destination database & table setup
+            Database destinationDb = this.destDb;
+            DataTable destinationDt;
+            if (!this.isDspaceDestination)
+            {
+                Table destinationTable = destinationDb.GetTable(this.destTable.GetName());
+                destinationTable.dataTable.TableName = destinationTable.GetName();
+                destinationDt = destinationTable.dataTable;
+            }
+            else
+            {
+                destinationDt = ((DSpaceDatabase)destinationDb).dspaceData;
+            }
+
+            bool createDestinationDatatableSucess = Expression.AddValuesToDatatableDestination(sourceTableOrQuery.dataTable, destinationDt, this.expressionDt, Global.mapDt);
             return createDestinationDatatableSucess;
         }
 
         public bool InsertDataToDestination()
         {
-            Global.progressForm.UpdateForm(ProgressForm.LABEL_ACTION, "Inserting data into destination table...");
+            string progressActionLabel = "Creating DSpace folder...";
             Database destinationDb = this.destDb;
-            Table destinationTable = this.destTable;
+            Table destinationTable = new Table();
+            string destinationTableName = "";
+            if (!this.isDspaceDestination)
+            {
+                destinationTable = this.destTable;
+                destinationTable = destinationDb.GetTable(destinationTable.GetName());
+                destinationTable.dataTable.TableName = destinationTable.GetName();
+                destinationTableName = destinationTable.GetName();
+            }
 
+            Global.progressForm.UpdateForm(ProgressForm.LABEL_ACTION, progressActionLabel);
             Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, "0");
             Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, destinationTable.dataTable.Rows.Count.ToString());
             destinationDb.Close();
             destinationDb.Connect();
-            bool insertInDestinationSuccess = destinationDb.Insert(destinationTable.GetName());
+            bool insertInDestinationSuccess = destinationDb.Insert(destinationTableName);
             destinationDb.Close();
             return insertInDestinationSuccess;
         }
