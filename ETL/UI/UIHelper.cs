@@ -72,14 +72,14 @@ namespace ETL.UI
 
         private static void LoadSavedMapDtFromJsonFile()
         {
-            Global.SplashForm.SetLoadingLabel("Loading mapping table..");
+            Global.SplashForm.SetLoadingLabel("Loading mapping table...");
             DataTable mapDt = JsonHelper.GetMapDtFromJsonFile();
             Global.mapDt = mapDt;
         }
 
         private static void LoadDatabasesFromJsonFile()
         {
-            Global.SplashForm.SetLoadingLabel("Loading databases..");
+            Global.SplashForm.SetLoadingLabel("Loading databases...");
             List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
             foreach (Database database in databases)
             {
@@ -97,14 +97,14 @@ namespace ETL.UI
 
         private static void LoadEtlsFromJsonFile()
         {
-            Global.SplashForm.SetLoadingLabel("Loading ETLs..");
+            Global.SplashForm.SetLoadingLabel("Loading ETLs...");
             List<SingleETL> etls = JsonHelper.GetETLsFromJsonFile();
             Global.etls = etls;
         }
 
         private static void LoadEtlJobsFromJsonFile()
         {
-            Global.SplashForm.SetLoadingLabel("Loading ETL jobs..");
+            Global.SplashForm.SetLoadingLabel("Loading ETL jobs...");
             List<JobETL> jobs = JsonHelper.GetETLJobsFromJsonFile();
             Global.jobETLs = jobs;
         }
