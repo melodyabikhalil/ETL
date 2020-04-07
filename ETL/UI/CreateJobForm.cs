@@ -12,12 +12,12 @@ using System.Windows.Forms;
 
 namespace ETL.UI
 {
-    public partial class CreateETLJob : Form
+    public partial class CreateJobForm : Form
     {
         private JobETL job = new JobETL();
         private List<string> etlNames = Global.GetEtlsNames();
 
-        public CreateETLJob()
+        public CreateJobForm()
         {
             InitializeComponent();
             SetEtlsDataGridView();

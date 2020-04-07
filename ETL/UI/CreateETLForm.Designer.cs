@@ -1,6 +1,6 @@
 ﻿namespace ETL.UI
 {
-    partial class NewETLForm
+    partial class CreateETLForm
     {
         /// <summary>
         /// Required designer variable.

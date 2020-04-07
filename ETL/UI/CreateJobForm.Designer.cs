@@ -1,6 +1,6 @@
 ﻿namespace ETL.UI
 {
-    partial class CreateETLJob
+    partial class CreateJobForm
     {
         /// <summary>
         /// Required designer variable.

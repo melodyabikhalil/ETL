@@ -130,7 +130,7 @@ namespace ETL.UI
 
         private void createStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewETLForm newEtlForm = new NewETLForm();
+            CreateETLForm newEtlForm = new CreateETLForm();
             newEtlForm.TopLevel = false;
             this.mainSplitContainer.Panel2.Controls.Add(newEtlForm);
             newEtlForm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
@@ -162,7 +162,7 @@ namespace ETL.UI
 
         private void CreateJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CreateETLJob createETLJob = new CreateETLJob();
+            CreateJobForm createETLJob = new CreateJobForm();
             createETLJob.TopLevel = false;
             this.mainSplitContainer.Panel2.Controls.Add(createETLJob);
             createETLJob.FormBorderStyle = FormBorderStyle.SizableToolWindow;
