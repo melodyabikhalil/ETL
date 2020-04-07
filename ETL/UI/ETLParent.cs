@@ -59,6 +59,11 @@ namespace ETL.UI
             statusStrip.Visible = statusBarToolStripMenuItem.Checked;
         }
 
+        private void HelpMenu_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void Add_Click(object sender, EventArgs e)
         {
             NewDatabaseForm newDatabaseForm = new NewDatabaseForm();
@@ -209,6 +214,5 @@ namespace ETL.UI
             MapForm mapForm = new MapForm();
             mapForm.Show();
         }
-        
     }
 }
