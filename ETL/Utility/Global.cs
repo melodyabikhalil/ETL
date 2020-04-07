@@ -22,6 +22,7 @@ namespace ETL.Utility
         public static DataTable mapDt = expression.mapDt;
 
         public static ProgressForm progressForm = new ProgressForm();
+        public static SplashForm splashForm;
         
         public static List<Database> Databases
         {
@@ -46,6 +47,12 @@ namespace ETL.Utility
                 return progressForm;
             }
             set { progressForm = value; }
+        }
+
+        public static SplashForm SplashForm
+        {
+            get { return splashForm; }
+            set { splashForm = value; }
         }
 
         public static Database GetDatabaseByName(string databaseName)

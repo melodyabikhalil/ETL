@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ETL.Core;
+using ETL.Utility;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -58,6 +60,53 @@ namespace ETL.UI
                 }
             }
             return dt;
+        }
+
+        public static void LoadSavedDataFromJsonFiles()
+        {
+            LoadDatabasesFromJsonFile();
+            LoadEtlsFromJsonFile();
+            LoadEtlJobsFromJsonFile();
+            LoadSavedMapDtFromJsonFile();
+        }
+
+        private static void LoadSavedMapDtFromJsonFile()
+        {
+            Global.SplashForm.SetLoadingLabel("Loading mapping table..");
+            DataTable mapDt = JsonHelper.GetMapDtFromJsonFile();
+            Global.mapDt = mapDt;
+        }
+
+        private static void LoadDatabasesFromJsonFile()
+        {
+            Global.SplashForm.SetLoadingLabel("Loading databases..");
+            List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
+            foreach (Database database in databases)
+            {
+                bool canConnect = database.Connect();
+                database.Close();
+                if (canConnect)
+                {
+                    if (!Global.DatabaseAlreadyConnected(database))
+                    {
+                        Global.Databases.Add(database);
+                    }
+                }
+            }
+        }
+
+        private static void LoadEtlsFromJsonFile()
+        {
+            Global.SplashForm.SetLoadingLabel("Loading ETLs..");
+            List<SingleETL> etls = JsonHelper.GetETLsFromJsonFile();
+            Global.etls = etls;
+        }
+
+        private static void LoadEtlJobsFromJsonFile()
+        {
+            Global.SplashForm.SetLoadingLabel("Loading ETL jobs..");
+            List<JobETL> jobs = JsonHelper.GetETLJobsFromJsonFile();
+            Global.jobETLs = jobs;
         }
     }
 }

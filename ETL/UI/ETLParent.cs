@@ -33,7 +33,17 @@ namespace ETL.UI
             this.mainSplitContainer.Visible = false;
             this.AddMenuItems();
             JsonHelper.CreateJsonFolder();
-            this.LoadSavedDataFromJsonFiles();
+
+            foreach (Database database in Global.Databases)
+            {
+                NewDatabaseForm.AddNodesToTreeView(database);
+            }
+            if (Global.Databases.Count > 0)
+            {
+                ShowMainContainer();
+            }
+            ETLParent.ReloadEtlsListInMenu();
+            ETLParent.ReloadEtlJobsListInMenu();
         }
 
         private void AddMenuItems()
@@ -42,56 +52,6 @@ namespace ETL.UI
             newQueryMenuItem.Click += new EventHandler(newQueryMenuItem_Click);
             closeDatabaseMenu.MenuItems.Add(closeDatabaseMenuItem);
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
-        }
-
-        private void LoadSavedDataFromJsonFiles()
-        {
-            this.LoadDatabasesFromJsonFile();
-            this.LoadEtlsFromJsonFile();
-            this.LoadEtlJobsFromJsonFile();
-            this.LoadSavedMapDtFromJsonFile();
-        }
-
-        private void LoadSavedMapDtFromJsonFile()
-        {
-            DataTable mapDt = JsonHelper.GetMapDtFromJsonFile();
-            Global.mapDt = mapDt;
-        }
-        
-        private void LoadDatabasesFromJsonFile()
-        {
-            List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
-            foreach (Database database in databases)
-            {
-                bool canConnect = database.Connect();
-                database.Close();
-                if (canConnect)
-                {
-                    if (!Global.DatabaseAlreadyConnected(database))
-                    {
-                        NewDatabaseForm.AddNodesToTreeView(database);
-                        Global.Databases.Add(database);
-                    }
-                    if (databases.Count > 0)
-                    {
-                        ShowMainContainer();
-                    }
-                }
-            }
-        }
-
-        private void LoadEtlsFromJsonFile()
-        {
-            List<SingleETL> etls = JsonHelper.GetETLsFromJsonFile();
-            Global.etls = etls;
-            ETLParent.ReloadEtlsListInMenu();
-        }
-
-        private void LoadEtlJobsFromJsonFile()
-        {
-            List<JobETL> jobs = JsonHelper.GetETLJobsFromJsonFile();
-            Global.jobETLs = jobs;
-            ETLParent.ReloadEtlJobsListInMenu();
         }
 
         private void ETLParent_Activated(object sender, EventArgs e)
