@@ -6,18 +6,16 @@ using System.Data;
 namespace ETLTest
 {
     [TestClass]
-    public class UnitTest
+    public class UnitTestExpression
     {
-        [TestMethod]
-        public void TestCreateDestinationDatatable()
+        private DataTable sourceDatatable = new DataTable();
+        private DataTable destinationDatatable = new DataTable();
+        private DataTable expressionDatatable = new DataTable();
+        private DataTable mappingDatatable = new DataTable();
+        private DataTable expectedDatatable = new DataTable();
+
+        private void SetupDatatTables()
         {
-            DataTable sourceDatatable = new DataTable();
-            DataTable destinationDatatable = new DataTable();
-            DataTable expressionDatatable = new DataTable();
-            DataTable mappingDatatable = new DataTable();
-
-            DataTable expectedDatatable = new DataTable();
-
             sourceDatatable.Columns.Add("id", typeof(int));
             sourceDatatable.Columns.Add("fullname", typeof(string));
             sourceDatatable.Columns.Add("dob", typeof(DateTime));
@@ -70,9 +68,14 @@ namespace ETLTest
             expectedDatatable.Rows.Add(1, "Jenna", "Smith", "1997-09-03", 13.45, "Female");
             expectedDatatable.Rows.Add(2, "John", "Doe", "2001-05-03", 150.5, "Male");
             expectedDatatable.Rows.Add(3, "Michael", "Doe", "1/1/0001 12:00:00 AM", 0, "Male");
+        }
 
+        [TestMethod]
+        public void TestCreateDestinationDatatable()
+        {
+            SetupDatatTables();
             bool success = Expression.AddValuesToDatatableDestination(sourceDatatable, destinationDatatable, expressionDatatable, mappingDatatable);
-            
+
             Assert.IsTrue(success);
             Assert.AreEqual(destinationDatatable.Rows.Count, 3);
 
@@ -85,6 +88,40 @@ namespace ETLTest
                     Assert.AreEqual(destinationValue, expectedValue);
                 }
             }
+        }
+
+        [TestMethod]
+        public void TestReplace()
+        {
+            SetupDatatTables();
+            DataRow row = sourceDatatable.Rows[0];
+            string expression = "[fullname]";
+            string result = Expression.Replace(expression, row);
+            string expectedResult = "Jenna Smith";
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void TestRegularExpression()
+        {
+            SetupDatatTables();
+            DataRow row = sourceDatatable.Rows[0];
+            string text = "Jenna Smith";
+            string expression = "([^\\s]+)";
+            string result = Expression.Regexp(expression, row, text);
+            string expectedResult = "Jenna";
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void TestMap()
+        {
+            SetupDatatTables();
+            DataRow row = sourceDatatable.Rows[0];
+            DataRow expressionRow = expressionDatatable.Rows[5];
+            string result = Expression.GetValue(expressionRow, row, mappingDatatable);
+            string expectedResult = "Female";
+            Assert.AreEqual(expectedResult, result);
         }
     }
 }
