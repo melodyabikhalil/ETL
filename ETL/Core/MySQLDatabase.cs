@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class MySQLDatabase: Database
+    public class MySQLDatabase: Database
     {
         private MySqlConnection connection { get; set; }
 

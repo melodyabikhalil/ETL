@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class ODBCDatabase : Database
+    public class ODBCDatabase : Database
     {
         private OdbcConnection connection { get; set; }
 

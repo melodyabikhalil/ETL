@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class Expression
+    public class Expression
     {
         public const string EXPRESSION_REPLACE = "Replace";
         public const string EXPRESSION_REGEX = "Reg";

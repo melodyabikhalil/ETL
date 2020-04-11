@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class AccessDatabase : Database
+    public class AccessDatabase : Database
     {
         private OleDbConnection connection { get; set; }
         public string path { get; set; }

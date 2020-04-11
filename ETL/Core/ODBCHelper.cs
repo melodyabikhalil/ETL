@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class ODBCHelper
+    public class ODBCHelper
     {
         public static OdbcType MapCsharpTypeToODBCType(Type dataType)
         {

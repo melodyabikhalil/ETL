@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class SQLServerHelper
+    public class SQLServerHelper
     {
         public static SqlDbType MapCsharpTypeToSQLType(Type dataType)
         {

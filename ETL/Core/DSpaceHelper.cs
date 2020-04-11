@@ -12,7 +12,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace ETL.Core
 {
-    class DSpaceHelper
+    public class DSpaceHelper
     {
         public static DataTable ConvertCSVtoDataTable(string strFilePath)
         {
