@@ -29,9 +29,11 @@ namespace ETL.Core
                 bool selectDataSuccess = etl.FetchSourceData();
                 if (selectDataSuccess)
                 {
+                    System.Threading.Thread.Sleep(2000);
                     bool createDestinationDatatableSucess = etl.CreateDestinationDataTable();
                     if (createDestinationDatatableSucess)
                     {
+                        System.Threading.Thread.Sleep(2000);
                         bool insertInDestinationSuccess = etl.InsertDataToDestination();
                         if (!insertInDestinationSuccess)
                         {
