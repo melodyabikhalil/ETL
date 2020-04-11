@@ -33,7 +33,17 @@ namespace ETL.UI
             this.mainSplitContainer.Visible = false;
             this.AddMenuItems();
             JsonHelper.CreateJsonFolder();
-            this.LoadSavedDataFromJsonFiles();
+
+            foreach (Database database in Global.Databases)
+            {
+                NewDatabaseForm.AddNodesToTreeView(database);
+            }
+            if (Global.Databases.Count > 0)
+            {
+                ShowMainContainer();
+            }
+            ETLParent.ReloadEtlsListInMenu();
+            ETLParent.ReloadEtlJobsListInMenu();
         }
 
         private void AddMenuItems()
@@ -44,96 +54,14 @@ namespace ETL.UI
             closeDatabaseMenuItem.Click += new EventHandler(closeDatabaseMenuItem_Click);
         }
 
-        private void LoadSavedDataFromJsonFiles()
-        {
-            this.LoadDatabasesFromJsonFile();
-            this.LoadEtlsFromJsonFile();
-            this.LoadEtlJobsFromJsonFile();
-            this.LoadSavedMapDtFromJsonFile();
-        }
-
-        private void LoadSavedMapDtFromJsonFile()
-        {
-            DataTable mapDt = JsonHelper.GetMapDtFromJsonFile();
-            Global.mapDt = mapDt;
-        }
-        
-        private void LoadDatabasesFromJsonFile()
-        {
-            List<Database> databases = JsonHelper.GetDatabasesFromJsonFile();
-            foreach (Database database in databases)
-            {
-                bool canConnect = database.Connect();
-                database.Close();
-                if (canConnect)
-                {
-                    if (!Global.DatabaseAlreadyConnected(database))
-                    {
-                        NewDatabaseForm.AddNodesToTreeView(database);
-                        Global.Databases.Add(database);
-                    }
-                    if (databases.Count > 0)
-                    {
-                        ShowMainContainer();
-                    }
-                }
-            }
-        }
-
-        private void LoadEtlsFromJsonFile()
-        {
-            List<SingleETL> etls = JsonHelper.GetETLsFromJsonFile();
-            Global.etls = etls;
-            ETLParent.ReloadEtlsListInMenu();
-        }
-
-        private void LoadEtlJobsFromJsonFile()
-        {
-            List<JobETL> jobs = JsonHelper.GetETLJobsFromJsonFile();
-            Global.jobETLs = jobs;
-            ETLParent.ReloadEtlJobsListInMenu();
-        }
-
-        private void ETLParent_Activated(object sender, EventArgs e)
-        {
-            MessageBox.Show("activated:");
-        }
-
-        private void OpenFile(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            openFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                string FileName = openFileDialog.FileName;
-            }
-        }
-
-        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            saveFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                string FileName = saveFileDialog.FileName;
-            }
-        }
-
-        private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
-        }
-
         private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             statusStrip.Visible = statusBarToolStripMenuItem.Checked;
+        }
+
+        private void HelpMenu_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void Add_Click(object sender, EventArgs e)
@@ -207,7 +135,7 @@ namespace ETL.UI
 
         private void createStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewETLForm newEtlForm = new NewETLForm();
+            CreateETLForm newEtlForm = new CreateETLForm();
             newEtlForm.TopLevel = false;
             this.mainSplitContainer.Panel2.Controls.Add(newEtlForm);
             newEtlForm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
@@ -239,7 +167,7 @@ namespace ETL.UI
 
         private void CreateJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CreateETLJob createETLJob = new CreateETLJob();
+            CreateJobForm createETLJob = new CreateJobForm();
             createETLJob.TopLevel = false;
             this.mainSplitContainer.Panel2.Controls.Add(createETLJob);
             createETLJob.FormBorderStyle = FormBorderStyle.SizableToolWindow;
@@ -286,6 +214,5 @@ namespace ETL.UI
             MapForm mapForm = new MapForm();
             mapForm.Show();
         }
-        
     }
 }

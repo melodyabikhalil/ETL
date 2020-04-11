@@ -152,11 +152,11 @@
     <Compile Include="Core\Table.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\CreateETLJob.cs">
+    <Compile Include="UI\CreateJobForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CreateETLJob.Designer.cs">
-      <DependentUpon>CreateETLJob.cs</DependentUpon>
+    <Compile Include="UI\CreateJobForm.Designer.cs">
+      <DependentUpon>CreateJobForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\CreateQueryForm.cs">
       <SubType>Form</SubType>
@@ -188,17 +188,23 @@
     <Compile Include="UI\NewDatabaseForm.Designer.cs">
       <DependentUpon>NewDatabaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\NewETLForm.cs">
+    <Compile Include="UI\CreateETLForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\NewETLForm.Designer.cs">
-      <DependentUpon>NewETLForm.cs</DependentUpon>
+    <Compile Include="UI\CreateETLForm.Designer.cs">
+      <DependentUpon>CreateETLForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ProgressForm.Designer.cs">
       <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SplashForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\UIHelper.cs" />
     <Compile Include="UI\ViewEditETLForm.cs">
@@ -226,8 +232,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI\CreateETLJob.resx">
-      <DependentUpon>CreateETLJob.cs</DependentUpon>
+    <EmbeddedResource Include="UI\CreateJobForm.resx">
+      <DependentUpon>CreateJobForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CreateQueryForm.resx">
       <DependentUpon>CreateQueryForm.cs</DependentUpon>
@@ -244,11 +250,14 @@
     <EmbeddedResource Include="UI\NewDatabaseForm.resx">
       <DependentUpon>NewDatabaseForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\NewETLForm.resx">
-      <DependentUpon>NewETLForm.cs</DependentUpon>
+    <EmbeddedResource Include="UI\CreateETLForm.resx">
+      <DependentUpon>CreateETLForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ProgressForm.resx">
       <DependentUpon>ProgressForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ViewEditETLForm.resx">
       <DependentUpon>ViewEditETLForm.cs</DependentUpon>

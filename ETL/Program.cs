@@ -1,4 +1,5 @@
 ﻿using ETL.UI;
+using ETL.Utility;
 using System;
 using System.Windows.Forms;
 
@@ -14,6 +15,19 @@ namespace ETL
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            SplashForm splashForm = new SplashForm();
+            try
+            {
+                Global.SplashForm = splashForm;
+                splashForm.Show();
+                UIHelper.LoadSavedDataFromJsonFiles();
+                splashForm.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "LoadingSavedData");
+            }
             Application.Run(new ETLParent());
         }
     }

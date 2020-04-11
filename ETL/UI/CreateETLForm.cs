@@ -13,7 +13,7 @@ using System.IO;
 
 namespace ETL.UI
 {
-    public partial class NewETLForm : Form
+    public partial class CreateETLForm : Form
     {
         private Database src;
         private Database dest;
@@ -24,7 +24,7 @@ namespace ETL.UI
         private string dspaceFolderPath;
         private string destTableName;
 
-        public NewETLForm()
+        public CreateETLForm()
         {
             InitializeComponent();
             this.ExpressionTab.Enabled = false;
