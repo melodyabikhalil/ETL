@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class PostgreSQLDatabase : Database
+    public class PostgreSQLDatabase : Database
     {
         private NpgsqlConnection connection { get; set; }
         public string port { get; set; }

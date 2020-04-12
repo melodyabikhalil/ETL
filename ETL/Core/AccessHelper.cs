@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class AccessHelper
+    public class AccessHelper
     {
         public static OleDbType MapCsharpTypeToAccessType(Type dataType)
         {

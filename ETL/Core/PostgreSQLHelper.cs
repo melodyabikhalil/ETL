@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class PostgreSQLHelper
+    public class PostgreSQLHelper
     {
         public static NpgsqlDbType MapCsharpTypeToNpsglType(Type dataType)
         {

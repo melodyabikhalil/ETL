@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class SQLServerDatabase : Database
+    public class SQLServerDatabase : Database
     {
         private SqlConnection connection { get; set; }
 

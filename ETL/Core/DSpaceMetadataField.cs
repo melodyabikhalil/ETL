@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class DSpaceMetadataField
+    public class DSpaceMetadataField
     {
         public string qualifier { get; set; }
         public string element { get; set; }

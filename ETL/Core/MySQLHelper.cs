@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ETL.Core
 {
-    class MySQLHelper
+    public class MySQLHelper
     {
         public static MySqlDbType MapCsharpTypeToMySQLType(Type dataType)
         {
