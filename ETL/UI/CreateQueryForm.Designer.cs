@@ -71,7 +71,7 @@
             this.createQueryTabControl.Location = new System.Drawing.Point(0, 0);
             this.createQueryTabControl.Name = "createQueryTabControl";
             this.createQueryTabControl.SelectedIndex = 0;
-            this.createQueryTabControl.Size = new System.Drawing.Size(984, 592);
+            this.createQueryTabControl.Size = new System.Drawing.Size(979, 592);
             this.createQueryTabControl.TabIndex = 0;
             // 
             // mainTableTabPage
@@ -85,7 +85,7 @@
             this.mainTableTabPage.Location = new System.Drawing.Point(4, 22);
             this.mainTableTabPage.Name = "mainTableTabPage";
             this.mainTableTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mainTableTabPage.Size = new System.Drawing.Size(976, 566);
+            this.mainTableTabPage.Size = new System.Drawing.Size(971, 566);
             this.mainTableTabPage.TabIndex = 0;
             this.mainTableTabPage.Text = "Main Table";
             // 
@@ -144,14 +144,14 @@
             this.buildQueryTabPage.Location = new System.Drawing.Point(4, 22);
             this.buildQueryTabPage.Name = "buildQueryTabPage";
             this.buildQueryTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.buildQueryTabPage.Size = new System.Drawing.Size(976, 566);
+            this.buildQueryTabPage.Size = new System.Drawing.Size(971, 566);
             this.buildQueryTabPage.TabIndex = 1;
             this.buildQueryTabPage.Text = "Build Query";
             // 
             // mainTableTextBox
             // 
             this.mainTableTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mainTableTextBox.Location = new System.Drawing.Point(91, 50);
+            this.mainTableTextBox.Location = new System.Drawing.Point(101, 56);
             this.mainTableTextBox.Name = "mainTableTextBox";
             this.mainTableTextBox.ReadOnly = true;
             this.mainTableTextBox.Size = new System.Drawing.Size(141, 20);
@@ -160,7 +160,7 @@
             // mainTableNameLabel
             // 
             this.mainTableNameLabel.AutoSize = true;
-            this.mainTableNameLabel.Location = new System.Drawing.Point(26, 53);
+            this.mainTableNameLabel.Location = new System.Drawing.Point(36, 59);
             this.mainTableNameLabel.Name = "mainTableNameLabel";
             this.mainTableNameLabel.Size = new System.Drawing.Size(59, 13);
             this.mainTableNameLabel.TabIndex = 14;
@@ -169,7 +169,7 @@
             // buildQueryLabel
             // 
             this.buildQueryLabel.AutoSize = true;
-            this.buildQueryLabel.Location = new System.Drawing.Point(25, 22);
+            this.buildQueryLabel.Location = new System.Drawing.Point(35, 28);
             this.buildQueryLabel.Name = "buildQueryLabel";
             this.buildQueryLabel.Size = new System.Drawing.Size(294, 13);
             this.buildQueryLabel.TabIndex = 13;
@@ -179,7 +179,7 @@
             // 
             this.buildQueryDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.buildQueryDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.buildQueryDataGridView.Location = new System.Drawing.Point(29, 88);
+            this.buildQueryDataGridView.Location = new System.Drawing.Point(39, 94);
             this.buildQueryDataGridView.Name = "buildQueryDataGridView";
             this.buildQueryDataGridView.Size = new System.Drawing.Size(893, 380);
             this.buildQueryDataGridView.TabIndex = 12;
@@ -187,7 +187,7 @@
             // 
             // goBackToMainTableTabFromBuildQueryTabButton
             // 
-            this.goBackToMainTableTabFromBuildQueryTabButton.Location = new System.Drawing.Point(743, 495);
+            this.goBackToMainTableTabFromBuildQueryTabButton.Location = new System.Drawing.Point(753, 501);
             this.goBackToMainTableTabFromBuildQueryTabButton.Name = "goBackToMainTableTabFromBuildQueryTabButton";
             this.goBackToMainTableTabFromBuildQueryTabButton.Size = new System.Drawing.Size(75, 23);
             this.goBackToMainTableTabFromBuildQueryTabButton.TabIndex = 11;
@@ -197,7 +197,7 @@
             // 
             // goToSelectColumnsTabFromBuildQueryTabButton
             // 
-            this.goToSelectColumnsTabFromBuildQueryTabButton.Location = new System.Drawing.Point(837, 495);
+            this.goToSelectColumnsTabFromBuildQueryTabButton.Location = new System.Drawing.Point(847, 501);
             this.goToSelectColumnsTabFromBuildQueryTabButton.Name = "goToSelectColumnsTabFromBuildQueryTabButton";
             this.goToSelectColumnsTabFromBuildQueryTabButton.Size = new System.Drawing.Size(75, 23);
             this.goToSelectColumnsTabFromBuildQueryTabButton.TabIndex = 10;
@@ -215,7 +215,7 @@
             this.selectColumnsTabPage.Location = new System.Drawing.Point(4, 22);
             this.selectColumnsTabPage.Name = "selectColumnsTabPage";
             this.selectColumnsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.selectColumnsTabPage.Size = new System.Drawing.Size(976, 566);
+            this.selectColumnsTabPage.Size = new System.Drawing.Size(971, 566);
             this.selectColumnsTabPage.TabIndex = 2;
             this.selectColumnsTabPage.Text = "Select Columns";
             // 
@@ -253,9 +253,9 @@
             this.selectColumnsDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.selectColumnsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.selectColumnsDataGridView.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.selectColumnsDataGridView.Location = new System.Drawing.Point(240, 63);
+            this.selectColumnsDataGridView.Location = new System.Drawing.Point(254, 63);
             this.selectColumnsDataGridView.Name = "selectColumnsDataGridView";
-            this.selectColumnsDataGridView.Size = new System.Drawing.Size(518, 423);
+            this.selectColumnsDataGridView.Size = new System.Drawing.Size(492, 423);
             this.selectColumnsDataGridView.TabIndex = 0;
             // 
             // queryPreviewTabPage
@@ -268,13 +268,13 @@
             this.queryPreviewTabPage.Location = new System.Drawing.Point(4, 22);
             this.queryPreviewTabPage.Name = "queryPreviewTabPage";
             this.queryPreviewTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.queryPreviewTabPage.Size = new System.Drawing.Size(976, 566);
+            this.queryPreviewTabPage.Size = new System.Drawing.Size(971, 566);
             this.queryPreviewTabPage.TabIndex = 3;
             this.queryPreviewTabPage.Text = "Preview";
             // 
             // goBackToSelectColumnsTabFromPreviewTabButton
             // 
-            this.goBackToSelectColumnsTabFromPreviewTabButton.Location = new System.Drawing.Point(748, 487);
+            this.goBackToSelectColumnsTabFromPreviewTabButton.Location = new System.Drawing.Point(759, 505);
             this.goBackToSelectColumnsTabFromPreviewTabButton.Name = "goBackToSelectColumnsTabFromPreviewTabButton";
             this.goBackToSelectColumnsTabFromPreviewTabButton.Size = new System.Drawing.Size(75, 23);
             this.goBackToSelectColumnsTabFromPreviewTabButton.TabIndex = 15;
@@ -284,7 +284,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(842, 487);
+            this.saveButton.Location = new System.Drawing.Point(853, 505);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 14;
@@ -295,16 +295,16 @@
             // queryRichTextBox
             // 
             this.queryRichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.queryRichTextBox.Location = new System.Drawing.Point(55, 90);
+            this.queryRichTextBox.Location = new System.Drawing.Point(32, 85);
             this.queryRichTextBox.Name = "queryRichTextBox";
-            this.queryRichTextBox.Size = new System.Drawing.Size(862, 362);
+            this.queryRichTextBox.Size = new System.Drawing.Size(896, 405);
             this.queryRichTextBox.TabIndex = 1;
             this.queryRichTextBox.Text = "";
             // 
             // previewLabel
             // 
             this.previewLabel.AutoSize = true;
-            this.previewLabel.Location = new System.Drawing.Point(52, 38);
+            this.previewLabel.Location = new System.Drawing.Point(29, 33);
             this.previewLabel.Name = "previewLabel";
             this.previewLabel.Size = new System.Drawing.Size(645, 13);
             this.previewLabel.TabIndex = 0;
@@ -315,7 +315,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 592);
+            this.ClientSize = new System.Drawing.Size(979, 592);
             this.Controls.Add(this.createQueryTabControl);
             this.Name = "CreateQueryForm";
             this.Text = "Create new query";

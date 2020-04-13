@@ -164,7 +164,7 @@ namespace ETL.UI
                 new DataGridViewComboBoxColumn();
             {
                 column.Name = name;
-                column.Width = 130;
+                column.Width = 127;
                 column.MaxDropDownItems = 5;
                 column.HeaderText = header;
                 column.DataPropertyName = name;
@@ -184,7 +184,7 @@ namespace ETL.UI
                 new DataGridViewTextBoxColumn();
             {
                 column.Name = name;
-                column.Width = 130;
+                column.Width = 127;
                 column.HeaderText = header;
                 column.ReadOnly = readOnly;
                 column.DataPropertyName = name;

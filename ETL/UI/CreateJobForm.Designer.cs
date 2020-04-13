@@ -44,7 +44,7 @@
             // 
             this.nameGroupbox.Controls.Add(this.ETLJobNameTextBox);
             this.nameGroupbox.Controls.Add(this.label1);
-            this.nameGroupbox.Location = new System.Drawing.Point(21, 33);
+            this.nameGroupbox.Location = new System.Drawing.Point(11, 14);
             this.nameGroupbox.Name = "nameGroupbox";
             this.nameGroupbox.Size = new System.Drawing.Size(953, 96);
             this.nameGroupbox.TabIndex = 0;
@@ -69,7 +69,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(899, 556);
+            this.saveButton.Location = new System.Drawing.Point(889, 537);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 19;
@@ -100,22 +100,22 @@
             // 
             this.datagridviewGroupBox.Controls.Add(this.etlJobDataGridView);
             this.datagridviewGroupBox.Controls.Add(this.etlsLabel);
-            this.datagridviewGroupBox.Location = new System.Drawing.Point(21, 153);
+            this.datagridviewGroupBox.Location = new System.Drawing.Point(11, 134);
             this.datagridviewGroupBox.Name = "datagridviewGroupBox";
             this.datagridviewGroupBox.Size = new System.Drawing.Size(953, 386);
             this.datagridviewGroupBox.TabIndex = 21;
             this.datagridviewGroupBox.TabStop = false;
             this.datagridviewGroupBox.Text = "ETLs order";
             // 
-            // CreateETLJob
+            // CreateJobForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(986, 591);
+            this.ClientSize = new System.Drawing.Size(976, 591);
             this.Controls.Add(this.datagridviewGroupBox);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.nameGroupbox);
-            this.Name = "CreateETLJob";
+            this.Name = "CreateJobForm";
             this.Text = "Create ETL job";
             this.nameGroupbox.ResumeLayout(false);
             this.nameGroupbox.PerformLayout();
