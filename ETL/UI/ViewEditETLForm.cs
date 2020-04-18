@@ -75,22 +75,23 @@ namespace ETL.UI
                 CreateComboBoxColumn("Column Destination", etl.destDb.GetTable(etl.destTable.GetName()).GetColumnsNames(), "ColumnDest");
             }
 
-            ETLDataGridView.Rows.Add(etl.expressionDt.Rows.Count-1);
-            foreach (DataGridViewRow Row in ETLDataGridView.Rows)
-            {
-                string destinationTableName;
-                if (etl.isDspaceDestination)
-                {
-                    destinationTableName = "Dspace table";
-                }
-                else
-                {
-                    destinationTableName = etl.destTable.GetName();
-                }
-                Row.Cells[5].Value = destinationTableName;
-            }
             try
             {
+                ETLDataGridView.Rows.Add(etl.expressionDt.Rows.Count - 1);
+                foreach (DataGridViewRow Row in ETLDataGridView.Rows)
+                {
+                    string destinationTableName;
+                    if (etl.isDspaceDestination)
+                    {
+                        destinationTableName = "Dspace table";
+                    }
+                    else
+                    {
+                        destinationTableName = etl.destTable.GetName();
+                    }
+                    Row.Cells[5].Value = destinationTableName;
+                }
+
                 for (int i = 0; i < etl.expressionDt.Rows.Count; ++i)
                 {
                     ETLDataGridView.Rows[i].Cells["ColumnDest"].Value = etl.expressionDt.Rows[i]["ColumnDest"];
@@ -180,22 +181,30 @@ namespace ETL.UI
 
         private void doneButton_Click(object sender, EventArgs e)
         {
-            SingleETL oldEtl = Global.GetETLByName(etl.name);
-            DataTable expressionDt = CreateExpressionDatatable();
-            oldEtl.expressionDt = expressionDt;
-            JobETL job = Global.GetJobContainingEtl(oldEtl);
-            if (job != null)
+            try
             {
-                job.ReplaceEtlInJob(oldEtl);
-                JsonHelper.SaveEtlJob(job, true);
-                Global.jobETLs.Remove(job);
-                Global.jobETLs.Add(job);
+                SingleETL oldEtl = Global.GetETLByName(etl.name);
+                DataTable expressionDt = CreateExpressionDatatable();
+                oldEtl.expressionDt = expressionDt;
+                JobETL job = Global.GetJobContainingEtl(oldEtl);
+                if (job != null)
+                {
+                    job.ReplaceEtlInJob(oldEtl);
+                    JsonHelper.SaveEtlJob(job, true);
+                    Global.jobETLs.Remove(job);
+                    Global.jobETLs.Add(job);
 
+                }
+                JsonHelper.SaveETL(oldEtl, true);
+                MessageBox.Show("ETL successfully edited", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ETLParent.ReloadEtlsListInMenu();
+                this.Close();
             }
-            JsonHelper.SaveETL(oldEtl, true);
-            MessageBox.Show("ETL successfully edited", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ETLParent.ReloadEtlsListInMenu();
-            this.Close();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Helper.Log(ex.Message, "CreateETL");
+            }
         }
 
         private void ETLDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -291,6 +300,17 @@ namespace ETL.UI
                 {
                     row.Cells[5].Value = etl.destTable.GetName();
                 }
+            }
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            var pressed = MessageBox.Show("Are you sure you want to delete this ETL?", "Delete ETL", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (pressed == DialogResult.Yes)
+            {
+                Global.etls.Remove(this.etl);
+                ETLParent.ReloadEtlsListInMenu();
+                this.Close();
             }
         }
     }

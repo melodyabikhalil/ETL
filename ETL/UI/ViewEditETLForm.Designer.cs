@@ -36,6 +36,7 @@
             this.destinationTableLabel = new System.Windows.Forms.Label();
             this.destinationDatabaseLabel = new System.Windows.Forms.Label();
             this.srcColumnLabel = new System.Windows.Forms.Label();
+            this.deleteButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ETLDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -114,11 +115,23 @@
             this.srcColumnLabel.Size = new System.Drawing.Size(0, 13);
             this.srcColumnLabel.TabIndex = 7;
             // 
+            // deleteButton
+            // 
+            this.deleteButton.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.deleteButton.Location = new System.Drawing.Point(809, 457);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteButton.TabIndex = 8;
+            this.deleteButton.Text = "Delete";
+            this.deleteButton.UseVisualStyleBackColor = false;
+            this.deleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
+            // 
             // ViewEditETLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1018, 498);
+            this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.srcColumnLabel);
             this.Controls.Add(this.destinationTableLabel);
             this.Controls.Add(this.destinationDatabaseLabel);
@@ -145,5 +158,6 @@
         private System.Windows.Forms.Label destinationTableLabel;
         private System.Windows.Forms.Label destinationDatabaseLabel;
         private System.Windows.Forms.Label srcColumnLabel;
+        private System.Windows.Forms.Button deleteButton;
     }
 }
