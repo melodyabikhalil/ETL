@@ -50,6 +50,7 @@ namespace ETL.Core
                     Helper.ShowDatabaseErrorInProgressForm();
                 }
             }
+            System.Threading.Thread.Sleep(2000);
             Helper.ShowJobDone();
         }
 
