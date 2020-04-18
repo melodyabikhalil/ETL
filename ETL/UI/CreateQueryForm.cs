@@ -108,7 +108,6 @@ namespace ETL.UI
         {
             try
             {
-
                 DataTable joinQueryDataTable = UIHelper.CreateDataTableFromDataGridView(buildQueryDataGridView);
                 this.joinQuery.queryDatatable = joinQueryDataTable;
                 List<string> tables = Helper.SelectOneColumnFromDataTable(joinQueryDataTable, "Table 1");
