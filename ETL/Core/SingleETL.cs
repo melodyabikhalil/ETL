@@ -86,6 +86,7 @@ namespace ETL.Core
             string destinationTableName = "";
             if (!this.isDspaceDestination)
             {
+                progressActionLabel = "Inserting data into destination table...";
                 destinationTable = this.destTable;
                 destinationTable = destinationDb.GetTable(destinationTable.GetName());
                 destinationTable.dataTable.TableName = destinationTable.GetName();

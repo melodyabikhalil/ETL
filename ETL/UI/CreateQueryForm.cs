@@ -106,21 +106,32 @@ namespace ETL.UI
 
         private void SetSelectColumnsDataFridView()
         {
-            DataTable joinQueryDataTable = UIHelper.CreateDataTableFromDataGridView(buildQueryDataGridView);
-            this.joinQuery.queryDatatable = joinQueryDataTable;
-            List<string> tables = Helper.SelectOneColumnFromDataTable(joinQueryDataTable, "Table 1");
-            tables.AddRange(Helper.SelectOneColumnFromDataTable(joinQueryDataTable, "Table 2"));
-            List<string> columns = Helper.GetColumnsFromTables(Helper.ConvertListToSet(tables), this.joinQuery.database);
-            DataTable datatableColumns = Helper.ConvertListToDataTable(columns);
-            datatableColumns.Columns["Column1"].ColumnName = "Column Name";
-            datatableColumns.Columns["Column Name"].ReadOnly = true;
-            datatableColumns = Helper.DuplicateDatatableColumnWithValues(datatableColumns, "Column Name", "AS");
-            selectColumnsDataGridView.AllowUserToAddRows = false;
-            this.CreateCheckBoxColumn();
-            selectColumnsDataGridView.DataSource = datatableColumns;
-            selectColumnsDataGridView.Columns[1].Width = 200;
-            selectColumnsDataGridView.Columns[2].Width = 200;
+            try
+            {
 
+                DataTable joinQueryDataTable = UIHelper.CreateDataTableFromDataGridView(buildQueryDataGridView);
+                this.joinQuery.queryDatatable = joinQueryDataTable;
+                List<string> tables = Helper.SelectOneColumnFromDataTable(joinQueryDataTable, "Table 1");
+                tables.AddRange(Helper.SelectOneColumnFromDataTable(joinQueryDataTable, "Table 2"));
+                List<string> columns = Helper.GetColumnsFromTables(Helper.ConvertListToSet(tables), this.joinQuery.database);
+                DataTable datatableColumns = Helper.ConvertListToDataTable(columns);
+                datatableColumns.Columns["Column1"].ColumnName = "Column Name";
+                datatableColumns.Columns["Column Name"].ReadOnly = true;
+                datatableColumns = Helper.DuplicateDatatableColumnWithValues(datatableColumns, "Column Name", "AS");
+                selectColumnsDataGridView.AllowUserToAddRows = false;
+                if (selectColumnsDataGridView.Columns.Count < 3)
+                {
+                    this.CreateCheckBoxColumn();
+                }
+                selectColumnsDataGridView.DataSource = datatableColumns;
+                selectColumnsDataGridView.Columns[1].Width = 200;
+                selectColumnsDataGridView.Columns[2].Width = 200;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Helper.Log(e.Message, "CreateQuery-SetJoinColumns");
+            }
         }
 
         private void CreateCheckBoxColumn()
