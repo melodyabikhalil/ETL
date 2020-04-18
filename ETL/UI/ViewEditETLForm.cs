@@ -310,6 +310,7 @@ namespace ETL.UI
             {
                 Global.etls.Remove(this.etl);
                 ETLParent.ReloadEtlsListInMenu();
+                JsonHelper.RemoveETL(this.etl);
                 this.Close();
             }
         }

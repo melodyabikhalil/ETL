@@ -149,15 +149,30 @@ namespace ETL.Utility
         {
             List<SingleETL> savedEtls = GetETLsFromJsonFile();
             savedEtls.Remove(etl);
-            string json = JsonConvert.SerializeObject(savedEtls, Formatting.Indented,
+            List<JsonSingleEtl> jsonEtls = JsonModels.MapFromListSingleETLToJsonSingleEtl(savedEtls);
+            string json = JsonConvert.SerializeObject(jsonEtls, Formatting.Indented,
+            new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            File.WriteAllText(PATH_ETLS, string.Empty);
+            File.WriteAllText(PATH_ETLS, json);
+        }
+
+        public static void RemoveDatabase(Database database)
+        {
+            List<Database> savedDatabases = GetDatabasesFromJsonFile();
+            savedDatabases.Remove(database);
+            List<JsonDatabase> jsonDatabases = JsonModels.MapFromListDatabaseToListJsonDatabase(savedDatabases);
+            string json = JsonConvert.SerializeObject(jsonDatabases, Formatting.Indented,
                 new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
 
-            File.WriteAllText(PATH_ETLS, string.Empty);
-            File.WriteAllText(PATH_ETLS, json);
-
+            File.WriteAllText(PATH_DATABASES, string.Empty);
+            File.WriteAllText(PATH_DATABASES, json);
         }
 
         public static void SaveETL(SingleETL etl, bool addIfNotExists)

@@ -130,6 +130,7 @@ namespace ETL.UI
                 var result = databasesTreeView.Nodes.OfType<TreeNode>()
                                         .FirstOrDefault(node => node.Tag.Equals(database.databaseName));
                 this.databasesTreeView.Nodes.Remove(result);
+                JsonHelper.RemoveDatabase(database);
             }
         }
 
