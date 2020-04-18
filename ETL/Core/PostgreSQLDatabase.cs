@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ETL.Core
@@ -244,16 +245,10 @@ namespace ETL.Core
             string query = tableOrQuery.query;
             try
             {
-                int startIndex = query.IndexOf("SELECT") + 7;
-                int endIndex = query.IndexOf("FROM") - 1;
+                query = Regex.Replace(query, ";", String.Empty);
 
-                query = query.Remove(startIndex, endIndex - startIndex);
-                query = query.Insert(startIndex, "count(1)");
+                query = "SELECT COUNT(*) FROM (" + query + ") AS temp;";
 
-                if (type == TableOrQuery.TYPE_TABLE && this.schema != "" && this.schema != null)
-                {
-                    query = "SELECT count(1) FROM " + this.schema + ".\"" + tableOrQueryName + "\";";
-                }
                 NpgsqlCommand command = new NpgsqlCommand(query, this.connection);
                 int count = Convert.ToInt32(command.ExecuteScalar());
                 return count;
