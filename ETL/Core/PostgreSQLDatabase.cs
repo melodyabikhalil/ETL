@@ -260,6 +260,7 @@ namespace ETL.Core
                 return 0;
             }
         }
+
         protected void Row_Changed(object sender, DataRowChangeEventArgs e)
         {
             if (e.Action != DataRowAction.Commit)
