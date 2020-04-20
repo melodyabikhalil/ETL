@@ -23,6 +23,7 @@ namespace ETL.UI
         private bool isDspace;
         private string dspaceFolderPath;
         private string destTableName;
+        private string sourceTableName;
 
         public CreateETLForm()
         {
@@ -94,13 +95,11 @@ namespace ETL.UI
             if (isDspace)
             {
                 destTableName = "Dspace table";
-                this.destTableName = destTableName;
                 columnsNames = ((DSpaceDatabase)dest).columns;
             }
             else
             {
                 destTableName = this.destTableComboBox.Text;
-                this.destTableName = destTableName;
                 dest.Close();
                 dest.Connect();
                 dest.SetDatatableSchema(destTableName);
@@ -110,6 +109,17 @@ namespace ETL.UI
             }
 
             string srcTableName = this.srcTableOrQueriesComboBox.Text;
+
+            bool clearRows = false;
+            if (this.sourceTableName != null && this.destTableName != null)
+            {
+                if (this.sourceTableName != srcTableName || this.destTableName != destTableName)
+                {
+                    clearRows = true;
+                }
+            }
+            this.sourceTableName = srcTableName;
+            this.destTableName = destTableName;
             List<string> sourceDatabaseTablesNames = this.src.tablesNames;
             if (sourceDatabaseTablesNames.Contains(srcTableName))
             {
@@ -137,59 +147,78 @@ namespace ETL.UI
             }
             this.srcColumnLabel.Text = this.srcColumnLabel.Text + " " + srcColumnsList;
             List<string> expressionTypes = new List<string>(new string[] { "Replace", "Reg", "Map" });
-            CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType");
-            CreateTexBoxColumn("Expression", false, "Expression");
-            CreateTexBoxColumn("Regular Expression", false, "RegularExpression");
+            CreateComboBoxColumn("Expression Type", expressionTypes, "ExpressionType", 0, clearRows);
+            CreateTexBoxColumn("Expression", false, "Expression", clearRows);
+            CreateTexBoxColumn("Regular Expression", false, "RegularExpression", clearRows);
 
-            CreateComboBoxColumn("Mapping Source column", srcTable.GetColumnsNames(), "MapColumnName");
+            CreateComboBoxColumn("Mapping Source column", srcTable.GetColumnsNames(), "MapColumnName", 3, clearRows);
             HashSet<string> sections = Global.mapDt.AsEnumerable().Select(r => r.Field<string>("MappingName")).ToHashSet();
             List<string> sectionNames = new List<string>();
             foreach (string section in sections)
             {
                 sectionNames.Add(section);
             }
-            CreateComboBoxColumn("Mapping Name", sectionNames, "MappingName");
+            CreateComboBoxColumn("Mapping Name", sectionNames, "MappingName", 4, clearRows);
 
-            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest");
+            CreateTexBoxColumn("Table Name Destination", true, "TableNameDest", clearRows);
             foreach (DataGridViewRow Row in ExpressionDataGridView.Rows)
             {
                 Row.Cells[5].Value = destTableName;
             }
-            CreateComboBoxColumn("Column Destination", columnsNames, "ColumnDest");
+            CreateComboBoxColumn("Column Destination", columnsNames, "ColumnDest", 6, clearRows);
         }
 
-        private void CreateComboBoxColumn(string header, List<string> values, string name)
+        private void CreateComboBoxColumn(string header, List<string> values, string name, int index, bool clearRows)
         {
-            DataGridViewComboBoxColumn column =
-                new DataGridViewComboBoxColumn();
+            if (ExpressionDataGridView.Columns.Contains(name))
             {
-                column.Name = name;
-                column.Width = 127;
-                column.MaxDropDownItems = 5;
-                column.HeaderText = header;
-                column.DataPropertyName = name;
-                column.FlatStyle = FlatStyle.Flat;
-                column.ValueType = typeof(string);
-                if (values != null)
+                ((DataGridViewComboBoxColumn)ExpressionDataGridView.Columns[index]).DataSource = values;
+                if (clearRows)
                 {
-                    column.DataSource = values;
+                    ExpressionDataGridView.Rows.Clear();
                 }
-                ExpressionDataGridView.Columns.Add(column);
+            }
+            else
+            {
+                DataGridViewComboBoxColumn column =
+                    new DataGridViewComboBoxColumn();
+                {
+                    column.Name = name;
+                    column.Width = 127;
+                    column.MaxDropDownItems = 5;
+                    column.HeaderText = header;
+                    column.DataPropertyName = name;
+                    column.FlatStyle = FlatStyle.Flat;
+                    column.ValueType = typeof(string);
+                    if (values != null)
+                    {
+                        column.DataSource = values;
+                    }
+                    ExpressionDataGridView.Columns.Add(column);
+                }
             }
         }
 
-        private void CreateTexBoxColumn(string header, bool readOnly, string name)
+        private void CreateTexBoxColumn(string header, bool readOnly, string name, bool clearRows)
         {
-            DataGridViewTextBoxColumn column =
-                new DataGridViewTextBoxColumn();
+            if (clearRows)
             {
-                column.Name = name;
-                column.Width = 127;
-                column.HeaderText = header;
-                column.ReadOnly = readOnly;
-                column.DataPropertyName = name;
-                column.ValueType = typeof(string);
-                ExpressionDataGridView.Columns.Add(column);
+                ExpressionDataGridView.Rows.Clear();
+            }
+
+            if (!ExpressionDataGridView.Columns.Contains(name))
+            {
+                DataGridViewTextBoxColumn column =
+                new DataGridViewTextBoxColumn();
+                {
+                    column.Name = name;
+                    column.Width = 127;
+                    column.HeaderText = header;
+                    column.ReadOnly = readOnly;
+                    column.DataPropertyName = name;
+                    column.ValueType = typeof(string);
+                    ExpressionDataGridView.Columns.Add(column);
+                }
             }
         }
 
@@ -235,22 +264,31 @@ namespace ETL.UI
 
         private void ExpressionDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            for (int index = e.RowIndex; index <= e.RowIndex + e.RowCount - 1; index++)
+            try
             {
-                DataGridViewRow row = ExpressionDataGridView.Rows[index];
-                //Adds default value for the destination table name
-                if (row.Cells.Count > 1) {
-                    if (isDspace)
+                for (int index = e.RowIndex; index <= e.RowIndex + e.RowCount - 1; index++)
+                {
+                    DataGridViewRow row = ExpressionDataGridView.Rows[index];
+                    //Adds default value for the destination table name
+                    if (row.Cells.Count > 1)
                     {
-                        row.Cells[5].Value = "Dspace table";
-                    }
-                    else
-                    {
-                        row.Cells[5].Value = this.destTableComboBox.Text;
+                        if (isDspace)
+                        {
+                            row.Cells[5].Value = "Dspace table";
+                        }
+                        else
+                        {
+                            row.Cells[5].Value = this.destTableComboBox.Text;
+                        }
                     }
                 }
-                
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Helper.Log(ex.Message, "CreateETL-RowAdded");
+            }
+            
         }
 
         private void ExpressionDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
