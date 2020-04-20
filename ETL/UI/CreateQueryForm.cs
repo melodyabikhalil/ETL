@@ -55,7 +55,10 @@ namespace ETL.UI
                 this.buildQueryTabPage.Enabled = true;
                 this.mainTableTextBox.Text = this.mainTableCombobox.SelectedItem.ToString();
                 this.joinQuery.mainTableName = this.mainTableCombobox.SelectedItem.ToString();
-                this.SetCreateQueryDataGridView();
+                if (buildQueryDataGridView.Columns.Count < 5)
+                {
+                    this.SetCreateQueryDataGridView();
+                }
                 this.joinQuery.SetName(queryName);
                 this.createQueryTabControl.SelectedTab = this.buildQueryTabPage;
             }
