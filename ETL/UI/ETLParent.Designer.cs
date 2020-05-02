@@ -35,13 +35,12 @@
             this.ETLMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.createStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.jobMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.createJobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mappingMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.editMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -61,7 +60,7 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.databaseMenu,
             this.ETLMenu,
-            this.toolsMenu,
+            this.jobMenu,
             this.mappingMenu,
             this.viewMenu});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
@@ -101,36 +100,36 @@
             // 
             this.createStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.createStripMenuItem.Name = "createStripMenuItem";
-            this.createStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.createStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createStripMenuItem.Text = "&Create";
             this.createStripMenuItem.Click += new System.EventHandler(this.createStripMenuItem_Click);
             // 
             // viewEditToolStripMenuItem
             // 
             this.viewEditToolStripMenuItem.Name = "viewEditToolStripMenuItem";
-            this.viewEditToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.viewEditToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.viewEditToolStripMenuItem.Text = "View/Edit";
             // 
-            // toolsMenu
+            // jobMenu
             // 
-            this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jobMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createJobToolStripMenuItem,
             this.RunToolStripMenuItem});
-            this.toolsMenu.Name = "toolsMenu";
-            this.toolsMenu.Size = new System.Drawing.Size(59, 20);
-            this.toolsMenu.Text = "&ETL Job";
+            this.jobMenu.Name = "jobMenu";
+            this.jobMenu.Size = new System.Drawing.Size(59, 20);
+            this.jobMenu.Text = "&ETL Job";
             // 
             // createJobToolStripMenuItem
             // 
             this.createJobToolStripMenuItem.Name = "createJobToolStripMenuItem";
-            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.createJobToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createJobToolStripMenuItem.Text = "&Create";
             this.createJobToolStripMenuItem.Click += new System.EventHandler(this.CreateJobToolStripMenuItem_Click);
             // 
             // RunToolStripMenuItem
             // 
             this.RunToolStripMenuItem.Name = "RunToolStripMenuItem";
-            this.RunToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.RunToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.RunToolStripMenuItem.Text = "Run";
             // 
             // mappingMenu
@@ -144,27 +143,17 @@
             // editMappingToolStripMenuItem
             // 
             this.editMappingToolStripMenuItem.Name = "editMappingToolStripMenuItem";
-            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.editMappingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editMappingToolStripMenuItem.Text = "View/Edit";
             this.editMappingToolStripMenuItem.Click += new System.EventHandler(this.editMappingToolStripMenuItem_Click);
             // 
             // viewMenu
             // 
             this.viewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolBarToolStripMenuItem,
             this.statusBarToolStripMenuItem});
             this.viewMenu.Name = "viewMenu";
             this.viewMenu.Size = new System.Drawing.Size(44, 20);
             this.viewMenu.Text = "&View";
-            // 
-            // toolBarToolStripMenuItem
-            // 
-            this.toolBarToolStripMenuItem.Checked = true;
-            this.toolBarToolStripMenuItem.CheckOnClick = true;
-            this.toolBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.toolBarToolStripMenuItem.Name = "toolBarToolStripMenuItem";
-            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.toolBarToolStripMenuItem.Text = "&Toolbar";
             // 
             // statusBarToolStripMenuItem
             // 
@@ -172,7 +161,7 @@
             this.statusBarToolStripMenuItem.CheckOnClick = true;
             this.statusBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
-            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.statusBarToolStripMenuItem.Text = "&Status Bar";
             this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
             // 
@@ -250,9 +239,8 @@
         private System.Windows.Forms.ToolStripMenuItem ETLMenu;
         private System.Windows.Forms.ToolStripMenuItem createStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewMenu;
-        private System.Windows.Forms.ToolStripMenuItem toolBarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem statusBarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsMenu;
+        private System.Windows.Forms.ToolStripMenuItem jobMenu;
         private System.Windows.Forms.ToolStripMenuItem createJobToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.SplitContainer mainSplitContainer;
