@@ -64,6 +64,7 @@ namespace ETL.UI
 
         public static void LoadSavedDataFromJsonFiles()
         {
+            JsonHelper.CreateJsonFolder();
             LoadDatabasesFromJsonFile();
             LoadEtlsFromJsonFile();
             LoadEtlJobsFromJsonFile();

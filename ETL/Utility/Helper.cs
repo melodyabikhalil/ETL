@@ -205,6 +205,7 @@ namespace ETL.Utility
                         string date = DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss");
                         string toWrite = date + " : [" + source + "] " + message;
                         file.WriteLine(toWrite);
+                        file.Close();
                     }
                 }
                 catch (Exception e)

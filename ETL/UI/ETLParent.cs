@@ -32,7 +32,6 @@ namespace ETL.UI
             _instance = this;
             this.mainSplitContainer.Visible = false;
             this.AddMenuItems();
-            JsonHelper.CreateJsonFolder();
 
             foreach (Database database in Global.Databases)
             {

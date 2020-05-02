@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETL", "ETL\ETL.csproj", "{4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLTest", "ETLTest\ETLTest.csproj", "{827AD4F1-DF28-4BF8-A2D3-C5DEA13DB4C4}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ETLStudioSetup", "ETLStudioSetup\ETLStudioSetup.vdproj", "{BC7FCFC7-9EA2-4B76-9D39-B0C764DA0567}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,8 +21,6 @@ Global
 		{827AD4F1-DF28-4BF8-A2D3-C5DEA13DB4C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{827AD4F1-DF28-4BF8-A2D3-C5DEA13DB4C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{827AD4F1-DF28-4BF8-A2D3-C5DEA13DB4C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC7FCFC7-9EA2-4B76-9D39-B0C764DA0567}.Debug|Any CPU.ActiveCfg = Debug
-		{BC7FCFC7-9EA2-4B76-9D39-B0C764DA0567}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
