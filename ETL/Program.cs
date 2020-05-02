@@ -15,6 +15,12 @@ namespace ETL
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Start();
+        }
+
+
+        public static void Start()
+        {
             SplashForm splashForm = new SplashForm();
             try
             {
@@ -28,6 +34,7 @@ namespace ETL
                 Console.WriteLine(e.Message);
                 Helper.Log(e.Message, "LoadingSavedData");
             }
+
             Application.Run(new ETLParent());
         }
     }
