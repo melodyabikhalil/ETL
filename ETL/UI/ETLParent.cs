@@ -34,7 +34,6 @@ namespace ETL.UI
             this.AddMenuItems();
             ETLMenu.Enabled = false;
             jobMenu.Enabled = false;
-            viewMenu.Enabled = false;
             mappingMenu.Enabled = false;
 
             foreach (Database database in Global.Databases)
@@ -83,7 +82,6 @@ namespace ETL.UI
             _instance.mainSplitContainer.Visible = true;
             _instance.ETLMenu.Enabled = true;
             _instance.jobMenu.Enabled = true;
-            _instance.viewMenu.Enabled = true;
             _instance.mappingMenu.Enabled = true;
         }
 
