@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace ETL.Utility
 {
     static class Helper
     {
-        public static string PATH_FOLDER = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static string PATH_FOLDER = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ETL Studio\\Logs";
         public static string PATH_LOG_FILE = PATH_FOLDER + "\\logs.txt";
 
         public static DataTable ConvertListToDataTable(List<string> list)
@@ -158,7 +159,7 @@ namespace ETL.Utility
 
         public static void Log(string message, string source)
         {
-            string folderPath = PATH_LOG_FOLDER;
+            string folderPath = PATH_FOLDER;
             string filePath = PATH_LOG_FILE;
             bool folderExists = true;
             bool fileExists = true;
@@ -200,12 +201,12 @@ namespace ETL.Utility
             {
                 try
                 {
-                    using (StreamWriter file = new StreamWriter(filePath, true))
+                    using (EventLog eventLog = new EventLog("Application"))
                     {
                         string date = DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss");
                         string toWrite = date + " : [" + source + "] " + message;
-                        file.WriteLine(toWrite);
-                        file.Close();
+                        eventLog.Source = "Application";
+                        eventLog.WriteEntry(toWrite);
                     }
                 }
                 catch (Exception e)

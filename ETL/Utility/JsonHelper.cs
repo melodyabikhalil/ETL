@@ -13,7 +13,7 @@ namespace ETL.Utility
 {
     public static class JsonHelper
     {
-        public static string PATH_FOLDER = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static string PATH_FOLDER = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ETL Studio\\Json";
         public static string PATH_DATABASES = PATH_FOLDER + "\\databases.json";
         public static string PATH_ETLS = PATH_FOLDER + "\\etls.json";
         public static string PATH_ETL_JOBS = PATH_FOLDER + "\\jobs.json";
