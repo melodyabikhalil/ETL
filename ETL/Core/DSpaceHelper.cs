@@ -64,7 +64,7 @@ namespace ETL.Core
             string applicationLocation = System.Reflection.Assembly.GetEntryAssembly().Location;
             string applicationDirectory = Path.GetDirectoryName(applicationLocation);
 
-            string path = @"" + applicationDirectory + "\\Utility\\dspace_metadata.csv";
+            string path = @"" + applicationDirectory + "\\Resources\\dspace_metadata.csv";
             DataTable dt = ConvertCSVtoDataTable(path);
             List<DSpaceMetadataField> fields = CreateMetadataFieldsList(dt);
             return fields;

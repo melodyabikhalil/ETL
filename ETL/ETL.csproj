@@ -280,7 +280,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Utility\dspace_metadata.csv">
+    <None Include="Resources\dspace_metadata.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -289,7 +289,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="etlstudiologo.ico" />
-    <Content Include="HTML\HelpETL.html">
+    <Content Include="Resources\HelpETL.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
