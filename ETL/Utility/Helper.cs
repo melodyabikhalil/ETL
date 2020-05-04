@@ -13,8 +13,8 @@ namespace ETL.Utility
 {
     static class Helper
     {
-        public const string PATH_LOG_FOLDER = ".\\logs";
-        public const string PATH_LOG_FILE = PATH_LOG_FOLDER + "\\logs.txt";
+        public static string PATH_FOLDER = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static string PATH_LOG_FILE = PATH_FOLDER + "\\logs.txt";
 
         public static DataTable ConvertListToDataTable(List<string> list)
         {

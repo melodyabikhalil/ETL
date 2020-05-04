@@ -13,16 +13,16 @@ namespace ETL.Utility
 {
     public static class JsonHelper
     {
-        public const string PATH_FOLDER_CONFIG = ".\\config";
-        public const string PATH_DATABASES = PATH_FOLDER_CONFIG + "\\databases.json";
-        public const string PATH_ETLS = PATH_FOLDER_CONFIG + "\\etls.json";
-        public const string PATH_ETL_JOBS = PATH_FOLDER_CONFIG + "\\jobs.json";
-        public const string PATH_MAP_DT = PATH_FOLDER_CONFIG + "\\mappingDt.json";
+        public static string PATH_FOLDER = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static string PATH_DATABASES = PATH_FOLDER + "\\databases.json";
+        public static string PATH_ETLS = PATH_FOLDER + "\\etls.json";
+        public static string PATH_ETL_JOBS = PATH_FOLDER + "\\jobs.json";
+        public static string PATH_MAP_DT = PATH_FOLDER + "\\mappingDt.json";
 
         public static bool CreateJsonFolder()
         {
             bool success = false;
-            string path = PATH_FOLDER_CONFIG;
+            string path = PATH_FOLDER;
             if (Directory.Exists(path))
             {
                 success = true;
