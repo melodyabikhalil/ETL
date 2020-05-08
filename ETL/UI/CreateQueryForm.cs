@@ -48,7 +48,14 @@ namespace ETL.UI
             bool queryNameExistsAsTable = tablesNamesOfDatabase.Contains(queryName.Trim());
             if (this.mainTableCombobox.SelectedIndex < 0 || queryName == "" || queryName == null || queryNameExistsAsTable)
             {
-                MessageBox.Show("Please choose a name for this new ETL to proceed. You can't choose the same name as a table", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (this.mainTableCombobox.SelectedIndex < 0)
+                {
+                    MessageBox.Show("Please choose a main table for this new Query to proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Please choose a name for this new Query to proceed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
