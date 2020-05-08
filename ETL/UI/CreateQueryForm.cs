@@ -240,5 +240,11 @@ namespace ETL.UI
                 MessageBox.Show("Query is not valid. Please go back to previous steps and fix it", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void HelpButton_Click(object sender, EventArgs e)
+        {
+            HelpForm help = new HelpForm("\\Resources\\HelpQuery.html");
+            help.Show();
+        }
     }
 }

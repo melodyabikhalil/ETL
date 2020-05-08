@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>ETL Help</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        #table {
+            border-collapse: collapse;
+        }
+
+        #table td, #table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #ffffff;
+        }
+
+        #table tr:nth-child(even){background-color: #f2f2f2;}
+
+        #table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body style="background: #fffbf2;">
+    <h2>Query Help</h2>
+    <div>
+        This page consists of creating a new query (view) for a database.
+
+        <div>
+           First you should choose a name for your new query.
+            <br> Then a main table which is the one the query will start with.
+            <br>For example: SELECT * FROM x JOIN y ON x.id=y.id. Here, x is the main table.
+        </div>
+        <br>
+        <div><b>Table columns usage:</b></div>
+        Example:
+        SELECT * FROM users
+        INNER JOIN 
+        <ul>
+            <li><u>Join type:</u></li> 
+            Type of the join query: INNER, OUTER, LEFT, RIGHT, FULL.<br><br>
+
+            <li><u>Table 1:</u></li>
+            Table name after the join<br><br>
+
+            <li><u>Column 1:</u></li>
+            Column to join on from table 1<br><br>
+
+            <li><u>Table 2:</u></li>
+            Table name to join columns with<br><br>
+
+            <li><u>Column 2:</u></li>
+            Column to join on from table 2<br><br>
+        </ul>
+        <br>
+        <div><b>Example:</b></div>
+        Query:
+        <br>SELECT * FROM Users
+        <br>INNER JOIN Languages ON Languages.ID=Users.language_id
+        <br>LEFT JOIN Addresses ON Addresses.ID=Users.address_id
+        <br>RIGHT JOIN Buildings ON Buildings.ID=Addresses.building_id
+        <br><br>
+        Main table: Users
+        <br>
+        Table to fill:
+        <table id="table">
+            <tr>
+                <th>Join Type</th>
+                <th>Table 1</th>
+                <th>Column 1</th>
+                <th>Table 2</th>
+                <th>Column 2</th>
+            </tr>
+            <tr>
+                <td>INNER JOIN</td>
+                <td>Languages</td>
+                <td>ID</td>
+                <td>Users</td>
+                <td>language_id</td>  
+            </tr>
+            <tr>
+                <td>LEFT JOIN</td>
+                <td>Addresses</td>
+                <td>ID</td>
+                <td>Users</td>
+                <td>address_id</td>
+            </tr>
+            <tr>
+                <td>RIGHT JOIN</td>
+                <td>Buildings</td>
+                <td>ID</td>
+                <td>Addresses</td>
+                <td>building_id</td>
+            </tr>
+        </table>
+              
+    </div>
+</body>
+</html>
