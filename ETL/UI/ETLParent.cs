@@ -63,7 +63,8 @@ namespace ETL.UI
 
         private void HelpMenu_Click(object sender, EventArgs e)
         {
-
+            HelpForm help = new HelpForm("\\Resources\\HelpStudio.html");
+            help.Show();
         }
 
         private void Add_Click(object sender, EventArgs e)

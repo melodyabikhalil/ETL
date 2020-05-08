@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>ETL Studio Help</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        #table {
+            border-collapse: collapse;
+        }
+
+        #table td, #table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #ffffff;
+        }
+
+        #table tr:nth-child(even){background-color: #f2f2f2;}
+
+        #table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body style="background: #fffbf2;">
+    <h2>ETL Studio Help</h2>
+    <div>
+        <div><b>What is this application?</b></div>
+        <div>
+            ETL Studio allows you to migrate data between several databases. 
+            <br>You should create a Job where you list the migrations (called ETL) that you wish to do in this job, in a specific order. Then you run this job and the data will be migrated.
+        </div>
+        <br>
+        <div><b>Why ETL Studio?</b></div>
+        <div>
+            Our application supports several database types:
+            <ul>
+                <li>MySQL</li>
+                <li>MS Access</li>
+                <li>PostgreSQL</li>
+                <li>SQL Server</li>
+                <li>ODBC</li>
+            </ul>
+            We also support migration to DSpace library management.
+        </div>
+        <br>
+        <div><b>How to use ETL Studio?</b></div>
+        <div>
+           There are several easy steps to go through:
+            <ul>
+                <li>Connect to the databases (source and destination)</li>
+                <li>Create views (called Query) that is a JOIN query by right clicking on the 'Queries' node in the database in the treeview on the right. (Optional step)</li>
+                <li>Create an ETL by choosing source database and table (or query that was created in step 2), and destination database and table, as well as the transformation</li>
+                <li>Create a Job and add the ETLs needed to it</li>
+                <li>Run the Job</li>
+            </ul>
+            You can find more help pages for each step in the correspondent window.
+        </div>
+        <br>
+        <div>Enjoy!</div>
+    </div>
+</body>
+</html>
