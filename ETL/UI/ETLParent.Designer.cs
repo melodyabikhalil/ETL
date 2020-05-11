@@ -42,12 +42,12 @@
             this.editMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.databasesTreeView = new System.Windows.Forms.TreeView();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
@@ -68,7 +68,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.mappingMenu;
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1700, 28);
+            this.menuStrip.Size = new System.Drawing.Size(1924, 30);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -78,7 +78,7 @@
             this.addToolStripMenuItem});
             this.databaseMenu.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
             this.databaseMenu.Name = "databaseMenu";
-            this.databaseMenu.Size = new System.Drawing.Size(86, 34);
+            this.databaseMenu.Size = new System.Drawing.Size(86, 24);
             this.databaseMenu.Text = "&Database";
             // 
             // addToolStripMenuItem
@@ -95,7 +95,7 @@
             this.createStripMenuItem,
             this.viewEditToolStripMenuItem});
             this.ETLMenu.Name = "ETLMenu";
-            this.ETLMenu.Size = new System.Drawing.Size(46, 34);
+            this.ETLMenu.Size = new System.Drawing.Size(46, 24);
             this.ETLMenu.Text = "&ETL";
             // 
             // createStripMenuItem
@@ -118,7 +118,7 @@
             this.createJobToolStripMenuItem,
             this.RunToolStripMenuItem});
             this.jobMenu.Name = "jobMenu";
-            this.jobMenu.Size = new System.Drawing.Size(73, 34);
+            this.jobMenu.Size = new System.Drawing.Size(73, 24);
             this.jobMenu.Text = "&ETL Job";
             // 
             // createJobToolStripMenuItem
@@ -139,7 +139,7 @@
             this.mappingMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editMappingToolStripMenuItem});
             this.mappingMenu.Name = "mappingMenu";
-            this.mappingMenu.Size = new System.Drawing.Size(83, 34);
+            this.mappingMenu.Size = new System.Drawing.Size(83, 24);
             this.mappingMenu.Text = "&Mapping";
             // 
             // editMappingToolStripMenuItem
@@ -154,7 +154,7 @@
             this.viewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusBarToolStripMenuItem});
             this.viewMenu.Name = "viewMenu";
-            this.viewMenu.Size = new System.Drawing.Size(55, 34);
+            this.viewMenu.Size = new System.Drawing.Size(55, 24);
             this.viewMenu.Text = "&View";
             // 
             // statusBarToolStripMenuItem
@@ -163,9 +163,16 @@
             this.statusBarToolStripMenuItem.CheckOnClick = true;
             this.statusBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
-            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
             this.statusBarToolStripMenuItem.Text = "&Status Bar";
             this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
+            this.helpToolStripMenuItem.Text = "&Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.HelpMenu_Click);
             // 
             // statusStrip
             // 
@@ -175,28 +182,28 @@
             this.statusStrip.Location = new System.Drawing.Point(0, 831);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip.Size = new System.Drawing.Size(1700, 26);
+            this.statusStrip.Size = new System.Drawing.Size(1924, 26);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(45, 27);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(45, 20);
             this.toolStripStatusLabel.Text = "Open";
             // 
             // mainSplitContainer
             // 
             this.mainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainSplitContainer.Location = new System.Drawing.Point(0, 28);
-            this.mainSplitContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mainSplitContainer.Location = new System.Drawing.Point(0, 30);
+            this.mainSplitContainer.Margin = new System.Windows.Forms.Padding(4);
             this.mainSplitContainer.Name = "mainSplitContainer";
             // 
             // mainSplitContainer.Panel1
             // 
             this.mainSplitContainer.Panel1.Controls.Add(this.databasesTreeView);
-            this.mainSplitContainer.Size = new System.Drawing.Size(1700, 803);
-            this.mainSplitContainer.SplitterDistance = 385;
+            this.mainSplitContainer.Size = new System.Drawing.Size(1924, 801);
+            this.mainSplitContainer.SplitterDistance = 296;
             this.mainSplitContainer.SplitterWidth = 5;
             this.mainSplitContainer.TabIndex = 4;
             // 
@@ -204,31 +211,24 @@
             // 
             this.databasesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.databasesTreeView.Location = new System.Drawing.Point(0, 0);
-            this.databasesTreeView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.databasesTreeView.Margin = new System.Windows.Forms.Padding(4);
             this.databasesTreeView.Name = "databasesTreeView";
-            this.databasesTreeView.Size = new System.Drawing.Size(385, 803);
+            this.databasesTreeView.Size = new System.Drawing.Size(296, 801);
             this.databasesTreeView.TabIndex = 0;
             this.databasesTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabasesTreeView_NodeMouseClick);
             this.databasesTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabasesTreeView_NodeMouseDoubleClick);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
-            this.helpToolStripMenuItem.Text = "&Help";
-            this.helpToolStripMenuItem.Click += new System.EventHandler(this.HelpMenu_Click);
             // 
             // ETLParent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1700, 857);
+            this.ClientSize = new System.Drawing.Size(1924, 857);
             this.Controls.Add(this.mainSplitContainer);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ETLParent";
             this.Text = "ETL Studio";
             this.menuStrip.ResumeLayout(false);
