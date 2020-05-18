@@ -201,12 +201,12 @@ namespace ETL.Utility
             {
                 try
                 {
-                    using (EventLog eventLog = new EventLog("Application"))
+                    using (StreamWriter file = new StreamWriter(filePath, true))
                     {
                         string date = DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss");
                         string toWrite = date + " : [" + source + "] " + message;
-                        eventLog.Source = "Application";
-                        eventLog.WriteEntry(toWrite);
+                        file.WriteLine(toWrite);
+                        file.Close();
                     }
                 }
                 catch (Exception e)

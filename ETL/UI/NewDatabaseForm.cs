@@ -29,7 +29,7 @@ namespace ETL.UI
             this.dbTypesComboBox.Items.Add(Database.DATABASE_TYPE_SQLSERVER);
             this.dbTypesComboBox.Items.Add(Database.DATABASE_TYPE_POSTGRES);
             this.dbTypesComboBox.Items.Add(Database.DATABASE_TYPE_ACCESS);
-            this.dbTypesComboBox.Items.Add(Database.DATABASE_TYPE_ODBC);
+            //this.dbTypesComboBox.Items.Add(Database.DATABASE_TYPE_ODBC);
         }
 
         private void ConnectToDb(string dbType)

@@ -44,34 +44,39 @@
             // 
             this.nameGroupbox.Controls.Add(this.ETLJobNameTextBox);
             this.nameGroupbox.Controls.Add(this.label1);
-            this.nameGroupbox.Location = new System.Drawing.Point(11, 14);
+            this.nameGroupbox.Location = new System.Drawing.Point(15, 17);
+            this.nameGroupbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.nameGroupbox.Name = "nameGroupbox";
-            this.nameGroupbox.Size = new System.Drawing.Size(953, 96);
+            this.nameGroupbox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nameGroupbox.Size = new System.Drawing.Size(1228, 118);
             this.nameGroupbox.TabIndex = 0;
             this.nameGroupbox.TabStop = false;
             this.nameGroupbox.Text = "Name";
             // 
             // ETLJobNameTextBox
             // 
-            this.ETLJobNameTextBox.Location = new System.Drawing.Point(313, 45);
+            this.ETLJobNameTextBox.Location = new System.Drawing.Point(417, 55);
+            this.ETLJobNameTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ETLJobNameTextBox.Name = "ETLJobNameTextBox";
-            this.ETLJobNameTextBox.Size = new System.Drawing.Size(315, 20);
+            this.ETLJobNameTextBox.Size = new System.Drawing.Size(419, 22);
             this.ETLJobNameTextBox.TabIndex = 22;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 45);
+            this.label1.Location = new System.Drawing.Point(44, 55);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(157, 13);
+            this.label1.Size = new System.Drawing.Size(209, 17);
             this.label1.TabIndex = 21;
             this.label1.Text = "Choose a name for the ETL Job";
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(889, 537);
+            this.saveButton.Location = new System.Drawing.Point(1143, 664);
+            this.saveButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.Size = new System.Drawing.Size(100, 28);
             this.saveButton.TabIndex = 19;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
@@ -80,9 +85,10 @@
             // etlsLabel
             // 
             this.etlsLabel.AutoSize = true;
-            this.etlsLabel.Location = new System.Drawing.Point(33, 46);
+            this.etlsLabel.Location = new System.Drawing.Point(44, 57);
+            this.etlsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.etlsLabel.Name = "etlsLabel";
-            this.etlsLabel.Size = new System.Drawing.Size(257, 39);
+            this.etlsLabel.Size = new System.Drawing.Size(344, 51);
             this.etlsLabel.TabIndex = 18;
             this.etlsLabel.Text = "Choose the ETLs you which to add in this Job.\r\n\r\nThe ETLs will run in the order t" +
     "hat you select them in.";
@@ -90,9 +96,11 @@
             // etlJobDataGridView
             // 
             this.etlJobDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.etlJobDataGridView.Location = new System.Drawing.Point(313, 73);
+            this.etlJobDataGridView.Location = new System.Drawing.Point(417, 90);
+            this.etlJobDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.etlJobDataGridView.Name = "etlJobDataGridView";
-            this.etlJobDataGridView.Size = new System.Drawing.Size(315, 289);
+            this.etlJobDataGridView.RowHeadersWidth = 51;
+            this.etlJobDataGridView.Size = new System.Drawing.Size(420, 356);
             this.etlJobDataGridView.TabIndex = 17;
             this.etlJobDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.EtlJobDataGridView_RowsAdded);
             // 
@@ -100,21 +108,24 @@
             // 
             this.datagridviewGroupBox.Controls.Add(this.etlJobDataGridView);
             this.datagridviewGroupBox.Controls.Add(this.etlsLabel);
-            this.datagridviewGroupBox.Location = new System.Drawing.Point(11, 134);
+            this.datagridviewGroupBox.Location = new System.Drawing.Point(15, 165);
+            this.datagridviewGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.datagridviewGroupBox.Name = "datagridviewGroupBox";
-            this.datagridviewGroupBox.Size = new System.Drawing.Size(953, 386);
+            this.datagridviewGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.datagridviewGroupBox.Size = new System.Drawing.Size(1228, 475);
             this.datagridviewGroupBox.TabIndex = 21;
             this.datagridviewGroupBox.TabStop = false;
             this.datagridviewGroupBox.Text = "ETLs order";
             // 
             // CreateJobForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(976, 591);
+            this.ClientSize = new System.Drawing.Size(1265, 727);
             this.Controls.Add(this.datagridviewGroupBox);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.nameGroupbox);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "CreateJobForm";
             this.Text = "Create ETL job";
             this.nameGroupbox.ResumeLayout(false);
