@@ -110,6 +110,7 @@ namespace ETL.Core
             Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_MAXIMUM, dspaceData.Rows.Count.ToString());
             foreach (DataRow dataRow in dspaceData.Rows)
             {
+                Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, itemNumber.ToString());
                 List<KeyValuePair<DSpaceMetadataField, string>> metadataWithValues = new List<KeyValuePair<DSpaceMetadataField, string>>();
                 string itemRepository = "item" + itemNumber.ToString();
                 itemNumber++;
@@ -121,26 +122,27 @@ namespace ETL.Core
                 {
                     string column = dspaceData.Columns[i].ColumnName;
                     string value = dataRow.Field<string>(column);
-
-                    if (column == "path")
+                    if (value != null)
                     {
-                        DownloadResource(value, itemCompletePath);
-                    }
-                    else
-                    {
-                        string[] metadatafields = column.Split('.');
-                        string element = metadatafields[0];
-                        string qualifier = "";
-                        if (metadatafields.Count() == 2)
+                        if (column == "path")
                         {
-                            qualifier = metadatafields[1];
+                            DownloadResource(value, itemCompletePath);
                         }
-                        metadataField = new DSpaceMetadataField(element, qualifier);
-                        metadataWithValues.Add(new KeyValuePair<DSpaceMetadataField, string>(metadataField, value));
+                        else
+                        {
+                            string[] metadatafields = column.Split('.');
+                            string element = metadatafields[0];
+                            string qualifier = "";
+                            if (metadatafields.Count() == 2)
+                            {
+                                qualifier = metadatafields[1];
+                            }
+                            metadataField = new DSpaceMetadataField(element, qualifier);
+                            metadataWithValues.Add(new KeyValuePair<DSpaceMetadataField, string>(metadataField, value));
+                        }
                     }
                 }
                 CreateXml(metadataWithValues, itemCompletePath);
-                Global.progressForm.UpdateForm(ProgressForm.PROGRESSBAR_VALUE, itemNumber.ToString());
             }
         }
 
